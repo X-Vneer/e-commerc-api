@@ -1,17 +1,17 @@
 import { z } from "zod"
 
 export const loginSchema = z.object({
-  phone: z.string().min(10, { message: "Phone number must be at least 10 characters long" }),
-  password: z.string().min(8, { message: "Password must be at least 8 characters long" }),
+  phone: z.string().min(10, { message: "auth.phone_min" }),
+  password: z.string().min(8, { message: "auth.password_min" }),
 })
 
 export const registerSchema = z.object({
-  phone: z.string().min(10, { message: "Phone number must be at least 10 characters long" }),
-  password: z.string().min(8, { message: "Password must be at least 8 characters long" }),
-  name: z.string().min(1, { message: "Name must be at least 1 character long" }),
-  email: z.email({ message: "Invalid email address" }),
-  region_id: z.string().min(1, { message: "Region is required" }),
-  address: z.string().min(1, { message: "Address is required" }),
+  phone: z.string().min(10, { message: "auth.phone_min" }),
+  password: z.string().min(8, { message: "auth.password_min" }),
+  name: z.string().min(1, { message: "auth.name_min" }),
+  email: z.email({ message: "auth.email_invalid" }),
+  region_id: z.string().min(1, { message: "auth.region_required" }),
+  address: z.string().min(1, { message: "auth.address_required" }),
 
 })
 

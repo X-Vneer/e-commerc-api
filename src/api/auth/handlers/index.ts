@@ -1,6 +1,5 @@
 import type { Response } from "express"
 import type { ValidatedRequest } from "express-zod-safe"
-import type { TFunction } from "i18next"
 
 import bcrypt from "bcrypt"
 
@@ -24,13 +23,13 @@ export async function loginHandler(req: ValidatedRequest<{ body: typeof loginSch
     },
   })
   if (!user) {
-    res.status(401).json({ message: "Invalid credentials" })
+    res.status(401).json({ message: req.t("unauthorized", { ns: "errors" }) })
     return
   }
   // checking if password is correct
   const isPasswordCorrect = await bcrypt.compare(password, user.password)
   if (!isPasswordCorrect) {
-    res.status(401).json({ message: "Invalid credentials" })
+    res.status(401).json({ message: req.t("unauthorized", { ns: "errors" }) })
     return
   }
   const { password: _, ...userWithoutPassword } = user
@@ -50,7 +49,7 @@ export async function registerHandler(req: ValidatedRequest<{ body: typeof regis
     select: { id: true },
   })
   if (existingUser) {
-    res.status(409).json({ message: "User already exists" })
+    res.status(409).json({ message: req.t("conflict", { ns: "errors" }) })
     return
   }
   // checking if region exists
@@ -59,7 +58,7 @@ export async function registerHandler(req: ValidatedRequest<{ body: typeof regis
   })
 
   if (!region) {
-    res.status(404).json({ message: "Region not found" })
+    res.status(404).json({ message: req.t("not_found", { ns: "errors" }) })
     return
   }
 

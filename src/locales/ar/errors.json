@@ -1,3 +1,20 @@
 {
-  "validation_error": "حدث خطأ في التحقق"
+  "validation_error": "حدث خطأ في التحقق",
+  "bad_request": "طلب غير صالح",
+  "unauthorized": "غير مصرح",
+  "forbidden": "ممنوع",
+  "not_found": "غير موجود",
+  "conflict": "تعارض",
+  "too_many_requests": "عدد كبير جدًا من الطلبات",
+  "request_timeout": "انتهت مهلة الطلب",
+  "internal_server_error": "خطأ داخلي في الخادم",
+  "service_unavailable": "الخدمة غير متاحة",
+  "auth": {
+    "phone_min": "يجب أن يكون رقم الهاتف 10 أحرف على الأقل",
+    "password_min": "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
+    "name_min": "يجب أن يكون الاسم حرفًا واحدًا على الأقل",
+    "email_invalid": "بريد إلكتروني غير صالح",
+    "region_required": "المنطقة مطلوبة",
+    "address_required": "العنوان مطلوب"
+  }
 }

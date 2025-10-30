@@ -1,3 +1,20 @@
 {
-  "validation_error": "Validation error"
+  "validation_error": "Validation error",
+  "bad_request": "Bad request",
+  "unauthorized": "Unauthorized",
+  "forbidden": "Forbidden",
+  "not_found": "Not found",
+  "conflict": "Conflict",
+  "too_many_requests": "Too many requests",
+  "request_timeout": "Request timeout",
+  "internal_server_error": "Internal server error",
+  "service_unavailable": "Service unavailable",
+  "auth": {
+    "phone_min": "Phone number must be at least 10 characters long",
+    "password_min": "Password must be at least 8 characters long",
+    "name_min": "Name must be at least 1 character long",
+    "email_invalid": "Invalid email address",
+    "region_required": "Region is required",
+    "address_required": "Address is required"
+  }
 }

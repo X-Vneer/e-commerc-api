@@ -22,4 +22,5 @@ i18next
     interpolation: { escapeValue: false },
   })
 
+export const t = i18next.t
 export default middleware.handle(i18next)

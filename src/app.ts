@@ -5,7 +5,7 @@ import helmet from "helmet"
 import morgan from "morgan"
 
 import api from "./api/index.js"
-import i18next from "./libs/i18next.js"
+import i18next, { t } from "./libs/i18next.js"
 import * as middlewares from "./middlewares.js"
 
 const app = express()
@@ -25,11 +25,17 @@ setGlobalErrorHandler((errors, req, res) => {
   for (const error of errors) {
     for (const issue of error.errors.issues) {
       const pathKey = issue.path.join(".")
-      errorObject[pathKey] = issue.message
+      // translate message keys from schemas using request language
+      errorObject[pathKey] = t(issue.message, { ns: "errors", defaultValue: issue.message })
+        ? req.t(issue.message, { ns: "errors", defaultValue: issue.message })
+        : issue.message
     }
   }
 
-  res.status(422).json({ message: "Validation error", errors: errorObject })
+  const topLevelMessage = (req as any).t
+    ? req.t("validation_error", { ns: "errors" })
+    : "Validation error"
+  res.status(422).json({ message: topLevelMessage, errors: errorObject })
 })
 app.use(middlewares.notFound)
 app.use(middlewares.errorHandler)
