@@ -14,6 +14,13 @@ export async function loginHandler(req: ValidatedRequest<{ body: typeof loginSch
     where: {
       phone,
     },
+    include: {
+      region: {
+        include: {
+          emirate: true,
+        },
+      },
+    },
   })
   if (!user) {
     res.status(401).json({ message: "Invalid credentials" })
@@ -25,9 +32,10 @@ export async function loginHandler(req: ValidatedRequest<{ body: typeof loginSch
     res.status(401).json({ message: "Invalid credentials" })
     return
   }
+  const { password: _, ...userWithoutPassword } = user
   // generating access token
-  const accessToken = generateAccessToken(user)
-  res.json({ accessToken, user })
+  const accessToken = generateAccessToken(userWithoutPassword)
+  res.json({ data: { accessToken, user: userWithoutPassword } })
 }
 
 export async function registerHandler(req: ValidatedRequest<{ body: typeof registerSchema }>, res: Response) {
@@ -71,5 +79,5 @@ export async function registerHandler(req: ValidatedRequest<{ body: typeof regis
   // generating access token
   const accessToken = generateAccessToken(user)
 
-  res.status(201).json({ accessToken, user })
+  res.status(201).json({ data: { accessToken, user } })
 }

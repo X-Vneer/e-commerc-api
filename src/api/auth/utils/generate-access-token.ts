@@ -6,7 +6,7 @@ import { env } from "../../../env.js"
 
 const JWT_SECRET = env.JWT_SECRET
 // Generate tokens
-export function generateAccessToken(user: User) {
+export function generateAccessToken(user: Omit<User, "password">) {
   const accessToken = jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn: "7d" })
   return accessToken
 }
