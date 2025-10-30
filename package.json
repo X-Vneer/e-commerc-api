@@ -26,6 +26,9 @@
     "express": "^5.1.0",
     "express-zod-safe": "^3.1.0",
     "helmet": "^8.1.0",
+    "i18next": "^25.6.0",
+    "i18next-fs-backend": "^2.6.0",
+    "i18next-http-middleware": "^3.8.1",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
     "zod": "^4.1.12"
@@ -35,6 +38,7 @@
     "@types/bcrypt": "^6.0.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
+    "@types/i18next": "^13.0.0",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/morgan": "^1.9.10",
     "@types/node": "^24.0.10",

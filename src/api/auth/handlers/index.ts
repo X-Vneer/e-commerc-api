@@ -1,5 +1,6 @@
 import type { Response } from "express"
 import type { ValidatedRequest } from "express-zod-safe"
+import type { TFunction } from "i18next"
 
 import bcrypt from "bcrypt"
 
@@ -35,7 +36,7 @@ export async function loginHandler(req: ValidatedRequest<{ body: typeof loginSch
   const { password: _, ...userWithoutPassword } = user
   // generating access token
   const accessToken = generateAccessToken(userWithoutPassword)
-  res.json({ data: { accessToken, user: userWithoutPassword } })
+  res.json({ message: req.t("message", { ns: "translations" }), data: { accessToken, user: userWithoutPassword } })
 }
 
 export async function registerHandler(req: ValidatedRequest<{ body: typeof registerSchema }>, res: Response) {

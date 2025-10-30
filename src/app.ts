@@ -5,6 +5,7 @@ import helmet from "helmet"
 import morgan from "morgan"
 
 import api from "./api/index.js"
+import i18next from "./libs/i18next.js"
 import * as middlewares from "./middlewares.js"
 
 const app = express()
@@ -13,6 +14,7 @@ app.use(morgan("dev"))
 app.use(helmet())
 app.use(cors())
 app.use(express.json())
+app.use(i18next)
 
 app.use("/api/v1", api)
 
