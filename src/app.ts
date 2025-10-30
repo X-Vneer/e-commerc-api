@@ -6,7 +6,7 @@ import morgan from "morgan"
 
 import api from "./api/index.js"
 import i18next, { t } from "./libs/i18next.js"
-import * as middlewares from "./middlewares.js"
+import * as middlewares from "./middlewares/index.js"
 
 const app = express()
 

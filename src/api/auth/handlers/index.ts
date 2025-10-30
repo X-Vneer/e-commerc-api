@@ -1,4 +1,4 @@
-import type { Response } from "express"
+import type { Request, Response } from "express"
 import type { ValidatedRequest } from "express-zod-safe"
 
 import bcrypt from "bcrypt"
@@ -80,4 +80,22 @@ export async function registerHandler(req: ValidatedRequest<{ body: typeof regis
   const accessToken = generateAccessToken(user)
 
   res.status(201).json({ data: { accessToken, user } })
+}
+
+export async function getMeHandler(req: Request, res: Response) {
+  const user = await prismaClient.user.findUnique({
+    where: { id: req.userId },
+    include: {
+      region: {
+        include: {
+          emirate: true,
+        },
+      },
+
+    },
+    omit: {
+      password: true,
+    },
+  })
+  res.json({ data: user })
 }
