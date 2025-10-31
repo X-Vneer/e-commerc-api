@@ -16,7 +16,6 @@ export const registerSchema = z.object({
 
 export const addressSchema = z.object({
   region_id: z.coerce.number().min(1, { message: "auth.region_required" }),
-  emirate_id: z.coerce.number().min(1, { message: "auth.emirate_required" }),
   address: z.string().min(1, { message: "auth.address_required" }),
 })
 
