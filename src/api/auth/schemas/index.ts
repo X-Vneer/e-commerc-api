@@ -22,13 +22,16 @@ export const addressSchema = z
     address: z.string().min(1, { message: "auth.address_required" }).optional(),
   })
   .refine(data => data.region_id !== undefined || data.address !== undefined, {
-    message: "auth.region_or_address_required",
+    message: "body_required",
     path: ["root"],
   })
 
 export const updateUserDataSchema = z.object({
-  name: z.string().min(1, { message: "auth.name_min" }),
-  email: z.email({ message: "auth.email_invalid" }),
+  name: z.string().min(1, { message: "auth.name_min" }).optional(),
+  email: z.email({ message: "auth.email_invalid" }).optional(),
+}).refine(data => data.name !== undefined || data.email !== undefined, {
+  message: "body_required",
+  path: ["root"],
 })
 
 export type LoginSchema = z.infer<typeof loginSchema>
