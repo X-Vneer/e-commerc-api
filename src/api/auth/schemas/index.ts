@@ -16,11 +16,22 @@ export const registerSchema = z.object({
   address: z.string().min(1, { message: "auth.address_required" }),
 })
 
-export const addressSchema = z.object({
-  region_id: z.coerce.number().min(1, { message: "auth.region_required" }),
-  address: z.string().min(1, { message: "auth.address_required" }),
+export const addressSchema = z
+  .object({
+    region_id: z.coerce.number().min(1, { message: "auth.region_required" }).optional(),
+    address: z.string().min(1, { message: "auth.address_required" }).optional(),
+  })
+  .refine(data => data.region_id !== undefined || data.address !== undefined, {
+    message: "auth.region_or_address_required",
+    path: ["root"],
+  })
+
+export const updateUserDataSchema = z.object({
+  name: z.string().min(1, { message: "auth.name_min" }),
+  email: z.email({ message: "auth.email_invalid" }),
 })
 
 export type LoginSchema = z.infer<typeof loginSchema>
 export type RegisterSchema = z.infer<typeof registerSchema>
 export type AddressSchema = z.infer<typeof addressSchema>
+export type UpdateUserDataSchema = z.infer<typeof updateUserDataSchema>

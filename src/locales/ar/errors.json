@@ -15,7 +15,8 @@
     "name_min": "يجب أن يكون الاسم حرفًا واحدًا على الأقل",
     "email_invalid": "بريد إلكتروني غير صالح",
     "region_required": "المنطقة مطلوبة",
-    "address_required": "العنوان مطلوب"
+    "address_required": "العنوان مطلوب",
+    "region_or_address_required": "المنطقة أو العنوان مطلوب"
   },
   "region_not_found": "لم يتم العثور على المنطقة",
   "user_conflict": "المستخدم موجود بالفعل",

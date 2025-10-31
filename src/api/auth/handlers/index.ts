@@ -3,7 +3,7 @@ import type { ValidatedRequest } from "express-zod-safe"
 
 import bcrypt from "bcrypt"
 
-import type { addressSchema, loginSchema, registerSchema } from "../schemas/index.js"
+import type { addressSchema, loginSchema, registerSchema, updateUserDataSchema } from "../schemas/index.js"
 
 import prismaClient from "../../../prisma/index.js"
 import { generateAccessToken } from "../utils/generate-access-token.js"
@@ -106,6 +106,18 @@ export async function updateAddressHandler(req: ValidatedRequest<{ body: typeof 
   const user = await prismaClient.user.update({
     where: { id: req.userId },
     data: { region: { connect: { id: region_id } }, address },
+    include: {
+      region: true,
+    },
+  })
+  res.json({ data: user })
+}
+
+export async function updateUserDataHandler(req: ValidatedRequest<{ body: typeof updateUserDataSchema }>, res: Response) {
+  const { name, email } = req.body
+  const user = await prismaClient.user.update({
+    where: { id: req.userId },
+    data: { name, email },
   })
   res.json({ data: user })
 }
