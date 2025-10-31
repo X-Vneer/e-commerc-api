@@ -5,7 +5,7 @@ import app from "../src/app.js"
 import prismaClient from "../src/prisma/index.js"
 
 // Mocks must be declared before importing the app (which wires routes/handlers)
-vi.mock("../src/prisma.js", () => {
+vi.mock("../src/prisma/index.js", () => {
   const user = {
     findFirst: vi.fn(),
     create: vi.fn(),
@@ -35,7 +35,7 @@ describe("POST /api/v1/auth/register", () => {
     password: "password123",
     name: "John Doe",
     email: "john@example.com",
-    region_id: "region-1",
+    region_id: "1",
     address: "123 Main St",
   }
 

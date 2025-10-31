@@ -3,7 +3,7 @@ import type { ValidatedRequest } from "express-zod-safe"
 
 import bcrypt from "bcrypt"
 
-import type { loginSchema, registerSchema } from "../schemas/index.js"
+import type { addressSchema, loginSchema, registerSchema } from "../schemas/index.js"
 
 import prismaClient from "../../../prisma/index.js"
 import { generateAccessToken } from "../utils/generate-access-token.js"
@@ -49,7 +49,7 @@ export async function registerHandler(req: ValidatedRequest<{ body: typeof regis
     select: { id: true },
   })
   if (existingUser) {
-    res.status(409).json({ message: req.t("conflict", { ns: "errors" }) })
+    res.status(409).json({ message: req.t("user_conflict", { ns: "errors" }) })
     return
   }
   // checking if region exists
@@ -58,7 +58,7 @@ export async function registerHandler(req: ValidatedRequest<{ body: typeof regis
   })
 
   if (!region) {
-    res.status(404).json({ message: req.t("not_found", { ns: "errors" }) })
+    res.status(404).json({ message: req.t("region_not_found", { ns: "errors" }) })
     return
   }
 
@@ -82,6 +82,7 @@ export async function registerHandler(req: ValidatedRequest<{ body: typeof regis
   res.status(201).json({ data: { accessToken, user } })
 }
 
+// with auth middleware
 export async function getMeHandler(req: Request, res: Response) {
   const user = await prismaClient.user.findUnique({
     where: { id: req.userId },
@@ -96,6 +97,15 @@ export async function getMeHandler(req: Request, res: Response) {
     omit: {
       password: true,
     },
+  })
+  res.json({ data: user })
+}
+
+export async function updateAddressHandler(req: ValidatedRequest<{ body: typeof addressSchema }>, res: Response) {
+  const { region_id, address } = req.body
+  const user = await prismaClient.user.update({
+    where: { id: req.userId },
+    data: { region: { connect: { id: region_id } }, address },
   })
   res.json({ data: user })
 }

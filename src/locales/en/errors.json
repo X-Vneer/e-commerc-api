@@ -16,5 +16,7 @@
     "email_invalid": "Invalid email address",
     "region_required": "Region is required",
     "address_required": "Address is required"
-  }
+  },
+  "region_not_found": "Region not found",
+  "user_conflict": "User already exists"
 }
