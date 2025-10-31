@@ -16,7 +16,8 @@
     "build": "tsc",
     "lint": "eslint --fix src test",
     "test": "vitest run",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "seed": "tsx --env-file=.env src/prisma/seed/index.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.18.0",
@@ -50,5 +51,8 @@
     "tsx": "^4.20.3",
     "typescript": "^5.8.3",
     "vitest": "^3.2.4"
+  },
+  "prisma": {
+    "seed": "tsx --env-file=.env src/prisma/seed/index.ts"
   }
 }

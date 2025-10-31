@@ -10,7 +10,7 @@ export const registerSchema = z.object({
   password: z.string().min(8, { message: "auth.password_min" }),
   name: z.string().min(1, { message: "auth.name_min" }),
   email: z.email({ message: "auth.email_invalid" }),
-  region_id: z.string().min(1, { message: "auth.region_required" }),
+  region_id: z.coerce.number().min(1, { message: "auth.region_required" }),
   address: z.string().min(1, { message: "auth.address_required" }),
 
 })

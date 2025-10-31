@@ -22,7 +22,7 @@ model User {
   name      String
   role      String @default("user")
   status    String @default("active")
-  region_id String
+  region_id Int
 
   region  Region  @relation(fields: [region_id], references: [id])
   address String?
@@ -35,15 +35,17 @@ model User {
 }
 
 model Region {
-  id         String  @id @default(cuid())
-  name       String
-  emirate_id String
-  emirate    Emirate @relation(fields: [emirate_id], references: [id])
-  users      User[]
+  id      Int  @id @default(autoincrement())
+  name_en String @default("")
+  name_ar String @default("")
+  emirate_id Int
+  emirate Emirate @relation(fields: [emirate_id], references: [id])
+  users   User[]
 }
 
 model Emirate {
-  id      String   @id @default(cuid())
-  name    String
+  id      Int   @id @default(autoincrement())
+  name_en String @default("")
+  name_ar String @default("")
   regions Region[]
 }

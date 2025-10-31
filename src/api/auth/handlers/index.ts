@@ -5,7 +5,7 @@ import bcrypt from "bcrypt"
 
 import type { loginSchema, registerSchema } from "../schemas/index.js"
 
-import prismaClient from "../../../prisma.js"
+import prismaClient from "../../../prisma/index.js"
 import { generateAccessToken } from "../utils/generate-access-token.js"
 
 export async function loginHandler(req: ValidatedRequest<{ body: typeof loginSchema }>, res: Response) {

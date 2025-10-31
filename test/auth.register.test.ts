@@ -2,7 +2,7 @@ import request from "supertest"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import app from "../src/app.js"
-import prismaClient from "../src/prisma.js"
+import prismaClient from "../src/prisma/index.js"
 
 // Mocks must be declared before importing the app (which wires routes/handlers)
 vi.mock("../src/prisma.js", () => {
