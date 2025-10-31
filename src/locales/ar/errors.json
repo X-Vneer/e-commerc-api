@@ -18,5 +18,6 @@
     "address_required": "العنوان مطلوب"
   },
   "region_not_found": "لم يتم العثور على المنطقة",
-  "user_conflict": "المستخدم موجود بالفعل"
+  "user_conflict": "المستخدم موجود بالفعل",
+  "phone_number_invalid": "رقم هاتف غير صالح"
 }

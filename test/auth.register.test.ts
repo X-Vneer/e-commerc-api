@@ -31,7 +31,7 @@ vi.mock("../src/api/auth/utils/generate-access-token.js", () => ({
 
 describe("POST /api/v1/auth/register", () => {
   const validBody = {
-    phone: "0501234567",
+    phone: "+970598654780",
     password: "password123",
     name: "John Doe",
     email: "john@example.com",

@@ -1,12 +1,14 @@
 import { z } from "zod"
 
+import { phoneNumberSchema } from "../../../schemas/phone-number.js"
+
 export const loginSchema = z.object({
-  phone: z.string().min(10, { message: "auth.phone_min" }),
+  phone: phoneNumberSchema,
   password: z.string().min(8, { message: "auth.password_min" }),
 })
 
 export const registerSchema = z.object({
-  phone: z.string().min(10, { message: "auth.phone_min" }),
+  phone: phoneNumberSchema,
   password: z.string().min(8, { message: "auth.password_min" }),
   name: z.string().min(1, { message: "auth.name_min" }),
   email: z.email({ message: "auth.email_invalid" }),
