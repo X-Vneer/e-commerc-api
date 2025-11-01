@@ -12,8 +12,8 @@ import type {
 
 import prismaClient from "../../../prisma/index.js"
 import { userSelectWithoutPassword } from "../../../prisma/user.js"
+import { generateAccessToken } from "../../../utils/generate-access-token.js"
 import stripLangKeys from "../../../utils/obj-select-lang.js"
-import { generateAccessToken } from "../utils/generate-access-token.js"
 
 export async function loginHandler(
   req: ValidatedRequest<{ body: typeof loginSchema }>,

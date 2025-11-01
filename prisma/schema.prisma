@@ -5,7 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../src/generated/prisma"
 }
 
@@ -31,6 +31,20 @@ model User {
   updatedAt DateTime @updatedAt
 
   @@index([phone])
+  @@index([email])
+}
+
+model Admin {
+  id       String @id @default(cuid())
+  email    String @unique
+  password String
+  name     String
+  role     String @default("employee")
+  status   String @default("active")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@index([email])
 }
 
@@ -112,9 +126,9 @@ model ProductSize {
 }
 
 model Size {
-  id            Int           @id @default(autoincrement())
-  code          String        @unique
-  weight        String
+  id     Int    @id @default(autoincrement())
+  code   String @unique
+  weight String
 
   product_sizes ProductSize[]
 }
