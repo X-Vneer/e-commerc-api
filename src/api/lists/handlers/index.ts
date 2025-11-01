@@ -34,3 +34,8 @@ export async function getRegionsHandler(req: Request, res: Response) {
     data: formatted,
   })
 }
+
+export async function getSizesHandler(req: Request, res: Response) {
+  const sizes = await prismaClient.size.findMany()
+  res.json({ data: sizes })
+}

@@ -114,9 +114,6 @@ model Size {
   id            Int           @id @default(autoincrement())
   code          String        @unique
   weight        String
-  name_en       String
-  name_ar       String
-  hip           Float
-  chest         Float
+
   product_sizes ProductSize[]
 }
