@@ -5,7 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
   output   = "../src/generated/prisma"
 }
 
@@ -35,17 +35,88 @@ model User {
 }
 
 model Region {
-  id      Int  @id @default(autoincrement())
-  name_en String @default("")
-  name_ar String @default("")
+  id         Int     @id @default(autoincrement())
+  name_en    String
+  name_ar    String
   emirate_id Int
-  emirate Emirate @relation(fields: [emirate_id], references: [id])
-  users   User[]
+  emirate    Emirate @relation(fields: [emirate_id], references: [id])
+  users      User[]
 }
 
 model Emirate {
-  id      Int   @id @default(autoincrement())
-  name_en String @default("")
-  name_ar String @default("")
+  id      Int      @id @default(autoincrement())
+  name_en String
+  name_ar String
   regions Region[]
+}
+
+model Category {
+  id       Int       @id @default(autoincrement())
+  name_en  String
+  name_ar  String
+  products Product[]
+}
+
+model Product {
+  id             Int    @id @default(autoincrement())
+  code           String @unique
+  name_en        String
+  name_ar        String
+  description_en String
+  description_ar String
+  price          Float
+  main_image_url String
+
+  is_active      Boolean @default(true)
+  is_featured    Boolean @default(false)
+  is_best_seller Boolean @default(false)
+
+  categories Category[]
+
+  colors Color[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([code])
+}
+
+model Color {
+  id         Int           @id @default(autoincrement())
+  product_id Int
+  product    Product       @relation(fields: [product_id], references: [id])
+  name_en    String
+  name_ar    String
+  image      String
+  sizes      ProductSize[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([product_id])
+}
+
+model ProductSize {
+  id        Int    @id @default(autoincrement())
+  code      String @unique
+  name_en   String
+  name_ar   String
+  color_id  Int
+  color     Color  @relation(fields: [color_id], references: [id])
+  size_code String
+  size      Size   @relation(fields: [size_code], references: [code])
+
+  hip   Float
+  chest Float
+}
+
+model Size {
+  id            Int           @id @default(autoincrement())
+  code          String        @unique
+  weight        String
+  name_en       String
+  name_ar       String
+  hip           Float
+  chest         Float
+  product_sizes ProductSize[]
 }
