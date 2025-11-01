@@ -1,6 +1,7 @@
 import type { Request, Response } from "express"
 
 import prismaClient from "../../../prisma/index.js"
+import stripLangKeys from "../../../utils/obj-select-lang.js"
 
 export async function getEmiratesHandler(req: Request, res: Response) {
   const lang = req.language
@@ -11,8 +12,7 @@ export async function getEmiratesHandler(req: Request, res: Response) {
       [locale]: true,
     },
   })
-  const formatted = emirates.map(e => ({ id: e.id, name: e[locale] }))
-  res.json({ data: formatted })
+  res.json({ data: stripLangKeys(emirates) })
 }
 
 export async function getRegionsHandler(req: Request, res: Response) {
@@ -29,13 +29,26 @@ export async function getRegionsHandler(req: Request, res: Response) {
     },
   })
 
-  const formatted = regions.map(r => ({ id: r.id, name: r[locale] }))
   res.json({
-    data: formatted,
+    data: stripLangKeys(regions),
   })
 }
 
 export async function getSizesHandler(req: Request, res: Response) {
   const sizes = await prismaClient.size.findMany()
   res.json({ data: sizes })
+}
+
+export async function getCategoriesHandler(req: Request, res: Response) {
+  const lang = req.language
+  const locale = lang === "ar" ? "name_ar" : "name_en"
+  const categories = await prismaClient.category.findMany({
+    select: {
+      id: true,
+      [locale]: true,
+    },
+  })
+  res.json({ 
+    data: stripLangKeys(categories)
+ })
 }

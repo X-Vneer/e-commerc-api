@@ -17,7 +17,6 @@ export async function seedSizes() {
     { id: 12, code: "10XL", weight: "1000g" },
     { id: 12, code: "11XL", weight: "1000g" },
     { id: 12, code: "12XL", weight: "1000g" },
-
   ]
 
   await prismaClient.size.createMany({

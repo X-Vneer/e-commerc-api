@@ -17,6 +17,20 @@
     "region_required": "المنطقة مطلوبة",
     "address_required": "العنوان مطلوب"
   },
+  "products": {
+    "code_required": "رمز المنتج مطلوب",
+    "name_en_required": "اسم المنتج باللغة الإنجليزية مطلوب",
+    "name_ar_required": "اسم المنتج باللغة العربية مطلوب",
+    "description_en_required": "وصف المنتج باللغة الإنجليزية مطلوب",
+    "description_ar_required": "وصف المنتج باللغة العربية مطلوب",
+    "price_positive": "السعر مطلوب",
+    "main_image_url_invalid": "رابط الصورة الرئيسية غير صالح",
+    "category_id_invalid": "معرف الفئة مطلوب",
+    "categories_required": "فئة واحدة على الأقل مطلوبة",
+    "color_name_en_required": "اسم اللون باللغة الإنجليزية مطلوب",
+    "color_name_ar_required": "اسم اللون باللغة العربية مطلوب",
+    "color_image_invalid": "رابط صورة اللون غير صالح"
+  },
   "body_required": "يجب أن يكون هناك بيانات في الجسم المرسل",
   "region_not_found": "لم يتم العثور على المنطقة",
   "user_conflict": "المستخدم موجود بالفعل",

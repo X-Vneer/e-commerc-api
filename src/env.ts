@@ -13,7 +13,7 @@ const parsed = baseSchema.safeParse(process.env)
 
 if (!parsed.success) {
   // Validation of base keys failed (unlikely). Do not exit in tests.
-  const issues = parsed.error.issues.flatMap(issue => issue.path)
+  const issues = parsed.error.issues.flatMap((issue) => issue.path)
   // eslint-disable-next-line node/no-process-env
   if (process.env.NODE_ENV !== "test") {
     console.error("Missing environment variables:", issues)
@@ -21,8 +21,10 @@ if (!parsed.success) {
   }
 }
 
-// eslint-disable-next-line node/no-process-env
-const envUnsafe = parsed.success ? parsed.data : (process.env as unknown as z.infer<typeof baseSchema>)
+const envUnsafe = parsed.success
+  ? parsed.data
+  // eslint-disable-next-line node/no-process-env
+  : (process.env as unknown as z.infer<typeof baseSchema>)
 
 // In non-test environments, enforce required secrets and database URL.
 if (envUnsafe.NODE_ENV !== "test") {
@@ -34,7 +36,7 @@ if (envUnsafe.NODE_ENV !== "test") {
   if (!strict.success) {
     console.error(
       "Missing environment variables:",
-      strict.error.issues.flatMap(issue => issue.path),
+      strict.error.issues.flatMap((issue) => issue.path)
     )
     process.exit(1)
   }

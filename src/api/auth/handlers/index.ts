@@ -3,14 +3,22 @@ import type { ValidatedRequest } from "express-zod-safe"
 
 import bcrypt from "bcrypt"
 
-import type { addressSchema, loginSchema, registerSchema, updateUserDataSchema } from "../schemas/index.js"
+import type {
+  addressSchema,
+  loginSchema,
+  registerSchema,
+  updateUserDataSchema,
+} from "../schemas/index.js"
 
 import prismaClient from "../../../prisma/index.js"
 import { userSelectWithoutPassword } from "../../../prisma/user.js"
 import stripLangKeys from "../../../utils/obj-select-lang.js"
 import { generateAccessToken } from "../utils/generate-access-token.js"
 
-export async function loginHandler(req: ValidatedRequest<{ body: typeof loginSchema }>, res: Response) {
+export async function loginHandler(
+  req: ValidatedRequest<{ body: typeof loginSchema }>,
+  res: Response
+) {
   const { phone, password } = req.body
 
   const user = await prismaClient.user.findUnique({
@@ -45,10 +53,16 @@ export async function loginHandler(req: ValidatedRequest<{ body: typeof loginSch
   const { password: _, ...userWithoutPassword } = user
   // generating access token
   const accessToken = generateAccessToken(userWithoutPassword)
-  res.json({ message: req.t("message", { ns: "translations" }), data: { accessToken, user: stripLangKeys(userWithoutPassword) } })
+  res.json({
+    message: req.t("message", { ns: "translations" }),
+    data: { accessToken, user: stripLangKeys(userWithoutPassword) },
+  })
 }
 
-export async function registerHandler(req: ValidatedRequest<{ body: typeof registerSchema }>, res: Response) {
+export async function registerHandler(
+  req: ValidatedRequest<{ body: typeof registerSchema }>,
+  res: Response
+) {
   const { phone, password, name, email, region_id, address } = req.body
 
   // Check if user already exists by phone or email
@@ -102,7 +116,10 @@ export async function getMeHandler(req: Request, res: Response) {
   res.json({ data: stripLangKeys(user) })
 }
 
-export async function updateAddressHandler(req: ValidatedRequest<{ body: typeof addressSchema }>, res: Response) {
+export async function updateAddressHandler(
+  req: ValidatedRequest<{ body: typeof addressSchema }>,
+  res: Response
+) {
   const { region_id, address } = req.body
   const user = await prismaClient.user.update({
     where: { id: req.userId },
@@ -112,7 +129,10 @@ export async function updateAddressHandler(req: ValidatedRequest<{ body: typeof 
   res.json({ data: stripLangKeys(user) })
 }
 
-export async function updateUserDataHandler(req: ValidatedRequest<{ body: typeof updateUserDataSchema }>, res: Response) {
+export async function updateUserDataHandler(
+  req: ValidatedRequest<{ body: typeof updateUserDataSchema }>,
+  res: Response
+) {
   const { name, email } = req.body
   const user = await prismaClient.user.update({
     where: { id: req.userId },

@@ -21,18 +21,20 @@ export const addressSchema = z
     region_id: z.coerce.number().min(1, { message: "auth.region_required" }).optional(),
     address: z.string().min(1, { message: "auth.address_required" }).optional(),
   })
-  .refine(data => data.region_id !== undefined || data.address !== undefined, {
+  .refine((data) => data.region_id !== undefined || data.address !== undefined, {
     message: "body_required",
     path: ["root"],
   })
 
-export const updateUserDataSchema = z.object({
-  name: z.string().min(1, { message: "auth.name_min" }).optional(),
-  email: z.email({ message: "auth.email_invalid" }).optional(),
-}).refine(data => data.name !== undefined || data.email !== undefined, {
-  message: "body_required",
-  path: ["root"],
-})
+export const updateUserDataSchema = z
+  .object({
+    name: z.string().min(1, { message: "auth.name_min" }).optional(),
+    email: z.email({ message: "auth.email_invalid" }).optional(),
+  })
+  .refine((data) => data.name !== undefined || data.email !== undefined, {
+    message: "body_required",
+    path: ["root"],
+  })
 
 export type LoginSchema = z.infer<typeof loginSchema>
 export type RegisterSchema = z.infer<typeof registerSchema>

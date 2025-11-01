@@ -17,6 +17,20 @@
     "region_required": "Region is required",
     "address_required": "Address is required"
   },
+  "products": {
+    "code_required": "Product code is required",
+    "name_en_required": "Product name in English is required",
+    "name_ar_required": "Product name in Arabic is required",
+    "description_en_required": "Product description in English is required",
+    "description_ar_required": "Product description in Arabic is required",
+    "price_positive": "Price is required",
+    "main_image_url_invalid": "Main image URL is invalid",
+    "category_id_invalid": "Category ID is required",
+    "categories_required": "At least one category is required",
+    "color_name_en_required": "Color name in English is required",
+    "color_name_ar_required": "Color name in Arabic is required",
+    "color_image_invalid": "Color image URL is invalid"
+  },
   "body_required": "Body is required",
   "region_not_found": "Region not found",
   "user_conflict": "User already exists",

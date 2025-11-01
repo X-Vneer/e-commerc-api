@@ -20,9 +20,7 @@ export function authMiddleware(req: Request, res: Response, next: NextFunction) 
     const decoded = jwt.verify(token, env.JWT_SECRET)
     req.userId = (decoded as jwt.JwtPayload).userId
     next()
-  }
-  // eslint-disable-next-line unused-imports/no-unused-vars
-  catch (_error) {
+  } catch (_error) {
     res.status(401).json({ message: req.t("unauthorized", { ns: "errors" }) })
   }
 }
