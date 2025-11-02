@@ -34,5 +34,7 @@
   "body_required": "Body is required",
   "region_not_found": "Region not found",
   "user_conflict": "User already exists",
-  "phone_number_invalid": "Invalid phone number"
+  "phone_number_invalid": "Invalid phone number",
+  "category_not_found": "Category not found",
+  "invalid_id": "Invalid ID format"
 }
