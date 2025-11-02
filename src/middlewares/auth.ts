@@ -6,7 +6,6 @@ import { env } from "../env.js"
 
 export function authMiddleware(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization
-  console.log("🚀 ~ authMiddleware ~ authHeader:", authHeader)
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     res.status(401).json({ message: "Unauthorized" })
