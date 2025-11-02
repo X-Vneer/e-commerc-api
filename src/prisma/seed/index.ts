@@ -1,5 +1,5 @@
 import prismaClient from "../index.js"
-// import { seedCategories } from "./categories.js"
+import { seedCategories } from "./categories.js"
 import { seedEmirates } from "./emirates.js"
 import { seedRegions } from "./regions.js"
 import { seedSizes } from "./sizes.js"
@@ -8,7 +8,7 @@ async function main() {
   await seedEmirates()
   await seedRegions()
   await seedSizes()
-  // await seedCategories()
+  await seedCategories()
 }
 
 main()

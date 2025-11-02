@@ -3,7 +3,7 @@ import type { ValidatedRequest } from "express-zod-safe"
 
 import type { createProductSchema } from "../schemas/index.js"
 
-import prismaClient from "../../../prisma/index.js"
+import prismaClient from "../../../../prisma/index.js"
 
 export async function createProductHandler(
   req: ValidatedRequest<{ body: typeof createProductSchema }>,
@@ -18,8 +18,6 @@ export async function createProductHandler(
     price,
     main_image_url,
     is_active,
-    is_featured,
-    is_best_seller,
     category_ids,
     colors,
   } = req.body
@@ -33,11 +31,11 @@ export async function createProductHandler(
       price,
       main_image_url,
       is_active,
-      is_featured,
-      is_best_seller,
       categories: { connect: category_ids.map((id) => ({ id })) },
       colors: { create: colors.map((color) => ({ name_en, name_ar, image: color.image })) },
     },
   })
-  res.json({ data: product })
+  res
+    .status(201)
+    .json({ message: req.t("product_created_successfully", { ns: "translations" }), data: product })
 }

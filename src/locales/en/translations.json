@@ -3,5 +3,6 @@
   "category_created_successfully": "Category created successfully",
   "categories_fetched_successfully": "Categories fetched successfully",
   "category_updated_successfully": "Category updated successfully",
-  "category_deleted_successfully": "Category deleted successfully"
+  "category_deleted_successfully": "Category deleted successfully",
+  "product_created_successfully": "Product created succesffuly"
 }

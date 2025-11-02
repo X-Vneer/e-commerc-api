@@ -5,77 +5,43 @@ export async function seedCategories() {
     {
       name_en: "Dresses",
       name_ar: "فساتين",
-      image: "/images/categories/dresses.jpg",
-    },
-    {
-      name_en: "Tops & Blouses",
-      name_ar: "قمصان وبلوزات",
-      image: "/images/categories/tops.jpg",
-    },
-    {
-      name_en: "Pants & Trousers",
-      name_ar: "بنطلونات وسراويل",
-      image: "/images/categories/pants.jpg",
+      image: "https://via.placeholder.com/150",
     },
     {
       name_en: "Skirts",
       name_ar: "تنانير",
-      image: "/images/categories/skirts.jpg",
+      image: "https://via.placeholder.com/150",
     },
     {
       name_en: "Jackets & Coats",
       name_ar: "جاكيتات ومعاطف",
-      image: "/images/categories/jackets.jpg",
+      image: "https://via.placeholder.com/150",
     },
     {
       name_en: "Sweaters & Cardigans",
       name_ar: "سترات وكنزات",
-      image: "/images/categories/sweaters.jpg",
+      image: "https://via.placeholder.com/150",
     },
     {
       name_en: "Activewear",
       name_ar: "ملابس رياضية",
-      image: "/images/categories/activewear.jpg",
-    },
-    {
-      name_en: "Intimates & Lingerie",
-      name_ar: "ملابس داخلية",
-      image: "/images/categories/lingerie.jpg",
+      image: "https://via.placeholder.com/150",
     },
     {
       name_en: "Swimwear",
       name_ar: "ملابس سباحة",
-      image: "/images/categories/swimwear.jpg",
+      image: "https://via.placeholder.com/150",
     },
-    {
-      name_en: "Shoes",
-      name_ar: "أحذية",
-      image: "/images/categories/shoes.jpg",
-    },
+
     {
       name_en: "Bags & Handbags",
       name_ar: "حقائب",
-      image: "/images/categories/bags.jpg",
+      image: "https://via.placeholder.com/150",
     },
     {
       name_en: "Accessories",
       name_ar: "إكسسوارات",
-      image: "/images/categories/accessories.jpg",
-    },
-    {
-      name_en: "Jewelry",
-      name_ar: "مجوهرات",
-      image: "/images/categories/jewelry.jpg",
-    },
-    {
-      name_en: "Jeans",
-      name_ar: "جينز",
-      image: "/images/categories/jeans.jpg",
-    },
-    {
-      name_en: "Shorts",
-      name_ar: "شورتات",
-      image: "/images/categories/shorts.jpg",
+      image: "https://via.placeholder.com/150",
     },
   ]
 
@@ -86,4 +52,3 @@ export async function seedCategories() {
 
   console.log("✅ Categories seeded")
 }
-

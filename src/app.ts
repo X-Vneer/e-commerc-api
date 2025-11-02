@@ -26,15 +26,16 @@ setGlobalErrorHandler((errors, req, res) => {
     for (const issue of error.errors.issues) {
       const pathKey = issue.path.join(".")
       // translate message keys from schemas using request language
-      errorObject[pathKey] = t(issue.message, { ns: "errors", defaultValue: issue.message })
+      errorObject[pathKey || "root"] = t(issue.message, {
+        ns: "errors",
+        defaultValue: issue.message,
+      })
         ? req.t(issue.message, { ns: "errors", defaultValue: issue.message })
         : issue.message
     }
   }
 
-  const topLevelMessage = (req as any).t
-    ? req.t("validation_error", { ns: "errors" })
-    : "Validation error"
+  const topLevelMessage = req.t("validation_error", { ns: "errors" })
   res.status(422).json({ message: topLevelMessage, errors: errorObject })
 })
 app.use(middlewares.notFound)
