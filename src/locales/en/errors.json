@@ -36,5 +36,10 @@
   "user_conflict": "User already exists",
   "phone_number_invalid": "Invalid phone number",
   "category_not_found": "Category not found",
-  "invalid_id": "Invalid ID format"
+  "invalid_id": "Invalid ID format",
+  "pagination": {
+    "page_min": "Page must be at least 1",
+    "limit_min": "Limit must be at least 1",
+    "limit_max": "Limit must be less than 100"
+  }
 }

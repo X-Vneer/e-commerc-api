@@ -4,5 +4,6 @@
   "categories_fetched_successfully": "تم جلب الفئات بنجاح",
   "category_updated_successfully": "تم تحديث الفئة بنجاح",
   "category_deleted_successfully": "تم حذف الفئة بنجاح",
-  "product_created_successfully": "تم إنشاء المنتج بنجاح"
+  "product_created_successfully": "تم إنشاء المنتج بنجاح",
+  "products_fetched_successfully": "تم جلب المنتجات بنجاح"
 }

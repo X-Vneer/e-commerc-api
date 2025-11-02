@@ -1,10 +1,39 @@
 import type { Response } from "express"
 import type { ValidatedRequest } from "express-zod-safe"
 
+import type { paginationParamsSchema } from "../../../../schemas/pagination-params.js"
 import type { createProductSchema } from "../schemas/index.js"
 
 import prismaClient from "../../../../prisma/index.js"
 
+export async function getProductsHandler(
+  req: ValidatedRequest<{ query: typeof paginationParamsSchema }>,
+  res: Response
+) {
+  const { page = 1, limit = 10 } = req.query
+
+  const products = await prismaClient.product.findMany({
+    take: limit,
+    skip: (page - 1) * limit,
+    include: {
+      categories: true,
+      colors: {
+        include: {
+          sizes: true,
+        },
+      },
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  })
+  const total = await prismaClient.product.count()
+  res.json({
+    message: req.t("products_fetched_successfully", { ns: "translations" }),
+    data: products,
+    pagination: { page, limit, total, last_page: Math.ceil(total / limit) },
+  })
+}
 export async function createProductHandler(
   req: ValidatedRequest<{ body: typeof createProductSchema }>,
   res: Response
