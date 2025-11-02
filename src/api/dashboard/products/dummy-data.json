@@ -1,0 +1,98 @@
+{
+  "code": "PROD-001",
+  "name_en": "Premium Cotton T-Shirt",
+  "name_ar": "قميص قطني فاخر",
+  "description_en": "High-quality cotton t-shirt with modern design. Made from 100% organic cotton for maximum comfort and durability. Perfect for everyday wear.",
+  "description_ar": "قميص قطني عالي الجودة بتصميم عصري. مصنوع من القطن العضوي بنسبة 100٪ لأقصى راحة ومتانة. مثالي للارتداء اليومي.",
+  "price": 49.99,
+  "main_image_url": "https://example.com/images/products/premium-tshirt-main.jpg",
+  "is_active": true,
+  "is_featured": true,
+  "is_best_seller": false,
+  "category_ids": [1, 2],
+  "colors": [
+    {
+      "name_en": "Black",
+      "name_ar": "أسود",
+      "image": "https://example.com/images/products/premium-tshirt-black.jpg",
+      "sizes": [
+        {
+          "size_code": "S",
+
+          "amount": 10,
+          "hip": 92.0,
+          "chest": 96.0
+        },
+        {
+          "size_code": "M",
+
+          "amount": 10,
+          "hip": 96.0,
+          "chest": 100.0
+        },
+        {
+          "size_code": "L",
+
+          "amount": 10,
+          "hip": 100.0,
+          "chest": 104.0
+        }
+      ]
+    },
+    {
+      "name_en": "White",
+      "name_ar": "أبيض",
+      "image": "https://example.com/images/products/premium-tshirt-white.jpg",
+      "sizes": [
+        {
+          "size_code": "S",
+
+          "amount": 10,
+          "hip": 92.0,
+          "chest": 96.0
+        },
+        {
+          "size_code": "M",
+
+          "amount": 10,
+          "hip": 96.0,
+          "chest": 100.0
+        },
+        {
+          "size_code": "L",
+
+          "amount": 10,
+          "hip": 100.0,
+          "chest": 104.0
+        },
+        {
+          "size_code": "XL",
+
+          "amount": 10,
+          "hip": 104.0,
+          "chest": 108.0
+        }
+      ]
+    },
+    {
+      "name_en": "Navy Blue",
+      "name_ar": "أزرق داكن",
+      "image": "https://example.com/images/products/premium-tshirt-navy.jpg",
+      "sizes": [
+        {
+          "size_code": "M",
+          "amount": 10,
+          "hip": 96.0,
+          "chest": 100.0
+        },
+        {
+          "size_code": "L",
+
+          "amount": 10,
+          "hip": 100.0,
+          "chest": 104.0
+        }
+      ]
+    }
+  ]
+}

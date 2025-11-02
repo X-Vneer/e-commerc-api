@@ -10,7 +10,7 @@ export async function getProductsHandler(
   req: ValidatedRequest<{ query: typeof paginationParamsSchema }>,
   res: Response
 ) {
-  const { page = 1, limit = 10 } = req.query
+  const { page, limit } = req.query
 
   const products = await prismaClient.product.findMany({
     take: limit,
@@ -45,7 +45,6 @@ export async function createProductHandler(
     description_en,
     description_ar,
     price,
-    main_image_url,
     is_active,
     category_ids,
     colors,
@@ -58,10 +57,32 @@ export async function createProductHandler(
       description_en,
       description_ar,
       price,
-      main_image_url,
+      main_image_url: colors[0].image,
       is_active,
       categories: { connect: category_ids.map((id) => ({ id })) },
-      colors: { create: colors.map((color) => ({ name_en, name_ar, image: color.image })) },
+      colors: {
+        create: colors.map((color) => ({
+          name_en: color.name_en,
+          name_ar: color.name_ar,
+          image: color.image,
+          sizes: {
+            create: color.sizes.map((size) => ({
+              size: { connect: { code: size.size_code } },
+              amount: size.amount,
+              hip: size.hip,
+              chest: size.chest,
+            })),
+          },
+        })),
+      },
+    },
+    include: {
+      categories: true,
+      colors: {
+        include: {
+          sizes: true,
+        },
+      },
     },
   })
   res

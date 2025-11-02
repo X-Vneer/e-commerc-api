@@ -29,7 +29,14 @@
     "categories_required": "فئة واحدة على الأقل مطلوبة",
     "color_name_en_required": "اسم اللون باللغة الإنجليزية مطلوب",
     "color_name_ar_required": "اسم اللون باللغة العربية مطلوب",
-    "color_image_invalid": "رابط صورة اللون غير صالح"
+    "color_image_invalid": "رابط صورة اللون غير صالح",
+    "colors_required": "يجب أن يكون لديك لون واحد على الأقل",
+    "size_code_required": "رمز الحجم مطلوب",
+    "size_name_en_required": "اسم الحجم باللغة الإنجليزية مطلوب",
+    "size_name_ar_required": "اسم الحجم باللغة العربية مطلوب",
+    "size_weight_required": "وزن الحجم مطلوب",
+    "size_hip_positive": "يجب أن يكون الحجم أكبر من 0",
+    "size_chest_positive": "يجب أن يكون الحجم أكبر من 0"
   },
   "body_required": "يجب أن يكون هناك بيانات في الجسم المرسل",
   "region_not_found": "لم يتم العثور على المنطقة",

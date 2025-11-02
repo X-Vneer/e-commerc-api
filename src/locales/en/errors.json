@@ -29,7 +29,14 @@
     "categories_required": "At least one category is required",
     "color_name_en_required": "Color name in English is required",
     "color_name_ar_required": "Color name in Arabic is required",
-    "color_image_invalid": "Color image URL is invalid"
+    "color_image_invalid": "Color image URL is invalid",
+    "colors_required": "At least one color is required",
+    "size_code_required": "Size code is required",
+    "size_name_en_required": "Size name in English is required",
+    "size_name_ar_required": "Size name in Arabic is required",
+    "size_weight_required": "Size weight is required",
+    "size_hip_positive": "Size hip must be positive",
+    "size_chest_positive": "Size chest must be positive"
   },
   "body_required": "Body is required",
   "region_not_found": "Region not found",

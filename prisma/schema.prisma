@@ -73,25 +73,21 @@ model Category {
 }
 
 model Product {
-  id             Int    @id @default(autoincrement())
-  code           String @unique
+  id             Int        @id @default(autoincrement())
+  code           String     @unique
   name_en        String
   name_ar        String
   description_en String
   description_ar String
   price          Float
   main_image_url String
-
-  is_active      Boolean @default(true)
-  is_featured    Boolean @default(false)
-  is_best_seller Boolean @default(false)
-
-  categories Category[]
-
-  colors Color[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  is_active      Boolean    @default(true)
+  is_featured    Boolean    @default(false)
+  is_best_seller Boolean    @default(false)
+  categories     Category[]
+  colors         Color[]
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
 
   @@index([code])
 }
@@ -104,31 +100,26 @@ model Color {
   name_ar    String
   image      String
   sizes      ProductSize[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
 
   @@index([product_id])
 }
 
 model ProductSize {
   id        Int    @id @default(autoincrement())
-  code      String @unique
-  name_en   String
-  name_ar   String
   color_id  Int
   color     Color  @relation(fields: [color_id], references: [id])
   size_code String
   size      Size   @relation(fields: [size_code], references: [code])
-
-  hip   Float
-  chest Float
+  amount    Int
+  hip       Float
+  chest     Float
 }
 
 model Size {
-  id     Int    @id @default(autoincrement())
-  code   String @unique
-  weight String
-
+  id            Int           @id @default(autoincrement())
+  code          String        @unique
+  weight        String
   product_sizes ProductSize[]
 }
