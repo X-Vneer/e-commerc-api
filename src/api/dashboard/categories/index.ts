@@ -1,16 +1,23 @@
 import express from "express"
 import validate from "express-zod-safe"
 
-import { authMiddleware } from "../../../middlewares/auth.js"
-import { getCategoriesHandler } from "../../lists/handlers/index.js"
-import { createCategoryHandler } from "./handlers/index.js"
-import { createCategorySchema } from "./schemas/index.js"
+import {
+  createCategoryHandler,
+  deleteCategoryHandler,
+  getCategoriesHandler,
+  updateCategoryHandler,
+} from "./handlers/index.js"
+import { categoryIdSchema, createCategorySchema, updateCategorySchema } from "./schemas/index.js"
 
 const router = express.Router()
 
 router.get("/", getCategoriesHandler)
-
-router.use(authMiddleware)
 router.post("/", validate({ body: createCategorySchema }), createCategoryHandler)
+router.put(
+  "/:id",
+  validate({ body: updateCategorySchema, params: categoryIdSchema }),
+  updateCategoryHandler
+)
+router.delete("/:id", validate({ params: categoryIdSchema }), deleteCategoryHandler)
 
 export default router
