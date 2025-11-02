@@ -14,6 +14,8 @@ app.use(morgan("dev"))
 app.use(helmet())
 app.use(cors())
 app.use(express.json())
+app.use("/uploads", express.static("uploads"))
+
 app.use(i18next)
 
 app.use("/api/v1", api)
