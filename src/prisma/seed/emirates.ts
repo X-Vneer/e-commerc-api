@@ -1,7 +1,9 @@
+import type { Prisma } from "@prisma/client"
+
 import prismaClient from "../index.js"
 
 export async function seedEmirates() {
-  const emirates = [
+  const emirates: Prisma.EmirateCreateManyInput[] = [
     { id: 1, name_en: "Abu Dhabi", name_ar: "أبو ظبي" },
     { id: 2, name_en: "Dubai", name_ar: "دبي" },
     { id: 3, name_en: "Sharjah", name_ar: "الشارقة" },

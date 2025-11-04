@@ -1,7 +1,9 @@
+import type { Prisma } from "@prisma/client"
+
 import prismaClient from "../index.js"
 
 export async function seedRegions() {
-  const regions = [
+  const regions: Prisma.RegionCreateManyInput[] = [
     // Abu Dhabi (1)
     { id: 1, name_en: "Abu Dhabi City", name_ar: "مدينة أبو ظبي", emirate_id: 1 },
     { id: 2, name_en: "Khalifa City", name_ar: "خليفة سيتي", emirate_id: 1 },

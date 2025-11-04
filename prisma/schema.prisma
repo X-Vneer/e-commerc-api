@@ -1,8 +1,6 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// ========================================
+// Elwaha — Clothing Store API Schema
+// ========================================
 
 generator client {
   provider = "prisma-client-js"
@@ -13,38 +11,64 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// ======================
+// ENUMS
+// ======================
+
+enum UserRole {
+  user
+  admin
+  employee
+}
+
+enum Status {
+  active
+  inactive
+  suspended
+}
+
+// ======================
+// MODELS
+// ======================
+
 model User {
-  id        String @id @default(cuid())
-  phone     String @unique
-  email     String
+  id        String    @id @default(cuid())
+  phone     String    @unique
+  email     String?   @unique
   password  String
   name      String
-  role      String @default("user")
-  status    String @default("active")
+  role      UserRole  @default(user)
+  status    Status    @default(active)
   region_id Int
-
-  region  Region  @relation(fields: [region_id], references: [id])
-  address String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  region    Region    @relation(fields: [region_id], references: [id])
+  address   String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
   @@index([phone])
   @@index([email])
 }
 
 model Admin {
-  id       String @id @default(cuid())
-  email    String @unique
-  password String
-  name     String
-  role     String @default("employee")
-  status   String @default("active")
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        String    @id @default(cuid())
+  email     String    @unique
+  password  String
+  name      String
+  role      UserRole  @default(employee)
+  status    Status    @default(active)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
   @@index([email])
+}
+
+model Emirate {
+  id      Int      @id @default(autoincrement())
+  name_en String
+  name_ar String
+  regions Region[]
 }
 
 model Region {
@@ -56,64 +80,96 @@ model Region {
   users      User[]
 }
 
-model Emirate {
-  id      Int      @id @default(autoincrement())
-  name_en String
-  name_ar String
-  regions Region[]
+// ======================
+// LOCATIONS
+// ======================
+
+model Location {
+  id          Int                @id @default(autoincrement())
+  name_en     String
+  name_ar     String
+  code        String             @unique
+  inventories ProductInventory[]
 }
 
+model ProductInventory {
+  id              Int         @id @default(autoincrement())
+  product_size_id Int
+  location_id     Int
+  amount          Int         @default(0)
+  sold            Int         @default(0)
+  productSize     ProductSize @relation(fields: [product_size_id], references: [id], onDelete: Cascade)
+  location        Location    @relation(fields: [location_id], references: [id], onDelete: Cascade)
+
+  @@unique([product_size_id, location_id]) // each size has one entry per location
+}
+
+// ======================
+// PRODUCT + CATALOG
+// ======================
+
 model Category {
-  id       Int       @id @default(autoincrement())
-  name_en  String
-  name_ar  String
-  image    String
-  products Product[]
+  id        Int               @id @default(autoincrement())
+  name_en   String
+  name_ar   String
+  slug      String            @unique
+  image     String
+  products  ProductCategory[]
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+  deletedAt DateTime?
 }
 
 model Product {
-  id             Int        @id @default(autoincrement())
-  code           String     @unique
+  id             Int               @id @default(autoincrement())
+  code           String            @unique
+  slug           String            @unique
   name_en        String
   name_ar        String
   description_en String
   description_ar String
   price          Float
   main_image_url String
-  is_active      Boolean    @default(true)
-  is_featured    Boolean    @default(false)
-  is_best_seller Boolean    @default(false)
-  categories     Category[]
+  is_active      Boolean           @default(true)
+  is_featured    Boolean           @default(false)
+  is_best_seller Boolean           @default(false)
+  categories     ProductCategory[]
   colors         Color[]
-  createdAt      DateTime   @default(now())
-  updatedAt      DateTime   @updatedAt
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+  deletedAt      DateTime?
 
   @@index([code])
+  @@index([name_en])
 }
+
+// Explicit many-to-many relation with future flexibility
+model ProductCategory {
+  product_id  Int
+  category_id Int
+  product     Product  @relation(fields: [product_id], references: [id], onDelete: Cascade)
+  category    Category @relation(fields: [category_id], references: [id], onDelete: Cascade)
+
+  @@id([product_id, category_id])
+}
+
+// ======================
+// COLORS & SIZES
+// ======================
 
 model Color {
   id         Int           @id @default(autoincrement())
   product_id Int
-  product    Product       @relation(fields: [product_id], references: [id])
+  product    Product       @relation(fields: [product_id], references: [id], onDelete: Cascade)
   name_en    String
   name_ar    String
   image      String
   sizes      ProductSize[]
   createdAt  DateTime      @default(now())
   updatedAt  DateTime      @updatedAt
+  deletedAt  DateTime?
 
   @@index([product_id])
-}
-
-model ProductSize {
-  id        Int    @id @default(autoincrement())
-  color_id  Int
-  color     Color  @relation(fields: [color_id], references: [id])
-  size_code String
-  size      Size   @relation(fields: [size_code], references: [code])
-  amount    Int
-  hip       Float
-  chest     Float
 }
 
 model Size {
@@ -121,4 +177,17 @@ model Size {
   code          String        @unique
   weight        String
   product_sizes ProductSize[]
+}
+
+model ProductSize {
+  id          Int                @id @default(autoincrement())
+  color_id    Int
+  color       Color              @relation(fields: [color_id], references: [id], onDelete: Cascade)
+  size_code   String
+  size        Size               @relation(fields: [size_code], references: [code], onDelete: Cascade)
+  inventories ProductInventory[]
+  hip         Float
+  chest       Float
+
+  @@index([size_code])
 }

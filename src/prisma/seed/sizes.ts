@@ -1,7 +1,9 @@
+import type { Prisma } from "@prisma/client"
+
 import prismaClient from "../index.js"
 
 export async function seedSizes() {
-  const sizes = [
+  const sizes: Prisma.SizeCreateManyInput[] = [
     { id: 1, code: "S", weight: "100g" },
     { id: 2, code: "M", weight: "200g" },
     { id: 3, code: "L", weight: "300g" },
