@@ -9,6 +9,7 @@ import type {
 
 import prismaClient from "../../../../prisma/index.js"
 import stripLangKeys from "../../../../utils/obj-select-lang.js"
+import { slugify } from "../../../../utils/slugify.js"
 
 export async function createCategoryHandler(
   req: ValidatedRequest<{ body: typeof createCategorySchema }>,
@@ -19,6 +20,7 @@ export async function createCategoryHandler(
     data: {
       name_en,
       name_ar,
+      slug: slugify(name_en),
       image,
     },
   })
@@ -76,6 +78,18 @@ export async function deleteCategoryHandler(
   res: Response
 ) {
   const { id } = req.params
+
+  // Check if category has any products
+  const productsCount = await prismaClient.productCategory.count({
+    where: { category_id: Number(id) },
+  })
+
+  if (productsCount > 0) {
+    res.status(400).json({
+      message: req.t("category_has_products", { ns: "errors" }),
+    })
+    return
+  }
 
   await prismaClient.category.delete({
     where: { id: Number(id) },

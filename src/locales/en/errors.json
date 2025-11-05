@@ -43,6 +43,7 @@
   "user_conflict": "User already exists",
   "phone_number_invalid": "Invalid phone number",
   "category_not_found": "Category not found",
+  "category_has_products": "Cannot delete category with associated products",
   "invalid_id": "Invalid ID format",
   "pagination": {
     "page_min": "Page must be at least 1",

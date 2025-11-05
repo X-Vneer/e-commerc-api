@@ -33,3 +33,26 @@ export const createProductSchema = z.object({
 })
 
 export type CreateProductSchema = z.infer<typeof createProductSchema>
+
+export const updateProductSchema = z
+  .object({
+    code: z.string().min(1, { error: "products.code_required" }),
+    name_en: z.string().min(1, { error: "products.name_en_required" }),
+    name_ar: z.string().min(1, { error: "products.name_ar_required" }),
+    description_en: z.string().min(1, { error: "products.description_en_required" }),
+    description_ar: z.string().min(1, { error: "products.description_ar_required" }),
+    price: z.coerce.number().positive({ error: "products.price_positive" }),
+    is_active: z.boolean(),
+    is_featured: z.boolean(),
+    is_best_seller: z.boolean(),
+    category_ids: z
+      .array(z.coerce.number().int().min(1, { error: "products.category_id_invalid" }))
+      .min(1, { error: "products.categories_required" }),
+  })
+  .partial()
+export type UpdateProductSchema = z.infer<typeof updateProductSchema>
+
+export const productIdSchema = z.object({
+  id: z.coerce.number().int().min(1, { error: "products.id_invalid" }),
+})
+export type ProductIdSchema = z.infer<typeof productIdSchema>

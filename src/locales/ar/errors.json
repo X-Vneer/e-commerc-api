@@ -43,6 +43,7 @@
   "user_conflict": "المستخدم موجود بالفعل",
   "phone_number_invalid": "رقم هاتف غير صالح",
   "category_not_found": "الفئة غير موجودة",
+  "category_has_products": "لا يمكن حذف الفئة التي تحتوي على منتجات",
   "invalid_id": "صيغة المعرف غير صالحة",
   "pagination": {
     "page_min": "يجب أن تكون الصفحة 1 على الأقل",
