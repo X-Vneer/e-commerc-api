@@ -1,5 +1,7 @@
 import { z } from "zod/v4"
 
+import { paginationParamsSchema } from "@/schemas/pagination-params"
+
 export const createColorSchema = z.object({
   name_en: z.string().min(1, { error: "products.color_name_en_required" }),
   name_ar: z.string().min(1, { error: "products.color_name_ar_required" }),
@@ -56,3 +58,21 @@ export const productIdSchema = z.object({
   id: z.coerce.number().int().min(1, { error: "products.id_invalid" }),
 })
 export type ProductIdSchema = z.infer<typeof productIdSchema>
+
+export const productQuerySchema = z.object({
+  is_active: z.boolean().optional().default(true),
+  category_id: z.coerce.number().int().min(1, { error: "products.category_id_invalid" }).optional(),
+  q: z.string().optional(),
+  empty_inventories: z
+    .literal("1")
+    .transform(() => true)
+    .optional(),
+  fully_empty_inventories: z
+    .literal("1")
+    .transform(() => true)
+    .optional(),
+})
+
+export const productQueryWithPaginationSchema = paginationParamsSchema.and(productQuerySchema)
+export type ProductQuerySchema = z.infer<typeof productQuerySchema>
+export type ProductQueryWithPaginationSchema = z.infer<typeof productQueryWithPaginationSchema>

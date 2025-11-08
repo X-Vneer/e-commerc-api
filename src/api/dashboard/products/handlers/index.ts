@@ -2,33 +2,119 @@ import type { Prisma } from "@prisma/client"
 import type { Response } from "express"
 import type { ValidatedRequest } from "express-zod-safe"
 
-import type { paginationParamsSchema } from "@/schemas/pagination-params.js"
-
 import prismaClient from "@/prisma/index.js"
 import { productFullData } from "@/prisma/products.js"
 import stripLangKeys from "@/utils/obj-select-lang.js"
 import { slugify } from "@/utils/slugify.js"
 
-import type { createProductSchema, productIdSchema, updateProductSchema } from "../schemas/index.js"
+import type {
+  createProductSchema,
+  productIdSchema,
+  productQueryWithPaginationSchema,
+  updateProductSchema,
+} from "../schemas/index.js"
 
 export async function getProductsHandler(
-  req: ValidatedRequest<{ query: typeof paginationParamsSchema }>,
+  req: ValidatedRequest<{ query: typeof productQueryWithPaginationSchema }>,
   res: Response
 ) {
-  const { page, limit } = req.query
+  const { page, limit, is_active, category_id, q, empty_inventories, fully_empty_inventories } =
+    req.query
 
+  const where: Prisma.ProductWhereInput = {
+    is_active,
+    ...(empty_inventories
+      ? {
+          colors: {
+            some: {
+              sizes: {
+                some: {
+                  inventories: {
+                    some: {
+                      amount: 0,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        }
+      : {}),
+    ...(fully_empty_inventories
+      ? {
+          // Products where ALL inventory has amount = 0 (every quantity sold)
+          NOT: {
+            colors: {
+              some: {
+                sizes: {
+                  some: {
+                    inventories: {
+                      some: {
+                        amount: {
+                          gt: 0,
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        }
+      : {}),
+    ...(category_id
+      ? {
+          categories: {
+            some: {
+              category_id,
+            },
+          },
+        }
+      : {}),
+    ...(q
+      ? {
+          OR: [
+            {
+              code: {
+                contains: q,
+              },
+            },
+            {
+              name_en: {
+                contains: q,
+              },
+            },
+            {
+              name_ar: {
+                contains: q,
+              },
+            },
+          ],
+        }
+      : {}),
+  }
   const products = await prismaClient.product.findMany({
     take: limit,
     skip: (page - 1) * limit,
+    where,
     include: productFullData,
     orderBy: {
       createdAt: "desc",
     },
   })
-  const total = await prismaClient.product.count()
+  const total = await prismaClient.product.count({
+    where,
+  })
+
+  const productsWithCategories = products.map((product) => {
+    return {
+      ...product,
+      categories: product.categories.map((category) => category.category),
+    }
+  })
   res.json({
     message: req.t("products_fetched_successfully", { ns: "translations" }),
-    data: stripLangKeys(products),
+    data: stripLangKeys(productsWithCategories),
     pagination: { page, limit, total, last_page: Math.ceil(total / limit) },
   })
 }

@@ -32,34 +32,32 @@ enum Status {
 // ======================
 
 model User {
-  id        String    @id @default(cuid())
-  phone     String    @unique
-  email     String?   @unique
+  id        String   @id @default(cuid())
+  phone     String   @unique
+  email     String?  @unique
   password  String
   name      String
-  role      UserRole  @default(user)
-  status    Status    @default(active)
+  role      UserRole @default(user)
+  status    Status   @default(active)
   region_id Int
-  region    Region    @relation(fields: [region_id], references: [id])
+  region    Region   @relation(fields: [region_id], references: [id])
   address   String?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([phone])
   @@index([email])
 }
 
 model Admin {
-  id        String    @id @default(cuid())
-  email     String    @unique
+  id        String   @id @default(cuid())
+  email     String   @unique
   password  String
   name      String
-  role      UserRole  @default(employee)
-  status    Status    @default(active)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
+  role      UserRole @default(employee)
+  status    Status   @default(active)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([email])
 }
@@ -117,7 +115,6 @@ model Category {
   products  ProductCategory[]
   createdAt DateTime          @default(now())
   updatedAt DateTime          @updatedAt
-  deletedAt DateTime?
 }
 
 model Product {
@@ -137,7 +134,6 @@ model Product {
   colors         Color[]
   createdAt      DateTime          @default(now())
   updatedAt      DateTime          @updatedAt
-  deletedAt      DateTime?
 
   @@index([code])
   @@index([name_en])
@@ -167,7 +163,6 @@ model Color {
   sizes      ProductSize[]
   createdAt  DateTime      @default(now())
   updatedAt  DateTime      @updatedAt
-  deletedAt  DateTime?
 
   @@index([product_id])
 }

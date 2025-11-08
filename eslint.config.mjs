@@ -12,6 +12,7 @@ export default antfu(
   {
     rules: {
       ...prettierConfig.rules,
+      "antfu/if-newline": "off",
       "ts/no-redeclare": "off",
       "node/file-extension-in-import": ["error", "always"],
       "ts/consistent-type-definitions": ["error", "type"],

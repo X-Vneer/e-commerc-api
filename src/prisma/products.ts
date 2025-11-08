@@ -1,30 +1,18 @@
 import type { Prisma } from "@prisma/client"
 
-export const productFullData: Prisma.ProductInclude = {
+export const productFullData = {
   categories: {
-    select: {
-      category: {
-        select: {
-          id: true,
-          name_en: true,
-          name_ar: true,
-          slug: true,
-          image: true,
-        },
-      },
+    include: {
+      category: true,
     },
   },
   colors: {
     include: {
       sizes: {
         include: {
-          inventories: {
-            include: {
-              location: true,
-            },
-          },
+          inventories: true,
         },
       },
     },
   },
-}
+} satisfies Prisma.ProductInclude
