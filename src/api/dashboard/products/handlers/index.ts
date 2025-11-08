@@ -22,100 +22,72 @@ export async function getProductsHandler(
     req.query
 
   const where: Prisma.ProductWhereInput = {
-    is_active,
-    ...(empty_inventories
-      ? {
-          colors: {
-            some: {
-              sizes: {
-                some: {
-                  inventories: {
-                    some: {
-                      amount: 0,
-                    },
-                  },
-                },
-              },
-            },
-          },
-        }
-      : {}),
-    ...(fully_empty_inventories
-      ? {
-          // Products where ALL inventory has amount = 0 (every quantity sold)
-          NOT: {
-            colors: {
-              some: {
-                sizes: {
-                  some: {
-                    inventories: {
-                      some: {
-                        amount: {
-                          gt: 0,
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        }
-      : {}),
-    ...(category_id
-      ? {
-          categories: {
-            some: {
-              category_id,
-            },
-          },
-        }
-      : {}),
-    ...(q
-      ? {
-          OR: [
-            {
-              code: {
-                contains: q,
-              },
-            },
-            {
-              name_en: {
-                contains: q,
-              },
-            },
-            {
-              name_ar: {
-                contains: q,
-              },
-            },
-          ],
-        }
-      : {}),
-  }
-  const products = await prismaClient.product.findMany({
-    take: limit,
-    skip: (page - 1) * limit,
-    where,
-    include: productFullData,
-    orderBy: {
-      createdAt: "desc",
-    },
-  })
-  const total = await prismaClient.product.count({
-    where,
-  })
+    ...(is_active !== undefined && { is_active }),
 
-  const productsWithCategories = products.map((product) => {
-    return {
-      ...product,
-      categories: product.categories.map((category) => category.category),
-    }
-  })
+    ...(category_id && {
+      categories: { some: { category_id } },
+    }),
+
+    ...(q && {
+      OR: [{ code: { contains: q } }, { name_en: { contains: q } }, { name_ar: { contains: q } }],
+    }),
+
+    ...(empty_inventories && {
+      colors: {
+        some: {
+          sizes: {
+            some: {
+              inventories: { some: { amount: 0 } },
+            },
+          },
+        },
+      },
+    }),
+
+    ...(fully_empty_inventories && {
+      NOT: {
+        colors: {
+          some: {
+            sizes: {
+              some: {
+                inventories: { some: { amount: { gt: 0 } } },
+              },
+            },
+          },
+        },
+      },
+    }),
+  }
+
+  // Execute queries in parallel for better performance
+  const [products, total] = await Promise.all([
+    prismaClient.product.findMany({
+      where,
+      take: limit,
+      skip: (page - 1) * limit,
+      include: productFullData,
+      orderBy: {
+        createdAt: "desc",
+      },
+    }),
+    prismaClient.product.count({ where }),
+  ])
+
+  // Transform categories from join table to direct category objects
+  const productsWithCategories = products.map((product) => ({
+    ...product,
+    categories: product.categories.map((pc) => pc.category),
+  }))
+
   res.json({
     message: req.t("products_fetched_successfully", { ns: "translations" }),
     data: stripLangKeys(productsWithCategories),
-    pagination: { page, limit, total, last_page: Math.ceil(total / limit) },
+    pagination: {
+      page,
+      limit,
+      total,
+      last_page: Math.ceil(total / limit),
+    },
   })
 }
 export async function createProductHandler(

@@ -100,6 +100,8 @@ model ProductInventory {
   location        Location    @relation(fields: [location_id], references: [id], onDelete: Cascade)
 
   @@unique([product_size_id, location_id]) // each size has one entry per location
+  @@index([amount])
+  @@index([product_size_id])
 }
 
 // ======================
@@ -135,8 +137,11 @@ model Product {
   createdAt      DateTime          @default(now())
   updatedAt      DateTime          @updatedAt
 
+  @@index([is_active])
+  @@index([createdAt])
   @@index([code])
   @@index([name_en])
+  @@index([name_ar])
 }
 
 // Explicit many-to-many relation with future flexibility
@@ -147,6 +152,8 @@ model ProductCategory {
   category    Category @relation(fields: [category_id], references: [id], onDelete: Cascade)
 
   @@id([product_id, category_id])
+  @@index([category_id])
+  @@index([product_id])
 }
 
 // ======================
