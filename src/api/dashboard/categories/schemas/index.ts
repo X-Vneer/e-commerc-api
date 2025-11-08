@@ -1,4 +1,4 @@
-import z from "zod"
+import { z } from "zod/v4"
 
 export const createCategorySchema = z.object({
   name_ar: z.string().min(1, { error: "field_required" }),

@@ -8,6 +8,9 @@
     "type": "git",
     "url": "https://github.com/w3cj/express-api-starter-ts.git"
   },
+  "_moduleAliases": {
+    "@": "dist"
+  },
   "keywords": [],
   "main": "src/index.ts",
   "scripts": {
@@ -24,6 +27,7 @@
   },
   "dependencies": {
     "@prisma/client": "^6.18.0",
+    "@tsconfig/node22": "^22.0.2",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
@@ -35,6 +39,7 @@
     "i18next-http-middleware": "^3.8.1",
     "jsonwebtoken": "^9.0.2",
     "libphonenumber-js": "^1.12.25",
+    "module-alias": "^2.2.3",
     "morgan": "^1.10.0",
     "multer": "^2.0.2",
     "uuid": "^13.0.0",

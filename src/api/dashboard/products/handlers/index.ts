@@ -2,13 +2,14 @@ import type { Prisma } from "@prisma/client"
 import type { Response } from "express"
 import type { ValidatedRequest } from "express-zod-safe"
 
-import type { paginationParamsSchema } from "../../../../schemas/pagination-params.js"
-import type { createProductSchema, productIdSchema, updateProductSchema } from "../schemas/index.js"
+import type { paginationParamsSchema } from "@/schemas/pagination-params.js"
 
-import prismaClient from "../../../../prisma/index.js"
-import { productFullData } from "../../../../prisma/products.js"
-import stripLangKeys from "../../../../utils/obj-select-lang.js"
-import { slugify } from "../../../../utils/slugify.js"
+import prismaClient from "@/prisma/index.js"
+import { productFullData } from "@/prisma/products.js"
+import stripLangKeys from "@/utils/obj-select-lang.js"
+import { slugify } from "@/utils/slugify.js"
+
+import type { createProductSchema, productIdSchema, updateProductSchema } from "../schemas/index.js"
 
 export async function getProductsHandler(
   req: ValidatedRequest<{ query: typeof paginationParamsSchema }>,

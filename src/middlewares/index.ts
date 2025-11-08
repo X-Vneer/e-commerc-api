@@ -1,8 +1,8 @@
 import type { NextFunction, Request, Response } from "express"
 
-import type ErrorResponse from "../interfaces/error-response.js"
+import type ErrorResponse from "@/interfaces/error-response.js"
 
-import { env } from "../env.js"
+import { env } from "@/env.js"
 
 /**
  * Type guard to check if error is a Prisma known request error

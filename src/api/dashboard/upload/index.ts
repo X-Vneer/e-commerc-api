@@ -3,7 +3,7 @@ import multer from "multer"
 import path from "node:path"
 import { v4 as uuidv4 } from "uuid"
 
-import { formatFileSize } from "../../../utils/format-file-size.js"
+import { formatFileSize } from "@/utils/format-file-size.js"
 
 const storage = multer.diskStorage({
   destination: (_, __, cb) => cb(null, "uploads/"),

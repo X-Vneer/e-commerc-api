@@ -1,6 +1,11 @@
 import express from "express"
 
-import { getCategoriesHandler, getEmiratesHandler, getRegionsHandler, getSizesHandler } from "./handlers/index.js"
+import {
+  getCategoriesHandler,
+  getEmiratesHandler,
+  getRegionsHandler,
+  getSizesHandler,
+} from "./handlers/index.js"
 
 const router = express.Router()
 

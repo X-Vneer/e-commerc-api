@@ -1,7 +1,7 @@
 import type { Request, Response } from "express"
 
-import prismaClient from "../../../prisma/index.js"
-import stripLangKeys from "../../../utils/obj-select-lang.js"
+import prismaClient from "@/prisma/index.js"
+import stripLangKeys from "@/utils/obj-select-lang.js"
 
 export async function getEmiratesHandler(req: Request, res: Response) {
   const lang = req.language
@@ -48,7 +48,7 @@ export async function getCategoriesHandler(req: Request, res: Response) {
       [locale]: true,
     },
   })
-  res.json({ 
-    data: stripLangKeys(categories)
- })
+  res.json({
+    data: stripLangKeys(categories),
+  })
 }

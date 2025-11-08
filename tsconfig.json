@@ -1,7 +1,12 @@
 {
   "compilerOptions": {
     "target": "esnext",
+    "baseUrl": ".",
     "module": "commonjs",
+
+    "paths": {
+      "@/*": ["src/*"]
+    },
     // important for i18n
     "resolveJsonModule": true,
     "strict": true,
@@ -12,10 +17,5 @@
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true
   },
-  "include": [
-    "./*.js",
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "test/**/*.ts"
-  ]
+  "include": ["./*.js", "src/**/*.ts", "src/**/*.d.ts", "test/**/*.ts"]
 }

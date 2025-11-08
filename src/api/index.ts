@@ -1,8 +1,8 @@
 import express from "express"
 
-import auth from "./auth/index.js"
-import dashboard from "./dashboard/index.js"
-import lists from "./lists/index.js"
+import auth from "@/api/auth/index.js"
+import dashboard from "@/api/dashboard/index.js"
+import lists from "@/api/lists/index.js"
 
 const router = express.Router()
 

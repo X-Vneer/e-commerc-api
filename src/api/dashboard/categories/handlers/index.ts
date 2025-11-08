@@ -1,15 +1,15 @@
 import type { Request, Response } from "express"
 import type { ValidatedRequest } from "express-zod-safe"
 
+import prismaClient from "@/prisma/index.js"
+import stripLangKeys from "@/utils/obj-select-lang.js"
+import { slugify } from "@/utils/slugify.js"
+
 import type {
   categoryIdSchema,
   createCategorySchema,
   updateCategorySchema,
 } from "../schemas/index.js"
-
-import prismaClient from "../../../../prisma/index.js"
-import stripLangKeys from "../../../../utils/obj-select-lang.js"
-import { slugify } from "../../../../utils/slugify.js"
 
 export async function createCategoryHandler(
   req: ValidatedRequest<{ body: typeof createCategorySchema }>,

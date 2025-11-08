@@ -1,7 +1,8 @@
 import express from "express"
 import validate from "express-zod-safe"
 
-import { paginationParamsSchema } from "../../../schemas/pagination-params.js"
+import { paginationParamsSchema } from "@/schemas/pagination-params.js"
+
 import { createProductHandler, getProductsHandler, updateProductHandler } from "./handlers/index.js"
 import { createProductSchema, productIdSchema, updateProductSchema } from "./schemas/index.js"
 

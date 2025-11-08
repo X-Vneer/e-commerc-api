@@ -1,10 +1,10 @@
 import express from "express"
 
-import auth from "./auth/index.js"
-import categories from "./categories/index.js"
-import { authMiddleware } from "./middlewares/auth.js"
-import products from "./products/index.js"
-import upload from "./upload/index.js"
+import auth from "@/api/dashboard/auth/index.js"
+import categories from "@/api/dashboard/categories/index.js"
+import { authMiddleware } from "@/api/dashboard/middlewares/auth.js"
+import products from "@/api/dashboard/products/index.js"
+import upload from "@/api/dashboard/upload/index.js"
 
 const router = express.Router()
 
