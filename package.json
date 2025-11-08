@@ -9,14 +9,14 @@
     "url": "https://github.com/w3cj/express-api-starter-ts.git"
   },
   "_moduleAliases": {
-    "@": "dist"
+    "@": "src/"
   },
   "keywords": [],
   "main": "src/index.ts",
   "scripts": {
     "start": "node --env-file=.env dist/src/index.js",
     "dev": "tsx watch --env-file=.env src/index.ts",
-    "build": "tsc",
+    "build": "tsc && tsc-alias",
     "lint": "eslint --fix src test",
     "format": "prettier --write \"src/**/*.{ts,json}\" \"test/**/*.{ts,json}\" \"*.{json,md}\"",
     "format:check": "prettier --check \"src/**/*.{ts,json}\" \"test/**/*.{ts,json}\" \"*.{json,md}\"",
@@ -63,6 +63,7 @@
     "prettier": "^3.6.2",
     "prisma": "^6.18.0",
     "supertest": "^7.1.1",
+    "tsc-alias": "^1.8.16",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3",
     "vitest": "^3.2.4"
