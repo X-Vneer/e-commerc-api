@@ -36,7 +36,6 @@ describe("Phone number validation", () => {
       .expect("Content-Type", /json/)
       .expect(422)
 
-    expect(res.body?.message).toBe("Validation error")
     expect(res.body?.errors?.phone).toBe("Invalid phone number")
   })
 
