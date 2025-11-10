@@ -91,6 +91,28 @@ export async function getProductsHandler(
     },
   })
 }
+
+export async function getProductHandler(
+  req: ValidatedRequest<{ params: typeof productIdSchema }>,
+  res: Response
+) {
+  const { id } = req.params
+  const product = await prismaClient.product.findFirst({
+    where: { id: Number(id) },
+    include: productFullData,
+  })
+  if (!product) {
+    res.status(404).json({
+      message: req.t("product_product_not_fount", { ns: "translations" }),
+    })
+    return
+  }
+  res.json({
+    message: req.t("product_fetched_successfully", { ns: "translations" }),
+    data: product,
+  })
+}
+
 export async function createProductHandler(
   req: ValidatedRequest<{ body: typeof createProductSchema }>,
   res: Response

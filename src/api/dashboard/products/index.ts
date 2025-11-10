@@ -3,6 +3,7 @@ import validate from "express-zod-safe"
 
 import {
   createProductHandler,
+  getProductHandler,
   getProductsHandler,
   updateActivityHandler,
   updateProductHandler,
@@ -20,6 +21,8 @@ const router = express.Router()
 router.get("/", validate({ query: productQueryWithPaginationSchema }), getProductsHandler)
 
 router.post("/", validate({ body: createProductSchema }), createProductHandler)
+
+router.get("/:id", validate({ params: productIdSchema }), getProductHandler)
 
 router.put(
   "/:id",
