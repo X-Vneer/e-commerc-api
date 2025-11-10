@@ -19,8 +19,7 @@ export async function getProductsHandler(
   req: ValidatedRequest<{ query: typeof productQueryWithPaginationSchema }>,
   res: Response
 ) {
-  const { page, limit, is_active, category_id, q, empty_inventories, fully_empty_inventories } =
-    req.query
+  const { page, limit, is_active, category_id, q, empty_inventories, fully_empty_inventories } = req.query
 
   const where: Prisma.ProductWhereInput = {
     ...(is_active !== undefined && { is_active }),
@@ -86,10 +85,7 @@ export async function getProductsHandler(
   })
 }
 
-export async function getProductHandler(
-  req: ValidatedRequest<{ params: typeof productIdSchema }>,
-  res: Response
-) {
+export async function getProductHandler(req: ValidatedRequest<{ params: typeof productIdSchema }>, res: Response) {
   const { id } = req.params
   const product = await prismaClient.product.findFirst({
     where: { id: Number(id) },
@@ -107,21 +103,8 @@ export async function getProductHandler(
   })
 }
 
-export async function createProductHandler(
-  req: ValidatedRequest<{ body: typeof createProductSchema }>,
-  res: Response
-) {
-  const {
-    code,
-    name_en,
-    name_ar,
-    description_en,
-    description_ar,
-    price,
-    is_active,
-    category_ids,
-    colors,
-  } = req.body
+export async function createProductHandler(req: ValidatedRequest<{ body: typeof createProductSchema }>, res: Response) {
+  const { code, name_en, name_ar, description_en, description_ar, price, is_active, category_ids, colors } = req.body
 
   const product = await prismaClient.product.create({
     data: {
@@ -172,8 +155,7 @@ export async function updateProductHandler(
 ) {
   const { id } = req.params
   const productId = Number(id)
-  const { code, name_en, name_ar, description_en, description_ar, price, category_ids, colors } =
-    req.body
+  const { code, name_en, name_ar, description_en, description_ar, price, category_ids, colors } = req.body
 
   // Build the base update data object with only provided fields
   const updateData: Prisma.ProductUpdateInput = {
@@ -321,10 +303,7 @@ export async function updateActivityHandler(
   })
 }
 
-export async function deleteProductHandler(
-  req: ValidatedRequest<{ params: typeof productIdSchema }>,
-  res: Response
-) {
+export async function deleteProductHandler(req: ValidatedRequest<{ params: typeof productIdSchema }>, res: Response) {
   const { id } = req.params
   await prismaClient.product.delete({
     where: {

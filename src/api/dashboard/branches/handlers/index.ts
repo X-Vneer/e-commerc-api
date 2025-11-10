@@ -7,16 +7,9 @@ import type { generalQuerySchema } from "@/schemas/general-query-schema.js"
 import prismaClient from "@/prisma"
 import stripLangKeys from "@/utils/obj-select-lang.js"
 
-import type {
-  createBranchSchema,
-  paramsBranchIdSchema,
-  updateBranchSchema,
-} from "../schemas/index.js"
+import type { createBranchSchema, paramsBranchIdSchema, updateBranchSchema } from "../schemas/index.js"
 
-export async function getBranchesHandler(
-  req: ValidatedRequest<{ query: typeof generalQuerySchema }>,
-  res: Response
-) {
+export async function getBranchesHandler(req: ValidatedRequest<{ query: typeof generalQuerySchema }>, res: Response) {
   const { q } = req.query
   //   handle general search
   const where: Prisma.BranchWhereInput = {
@@ -43,10 +36,7 @@ export async function getBranchesHandler(
   })
 }
 
-export async function createBranchHandler(
-  req: ValidatedRequest<{ body: typeof createBranchSchema }>,
-  res: Response
-) {
+export async function createBranchHandler(req: ValidatedRequest<{ body: typeof createBranchSchema }>, res: Response) {
   const { name_en, name_ar, code } = req.body
   const branch = await prismaClient.branch.create({
     data: {

@@ -12,9 +12,7 @@ const server = app.listen(port, () => {
 
 server.on("error", (err) => {
   if ("code" in err && err.code === "EADDRINUSE") {
-    console.error(
-      `Port ${env.PORT} is already in use. Please choose another port or stop the process using it.`
-    )
+    console.error(`Port ${env.PORT} is already in use. Please choose another port or stop the process using it.`)
   } else {
     console.error("Failed to start server:", err)
   }

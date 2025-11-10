@@ -9,10 +9,7 @@ export type JsonValue = string | number | boolean | null | JsonObject | JsonArra
  * @param value - The object/array to process
  * @param suffix - A string or array of strings to match against key endings (default: ["_ar", "_en"])
  */
-export function removeKeysWithSuffix<T extends JsonValue>(
-  value: T,
-  suffix: string | string[] = ["_ar", "_en"]
-): T {
+export function removeKeysWithSuffix<T extends JsonValue>(value: T, suffix: string | string[] = ["_ar", "_en"]): T {
   if (value === null) return value
 
   const suffixes = Array.isArray(suffix) ? suffix : [suffix]
@@ -21,9 +18,7 @@ export function removeKeysWithSuffix<T extends JsonValue>(
   if (value instanceof Date) return value
 
   if (Array.isArray(value)) {
-    const cleaned = (value as JsonArray).map((item) =>
-      removeKeysWithSuffix(item as JsonValue, suffixes)
-    ) as JsonArray
+    const cleaned = (value as JsonArray).map((item) => removeKeysWithSuffix(item as JsonValue, suffixes)) as JsonArray
     return cleaned as T
   }
 
@@ -45,10 +40,7 @@ export function removeKeysWithSuffix<T extends JsonValue>(
  * Example: { name_ar: "X" } -> { name: "X" }
  * - Does not overwrite an existing base key; if a collision occurs, keeps the existing base key.
  */
-export function unsuffixKeys<T extends JsonValue>(
-  value: T,
-  suffix: string | string[] = ["_ar", "_en"]
-): T {
+export function unsuffixKeys<T extends JsonValue>(value: T, suffix: string | string[] = ["_ar", "_en"]): T {
   if (value === null) return value
 
   const suffixes = Array.isArray(suffix) ? suffix : [suffix]
@@ -62,9 +54,7 @@ export function unsuffixKeys<T extends JsonValue>(
   if (value instanceof Date) return value
 
   if (Array.isArray(value)) {
-    const cleaned = (value as JsonArray).map((item) =>
-      unsuffixKeys(item as JsonValue, suffixes)
-    ) as JsonArray
+    const cleaned = (value as JsonArray).map((item) => unsuffixKeys(item as JsonValue, suffixes)) as JsonArray
     return cleaned as T
   }
 

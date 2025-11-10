@@ -145,8 +145,7 @@ export async function seedProducts() {
       name_ar: "تنورة خطية كلاسيكية",
       description_en:
         "Timeless A-line skirt that flatters every figure. Perfect for office wear or casual outings. Available in multiple colors.",
-      description_ar:
-        "تنورة خطية خالدة تناسب كل جسم. مثالية لملابس المكتب أو الخروجات العادية. متوفرة بألوان متعددة.",
+      description_ar: "تنورة خطية خالدة تناسب كل جسم. مثالية لملابس المكتب أو الخروجات العادية. متوفرة بألوان متعددة.",
       price: 89.99,
       main_image_url: "https://via.placeholder.com/600/400?text=Classic+A-Line+Skirt",
       is_featured: false,
@@ -238,8 +237,7 @@ export async function seedProducts() {
       name_ar: "سترة شتوية دافئة",
       description_en:
         "Stylish and warm winter jacket with premium insulation. Perfect for cold weather with a modern design that never goes out of style.",
-      description_ar:
-        "سترة شتوية أنيقة ودافئة مع عزل ممتاز. مثالية للطقس البارد بتصميم عصري لا يخرج عن الموضة أبداً.",
+      description_ar: "سترة شتوية أنيقة ودافئة مع عزل ممتاز. مثالية للطقس البارد بتصميم عصري لا يخرج عن الموضة أبداً.",
       price: 249.99,
       main_image_url: "https://via.placeholder.com/600/400?text=Warm+Winter+Jacket",
       is_featured: true,
@@ -340,8 +338,7 @@ export async function seedProducts() {
       name_ar: "كنزة محبوكة مريحة",
       description_en:
         "Soft and comfortable knit cardigan perfect for layering. Made from premium soft yarn for ultimate comfort and warmth.",
-      description_ar:
-        "كنزة محبوكة ناعمة ومريحة مثالية للطبقات. مصنوعة من خيوط ناعمة ممتازة للراحة والدفء القصوى.",
+      description_ar: "كنزة محبوكة ناعمة ومريحة مثالية للطبقات. مصنوعة من خيوط ناعمة ممتازة للراحة والدفء القصوى.",
       price: 129.99,
       main_image_url: "https://via.placeholder.com/600/400?text=Cozy+Knit+Cardigan",
       is_featured: false,
@@ -433,8 +430,7 @@ export async function seedProducts() {
       name_ar: "طقم يوجا رياضي",
       description_en:
         "Complete yoga set including top and leggings. Made from moisture-wicking fabric for maximum comfort during workouts.",
-      description_ar:
-        "طقم يوجا كامل يشمل البلوزة والجوارب. مصنوع من قماش طارد للرطوبة للراحة القصوى أثناء التمارين.",
+      description_ar: "طقم يوجا كامل يشمل البلوزة والجوارب. مصنوع من قماش طارد للرطوبة للراحة القصوى أثناء التمارين.",
       price: 79.99,
       main_image_url: "https://via.placeholder.com/600/400?text=Athletic+Yoga+Set",
       is_featured: false,
@@ -526,8 +522,7 @@ export async function seedProducts() {
       name_ar: "مايوه أنيق بقطعة واحدة",
       description_en:
         "Stylish one-piece swimsuit with elegant design. Perfect for beach and pool activities. Made from quick-dry fabric.",
-      description_ar:
-        "مايوه أنيق بقطعة واحدة بتصميم أنيق. مثالي لأنشطة الشاطئ والسباحة. مصنوع من قماش سريع الجفاف.",
+      description_ar: "مايوه أنيق بقطعة واحدة بتصميم أنيق. مثالي لأنشطة الشاطئ والسباحة. مصنوع من قماش سريع الجفاف.",
       price: 119.99,
       main_image_url: "https://via.placeholder.com/600/400?text=Elegant+One-Piece+Swimsuit",
       is_featured: true,
@@ -819,8 +814,7 @@ export async function seedProducts() {
       name_ar: "معطف ترينش كلاسيكي",
       description_en:
         "Classic trench coat that never goes out of style. Perfect for transitional weather. Water-resistant and stylish design.",
-      description_ar:
-        "معطف ترينش كلاسيكي لا يخرج عن الموضة أبداً. مثالي للطقس الانتقالي. مقاوم للماء بتصميم أنيق.",
+      description_ar: "معطف ترينش كلاسيكي لا يخرج عن الموضة أبداً. مثالي للطقس الانتقالي. مقاوم للماء بتصميم أنيق.",
       price: 279.99,
       main_image_url: "https://via.placeholder.com/600/400?text=Trench+Coat+Classic",
       is_featured: false,

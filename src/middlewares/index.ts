@@ -7,9 +7,7 @@ import { env } from "@/env.js"
 /**
  * Type guard to check if error is a Prisma known request error
  */
-function isPrismaKnownRequestError(
-  error: unknown
-): error is { code: string; meta?: { target?: string[] } } {
+function isPrismaKnownRequestError(error: unknown): error is { code: string; meta?: { target?: string[] } } {
   return (
     typeof error === "object" &&
     error !== null &&
@@ -25,12 +23,7 @@ export function notFound(req: Request, res: Response, next: NextFunction) {
   next(error)
 }
 
-export function errorHandler(
-  err: Error,
-  req: Request,
-  res: Response<ErrorResponse>,
-  _next: NextFunction
-) {
+export function errorHandler(err: Error, req: Request, res: Response<ErrorResponse>, _next: NextFunction) {
   // Handle Prisma known request errors
   if (isPrismaKnownRequestError(err)) {
     let statusCode = 500

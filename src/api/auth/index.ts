@@ -9,12 +9,7 @@ import {
   updateAddressHandler,
   updateUserDataHandler,
 } from "./handlers/index.js"
-import {
-  addressSchema,
-  loginSchema,
-  registerSchema,
-  updateUserDataSchema,
-} from "./schemas/index.js"
+import { addressSchema, loginSchema, registerSchema, updateUserDataSchema } from "./schemas/index.js"
 
 const router = express.Router()
 

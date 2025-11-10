@@ -3,22 +3,14 @@ import type { ValidatedRequest } from "express-zod-safe"
 
 import bcrypt from "bcrypt"
 
-import type {
-  addressSchema,
-  loginSchema,
-  registerSchema,
-  updateUserDataSchema,
-} from "../schemas/index.js"
+import type { addressSchema, loginSchema, registerSchema, updateUserDataSchema } from "../schemas/index.js"
 
 import prismaClient from "../../../prisma/index.js"
 import { userSelectWithoutPassword } from "../../../prisma/user.js"
 import { generateAccessToken } from "../../../utils/generate-access-token.js"
 import stripLangKeys from "../../../utils/obj-select-lang.js"
 
-export async function loginHandler(
-  req: ValidatedRequest<{ body: typeof loginSchema }>,
-  res: Response
-) {
+export async function loginHandler(req: ValidatedRequest<{ body: typeof loginSchema }>, res: Response) {
   const { phone, password } = req.body
 
   const user = await prismaClient.user.findUnique({
@@ -59,10 +51,7 @@ export async function loginHandler(
   })
 }
 
-export async function registerHandler(
-  req: ValidatedRequest<{ body: typeof registerSchema }>,
-  res: Response
-) {
+export async function registerHandler(req: ValidatedRequest<{ body: typeof registerSchema }>, res: Response) {
   const { phone, password, name, email, region_id, address } = req.body
 
   // Check if user already exists by phone or email
@@ -116,10 +105,7 @@ export async function getMeHandler(req: Request, res: Response) {
   res.json({ data: stripLangKeys(user) })
 }
 
-export async function updateAddressHandler(
-  req: ValidatedRequest<{ body: typeof addressSchema }>,
-  res: Response
-) {
+export async function updateAddressHandler(req: ValidatedRequest<{ body: typeof addressSchema }>, res: Response) {
   const { region_id, address } = req.body
   const user = await prismaClient.user.update({
     where: { id: req.userId },

@@ -25,17 +25,9 @@ router.post("/", validate({ body: createProductSchema }), createProductHandler)
 
 router.get("/:id", validate({ params: productIdSchema }), getProductHandler)
 
-router.put(
-  "/:id",
-  validate({ body: updateProductSchema, params: productIdSchema }),
-  updateProductHandler
-)
+router.put("/:id", validate({ body: updateProductSchema, params: productIdSchema }), updateProductHandler)
 
-router.put(
-  "/:id/status",
-  validate({ body: updateActivitySchema, params: productIdSchema }),
-  updateActivityHandler
-)
+router.put("/:id/status", validate({ body: updateActivitySchema, params: productIdSchema }), updateActivityHandler)
 
 router.delete("/:id", validate({ params: productIdSchema }), deleteProductHandler)
 

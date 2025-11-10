@@ -10,12 +10,8 @@ export const inventorySchema = z.object({
 export type InventorySchema = z.infer<typeof inventorySchema>
 
 export const createColorSchema = z.object({
-  name_en: z
-    .string({ error: "products.color_name_en_required" })
-    .min(1, { error: "products.color_name_en_required" }),
-  name_ar: z
-    .string({ error: "products.color_name_ar_required" })
-    .min(1, { error: "products.color_name_ar_required" }),
+  name_en: z.string({ error: "products.color_name_en_required" }).min(1, { error: "products.color_name_en_required" }),
+  name_ar: z.string({ error: "products.color_name_ar_required" }).min(1, { error: "products.color_name_ar_required" }),
   image: z.url({ error: "products.color_image_invalid" }),
   sizes: z.array(
     z.object({

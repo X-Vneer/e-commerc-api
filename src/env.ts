@@ -23,8 +23,8 @@ if (!parsed.success) {
 
 const envUnsafe = parsed.success
   ? parsed.data
-  // eslint-disable-next-line node/no-process-env
-  : (process.env as unknown as z.infer<typeof baseSchema>)
+  : // eslint-disable-next-line node/no-process-env
+    (process.env as unknown as z.infer<typeof baseSchema>)
 
 // In non-test environments, enforce required secrets and database URL.
 if (envUnsafe.NODE_ENV !== "test") {

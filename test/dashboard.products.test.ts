@@ -133,7 +133,13 @@ describe("Dashboard Products API", () => {
         .expect(200)
 
       expect(res.body.pagination.total).toBe(0)
-      expect(prismaClient.product.findMany).toHaveBeenCalled()
+      expect(prismaClient.product.findMany).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: {
+            is_active: true,
+          },
+        })
+      )
     })
 
     it("filters products by category_id", async () => {
@@ -213,6 +219,12 @@ describe("Dashboard Products API", () => {
               amount: 10,
               hip: 30,
               chest: 40,
+              inventories: [
+                {
+                  branch_id: 1,
+                  amount: 10,
+                },
+              ],
             },
           ],
         },

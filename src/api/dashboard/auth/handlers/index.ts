@@ -8,10 +8,7 @@ import { generateAccessToken } from "@/utils/generate-access-token.js"
 
 import type { loginSchema } from "../schemas/index.js"
 
-export async function loginHandler(
-  req: ValidatedRequest<{ body: typeof loginSchema }>,
-  res: Response
-) {
+export async function loginHandler(req: ValidatedRequest<{ body: typeof loginSchema }>, res: Response) {
   const { email, password } = req.body
 
   const user = await prismaClient.admin.findUnique({

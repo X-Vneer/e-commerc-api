@@ -5,11 +5,7 @@ import prismaClient from "@/prisma/index.js"
 import stripLangKeys from "@/utils/obj-select-lang.js"
 import { slugify } from "@/utils/slugify.js"
 
-import type {
-  categoryIdSchema,
-  createCategorySchema,
-  updateCategorySchema,
-} from "../schemas/index.js"
+import type { categoryIdSchema, createCategorySchema, updateCategorySchema } from "../schemas/index.js"
 
 export async function createCategoryHandler(
   req: ValidatedRequest<{ body: typeof createCategorySchema }>,
@@ -73,10 +69,7 @@ export async function updateCategoryHandler(
   })
 }
 
-export async function deleteCategoryHandler(
-  req: ValidatedRequest<{ params: typeof categoryIdSchema }>,
-  res: Response
-) {
+export async function deleteCategoryHandler(req: ValidatedRequest<{ params: typeof categoryIdSchema }>, res: Response) {
   const { id } = req.params
 
   // Check if category has any products

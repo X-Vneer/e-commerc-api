@@ -1,4 +1,5 @@
 import antfu from "@antfu/eslint-config"
+import vitest from "@vitest/eslint-plugin"
 import prettierConfig from "eslint-config-prettier"
 
 export default antfu(
@@ -20,6 +21,8 @@ export default antfu(
       "antfu/no-top-level-await": ["off"],
       "node/prefer-global/process": ["off"],
       "node/no-process-env": ["error"],
+      // Ensure prettier doesn't disable import sorting - set after spreading prettierConfig
+      "sort-imports": "off",
       "perfectionist/sort-imports": [
         "error",
         {
@@ -50,6 +53,13 @@ export default antfu(
           caughtErrorsIgnorePattern: "^_",
         },
       ],
+    },
+  },
+  {
+    files: ["**/*.test.ts", "**/*.spec.ts"],
+    rules: {
+      ...vitest.configs.recommended.rules,
+      "@typescript-eslint/unbound-method": "off",
     },
   }
 )
