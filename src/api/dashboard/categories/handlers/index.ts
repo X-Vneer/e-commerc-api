@@ -80,8 +80,8 @@ export async function deleteCategoryHandler(
   const { id } = req.params
 
   // Check if category has any products
-  const productsCount = await prismaClient.productCategory.count({
-    where: { category_id: Number(id) },
+  const productsCount = await prismaClient.product.count({
+    where: { categories: { some: { id: Number(id) } } },
   })
 
   if (productsCount > 0) {

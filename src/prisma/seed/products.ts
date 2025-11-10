@@ -20,7 +20,7 @@ type ProductData = {
       size_code: string
       hip: number
       chest: number
-      inventory: { location_id: number; amount: number }[]
+      inventory: { branch_id: number; amount: number }[]
     }>
   }>
 }
@@ -52,8 +52,8 @@ export async function seedProducts() {
               hip: 90,
               chest: 85,
               inventory: [
-                { location_id: 1, amount: 15 },
-                { location_id: 2, amount: 10 },
+                { branch_id: 1, amount: 15 },
+                { branch_id: 2, amount: 10 },
               ],
             },
             {
@@ -61,8 +61,8 @@ export async function seedProducts() {
               hip: 95,
               chest: 90,
               inventory: [
-                { location_id: 1, amount: 20 },
-                { location_id: 2, amount: 15 },
+                { branch_id: 1, amount: 20 },
+                { branch_id: 2, amount: 15 },
               ],
             },
             {
@@ -70,8 +70,8 @@ export async function seedProducts() {
               hip: 100,
               chest: 95,
               inventory: [
-                { location_id: 1, amount: 18 },
-                { location_id: 2, amount: 12 },
+                { branch_id: 1, amount: 18 },
+                { branch_id: 2, amount: 12 },
               ],
             },
             {
@@ -79,8 +79,8 @@ export async function seedProducts() {
               hip: 105,
               chest: 100,
               inventory: [
-                { location_id: 1, amount: 12 },
-                { location_id: 2, amount: 8 },
+                { branch_id: 1, amount: 12 },
+                { branch_id: 2, amount: 8 },
               ],
             },
             {
@@ -88,8 +88,8 @@ export async function seedProducts() {
               hip: 110,
               chest: 105,
               inventory: [
-                { location_id: 1, amount: 8 },
-                { location_id: 2, amount: 5 },
+                { branch_id: 1, amount: 8 },
+                { branch_id: 2, amount: 5 },
               ],
             },
           ],
@@ -104,8 +104,8 @@ export async function seedProducts() {
               hip: 90,
               chest: 85,
               inventory: [
-                { location_id: 1, amount: 12 },
-                { location_id: 2, amount: 8 },
+                { branch_id: 1, amount: 12 },
+                { branch_id: 2, amount: 8 },
               ],
             },
             {
@@ -113,8 +113,8 @@ export async function seedProducts() {
               hip: 95,
               chest: 90,
               inventory: [
-                { location_id: 1, amount: 18 },
-                { location_id: 2, amount: 12 },
+                { branch_id: 1, amount: 18 },
+                { branch_id: 2, amount: 12 },
               ],
             },
             {
@@ -122,8 +122,8 @@ export async function seedProducts() {
               hip: 100,
               chest: 95,
               inventory: [
-                { location_id: 1, amount: 15 },
-                { location_id: 2, amount: 10 },
+                { branch_id: 1, amount: 15 },
+                { branch_id: 2, amount: 10 },
               ],
             },
             {
@@ -131,8 +131,8 @@ export async function seedProducts() {
               hip: 105,
               chest: 100,
               inventory: [
-                { location_id: 1, amount: 10 },
-                { location_id: 2, amount: 7 },
+                { branch_id: 1, amount: 10 },
+                { branch_id: 2, amount: 7 },
               ],
             },
           ],
@@ -163,8 +163,8 @@ export async function seedProducts() {
               hip: 88,
               chest: 0,
               inventory: [
-                { location_id: 1, amount: 25 },
-                { location_id: 2, amount: 20 },
+                { branch_id: 1, amount: 25 },
+                { branch_id: 2, amount: 20 },
               ],
             },
             {
@@ -172,8 +172,8 @@ export async function seedProducts() {
               hip: 93,
               chest: 0,
               inventory: [
-                { location_id: 1, amount: 30 },
-                { location_id: 2, amount: 25 },
+                { branch_id: 1, amount: 30 },
+                { branch_id: 2, amount: 25 },
               ],
             },
             {
@@ -181,8 +181,8 @@ export async function seedProducts() {
               hip: 98,
               chest: 0,
               inventory: [
-                { location_id: 1, amount: 28 },
-                { location_id: 2, amount: 22 },
+                { branch_id: 1, amount: 28 },
+                { branch_id: 2, amount: 22 },
               ],
             },
             {
@@ -190,8 +190,8 @@ export async function seedProducts() {
               hip: 103,
               chest: 0,
               inventory: [
-                { location_id: 1, amount: 20 },
-                { location_id: 2, amount: 15 },
+                { branch_id: 1, amount: 20 },
+                { branch_id: 2, amount: 15 },
               ],
             },
           ],
@@ -206,8 +206,8 @@ export async function seedProducts() {
               hip: 88,
               chest: 0,
               inventory: [
-                { location_id: 1, amount: 18 },
-                { location_id: 2, amount: 15 },
+                { branch_id: 1, amount: 18 },
+                { branch_id: 2, amount: 15 },
               ],
             },
             {
@@ -215,8 +215,8 @@ export async function seedProducts() {
               hip: 93,
               chest: 0,
               inventory: [
-                { location_id: 1, amount: 22 },
-                { location_id: 2, amount: 18 },
+                { branch_id: 1, amount: 22 },
+                { branch_id: 2, amount: 18 },
               ],
             },
             {
@@ -224,8 +224,8 @@ export async function seedProducts() {
               hip: 98,
               chest: 0,
               inventory: [
-                { location_id: 1, amount: 20 },
-                { location_id: 2, amount: 16 },
+                { branch_id: 1, amount: 20 },
+                { branch_id: 2, amount: 16 },
               ],
             },
           ],
@@ -256,8 +256,8 @@ export async function seedProducts() {
               hip: 95,
               chest: 100,
               inventory: [
-                { location_id: 1, amount: 15 },
-                { location_id: 2, amount: 12 },
+                { branch_id: 1, amount: 15 },
+                { branch_id: 2, amount: 12 },
               ],
             },
             {
@@ -265,8 +265,8 @@ export async function seedProducts() {
               hip: 100,
               chest: 105,
               inventory: [
-                { location_id: 1, amount: 18 },
-                { location_id: 2, amount: 15 },
+                { branch_id: 1, amount: 18 },
+                { branch_id: 2, amount: 15 },
               ],
             },
             {
@@ -274,8 +274,8 @@ export async function seedProducts() {
               hip: 105,
               chest: 110,
               inventory: [
-                { location_id: 1, amount: 16 },
-                { location_id: 2, amount: 13 },
+                { branch_id: 1, amount: 16 },
+                { branch_id: 2, amount: 13 },
               ],
             },
             {
@@ -283,8 +283,8 @@ export async function seedProducts() {
               hip: 110,
               chest: 115,
               inventory: [
-                { location_id: 1, amount: 12 },
-                { location_id: 2, amount: 10 },
+                { branch_id: 1, amount: 12 },
+                { branch_id: 2, amount: 10 },
               ],
             },
             {
@@ -292,8 +292,8 @@ export async function seedProducts() {
               hip: 115,
               chest: 120,
               inventory: [
-                { location_id: 1, amount: 8 },
-                { location_id: 2, amount: 6 },
+                { branch_id: 1, amount: 8 },
+                { branch_id: 2, amount: 6 },
               ],
             },
           ],
@@ -308,8 +308,8 @@ export async function seedProducts() {
               hip: 95,
               chest: 100,
               inventory: [
-                { location_id: 1, amount: 12 },
-                { location_id: 2, amount: 10 },
+                { branch_id: 1, amount: 12 },
+                { branch_id: 2, amount: 10 },
               ],
             },
             {
@@ -317,8 +317,8 @@ export async function seedProducts() {
               hip: 100,
               chest: 105,
               inventory: [
-                { location_id: 1, amount: 15 },
-                { location_id: 2, amount: 12 },
+                { branch_id: 1, amount: 15 },
+                { branch_id: 2, amount: 12 },
               ],
             },
             {
@@ -326,8 +326,8 @@ export async function seedProducts() {
               hip: 105,
               chest: 110,
               inventory: [
-                { location_id: 1, amount: 14 },
-                { location_id: 2, amount: 11 },
+                { branch_id: 1, amount: 14 },
+                { branch_id: 2, amount: 11 },
               ],
             },
           ],
@@ -358,8 +358,8 @@ export async function seedProducts() {
               hip: 90,
               chest: 88,
               inventory: [
-                { location_id: 1, amount: 20 },
-                { location_id: 2, amount: 15 },
+                { branch_id: 1, amount: 20 },
+                { branch_id: 2, amount: 15 },
               ],
             },
             {
@@ -367,8 +367,8 @@ export async function seedProducts() {
               hip: 95,
               chest: 93,
               inventory: [
-                { location_id: 1, amount: 25 },
-                { location_id: 2, amount: 20 },
+                { branch_id: 1, amount: 25 },
+                { branch_id: 2, amount: 20 },
               ],
             },
             {
@@ -376,8 +376,8 @@ export async function seedProducts() {
               hip: 100,
               chest: 98,
               inventory: [
-                { location_id: 1, amount: 22 },
-                { location_id: 2, amount: 18 },
+                { branch_id: 1, amount: 22 },
+                { branch_id: 2, amount: 18 },
               ],
             },
             {
@@ -385,8 +385,8 @@ export async function seedProducts() {
               hip: 105,
               chest: 103,
               inventory: [
-                { location_id: 1, amount: 18 },
-                { location_id: 2, amount: 14 },
+                { branch_id: 1, amount: 18 },
+                { branch_id: 2, amount: 14 },
               ],
             },
           ],
@@ -401,8 +401,8 @@ export async function seedProducts() {
               hip: 90,
               chest: 88,
               inventory: [
-                { location_id: 1, amount: 15 },
-                { location_id: 2, amount: 12 },
+                { branch_id: 1, amount: 15 },
+                { branch_id: 2, amount: 12 },
               ],
             },
             {
@@ -410,8 +410,8 @@ export async function seedProducts() {
               hip: 95,
               chest: 93,
               inventory: [
-                { location_id: 1, amount: 20 },
-                { location_id: 2, amount: 16 },
+                { branch_id: 1, amount: 20 },
+                { branch_id: 2, amount: 16 },
               ],
             },
             {
@@ -419,8 +419,8 @@ export async function seedProducts() {
               hip: 100,
               chest: 98,
               inventory: [
-                { location_id: 1, amount: 18 },
-                { location_id: 2, amount: 15 },
+                { branch_id: 1, amount: 18 },
+                { branch_id: 2, amount: 15 },
               ],
             },
           ],
@@ -451,8 +451,8 @@ export async function seedProducts() {
               hip: 88,
               chest: 85,
               inventory: [
-                { location_id: 1, amount: 30 },
-                { location_id: 2, amount: 25 },
+                { branch_id: 1, amount: 30 },
+                { branch_id: 2, amount: 25 },
               ],
             },
             {
@@ -460,8 +460,8 @@ export async function seedProducts() {
               hip: 93,
               chest: 90,
               inventory: [
-                { location_id: 1, amount: 35 },
-                { location_id: 2, amount: 30 },
+                { branch_id: 1, amount: 35 },
+                { branch_id: 2, amount: 30 },
               ],
             },
             {
@@ -469,8 +469,8 @@ export async function seedProducts() {
               hip: 98,
               chest: 95,
               inventory: [
-                { location_id: 1, amount: 32 },
-                { location_id: 2, amount: 28 },
+                { branch_id: 1, amount: 32 },
+                { branch_id: 2, amount: 28 },
               ],
             },
             {
@@ -478,8 +478,8 @@ export async function seedProducts() {
               hip: 103,
               chest: 100,
               inventory: [
-                { location_id: 1, amount: 25 },
-                { location_id: 2, amount: 20 },
+                { branch_id: 1, amount: 25 },
+                { branch_id: 2, amount: 20 },
               ],
             },
           ],
@@ -494,8 +494,8 @@ export async function seedProducts() {
               hip: 88,
               chest: 85,
               inventory: [
-                { location_id: 1, amount: 22 },
-                { location_id: 2, amount: 18 },
+                { branch_id: 1, amount: 22 },
+                { branch_id: 2, amount: 18 },
               ],
             },
             {
@@ -503,8 +503,8 @@ export async function seedProducts() {
               hip: 93,
               chest: 90,
               inventory: [
-                { location_id: 1, amount: 28 },
-                { location_id: 2, amount: 24 },
+                { branch_id: 1, amount: 28 },
+                { branch_id: 2, amount: 24 },
               ],
             },
             {
@@ -512,8 +512,8 @@ export async function seedProducts() {
               hip: 98,
               chest: 95,
               inventory: [
-                { location_id: 1, amount: 25 },
-                { location_id: 2, amount: 22 },
+                { branch_id: 1, amount: 25 },
+                { branch_id: 2, amount: 22 },
               ],
             },
           ],
@@ -544,8 +544,8 @@ export async function seedProducts() {
               hip: 90,
               chest: 85,
               inventory: [
-                { location_id: 1, amount: 18 },
-                { location_id: 2, amount: 15 },
+                { branch_id: 1, amount: 18 },
+                { branch_id: 2, amount: 15 },
               ],
             },
             {
@@ -553,8 +553,8 @@ export async function seedProducts() {
               hip: 95,
               chest: 90,
               inventory: [
-                { location_id: 1, amount: 22 },
-                { location_id: 2, amount: 18 },
+                { branch_id: 1, amount: 22 },
+                { branch_id: 2, amount: 18 },
               ],
             },
             {
@@ -562,8 +562,8 @@ export async function seedProducts() {
               hip: 100,
               chest: 95,
               inventory: [
-                { location_id: 1, amount: 20 },
-                { location_id: 2, amount: 16 },
+                { branch_id: 1, amount: 20 },
+                { branch_id: 2, amount: 16 },
               ],
             },
             {
@@ -571,8 +571,8 @@ export async function seedProducts() {
               hip: 105,
               chest: 100,
               inventory: [
-                { location_id: 1, amount: 15 },
-                { location_id: 2, amount: 12 },
+                { branch_id: 1, amount: 15 },
+                { branch_id: 2, amount: 12 },
               ],
             },
           ],
@@ -587,8 +587,8 @@ export async function seedProducts() {
               hip: 90,
               chest: 85,
               inventory: [
-                { location_id: 1, amount: 15 },
-                { location_id: 2, amount: 12 },
+                { branch_id: 1, amount: 15 },
+                { branch_id: 2, amount: 12 },
               ],
             },
             {
@@ -596,8 +596,8 @@ export async function seedProducts() {
               hip: 95,
               chest: 90,
               inventory: [
-                { location_id: 1, amount: 20 },
-                { location_id: 2, amount: 16 },
+                { branch_id: 1, amount: 20 },
+                { branch_id: 2, amount: 16 },
               ],
             },
             {
@@ -605,8 +605,8 @@ export async function seedProducts() {
               hip: 100,
               chest: 95,
               inventory: [
-                { location_id: 1, amount: 18 },
-                { location_id: 2, amount: 14 },
+                { branch_id: 1, amount: 18 },
+                { branch_id: 2, amount: 14 },
               ],
             },
           ],
@@ -637,8 +637,8 @@ export async function seedProducts() {
               hip: 0,
               chest: 0,
               inventory: [
-                { location_id: 1, amount: 25 },
-                { location_id: 2, amount: 20 },
+                { branch_id: 1, amount: 25 },
+                { branch_id: 2, amount: 20 },
               ],
             },
             {
@@ -646,8 +646,8 @@ export async function seedProducts() {
               hip: 0,
               chest: 0,
               inventory: [
-                { location_id: 1, amount: 30 },
-                { location_id: 2, amount: 25 },
+                { branch_id: 1, amount: 30 },
+                { branch_id: 2, amount: 25 },
               ],
             },
           ],
@@ -662,8 +662,8 @@ export async function seedProducts() {
               hip: 0,
               chest: 0,
               inventory: [
-                { location_id: 1, amount: 28 },
-                { location_id: 2, amount: 22 },
+                { branch_id: 1, amount: 28 },
+                { branch_id: 2, amount: 22 },
               ],
             },
             {
@@ -671,8 +671,8 @@ export async function seedProducts() {
               hip: 0,
               chest: 0,
               inventory: [
-                { location_id: 1, amount: 32 },
-                { location_id: 2, amount: 28 },
+                { branch_id: 1, amount: 32 },
+                { branch_id: 2, amount: 28 },
               ],
             },
           ],
@@ -703,8 +703,8 @@ export async function seedProducts() {
               hip: 0,
               chest: 0,
               inventory: [
-                { location_id: 1, amount: 40 },
-                { location_id: 2, amount: 35 },
+                { branch_id: 1, amount: 40 },
+                { branch_id: 2, amount: 35 },
               ],
             },
             {
@@ -712,8 +712,8 @@ export async function seedProducts() {
               hip: 0,
               chest: 0,
               inventory: [
-                { location_id: 1, amount: 45 },
-                { location_id: 2, amount: 40 },
+                { branch_id: 1, amount: 45 },
+                { branch_id: 2, amount: 40 },
               ],
             },
           ],
@@ -744,8 +744,8 @@ export async function seedProducts() {
               hip: 90,
               chest: 85,
               inventory: [
-                { location_id: 1, amount: 12 },
-                { location_id: 2, amount: 10 },
+                { branch_id: 1, amount: 12 },
+                { branch_id: 2, amount: 10 },
               ],
             },
             {
@@ -753,8 +753,8 @@ export async function seedProducts() {
               hip: 95,
               chest: 90,
               inventory: [
-                { location_id: 1, amount: 15 },
-                { location_id: 2, amount: 12 },
+                { branch_id: 1, amount: 15 },
+                { branch_id: 2, amount: 12 },
               ],
             },
             {
@@ -762,8 +762,8 @@ export async function seedProducts() {
               hip: 100,
               chest: 95,
               inventory: [
-                { location_id: 1, amount: 13 },
-                { location_id: 2, amount: 11 },
+                { branch_id: 1, amount: 13 },
+                { branch_id: 2, amount: 11 },
               ],
             },
             {
@@ -771,8 +771,8 @@ export async function seedProducts() {
               hip: 105,
               chest: 100,
               inventory: [
-                { location_id: 1, amount: 10 },
-                { location_id: 2, amount: 8 },
+                { branch_id: 1, amount: 10 },
+                { branch_id: 2, amount: 8 },
               ],
             },
           ],
@@ -787,8 +787,8 @@ export async function seedProducts() {
               hip: 90,
               chest: 85,
               inventory: [
-                { location_id: 1, amount: 10 },
-                { location_id: 2, amount: 8 },
+                { branch_id: 1, amount: 10 },
+                { branch_id: 2, amount: 8 },
               ],
             },
             {
@@ -796,8 +796,8 @@ export async function seedProducts() {
               hip: 95,
               chest: 90,
               inventory: [
-                { location_id: 1, amount: 13 },
-                { location_id: 2, amount: 10 },
+                { branch_id: 1, amount: 13 },
+                { branch_id: 2, amount: 10 },
               ],
             },
             {
@@ -805,8 +805,8 @@ export async function seedProducts() {
               hip: 100,
               chest: 95,
               inventory: [
-                { location_id: 1, amount: 12 },
-                { location_id: 2, amount: 9 },
+                { branch_id: 1, amount: 12 },
+                { branch_id: 2, amount: 9 },
               ],
             },
           ],
@@ -837,8 +837,8 @@ export async function seedProducts() {
               hip: 95,
               chest: 100,
               inventory: [
-                { location_id: 1, amount: 14 },
-                { location_id: 2, amount: 11 },
+                { branch_id: 1, amount: 14 },
+                { branch_id: 2, amount: 11 },
               ],
             },
             {
@@ -846,8 +846,8 @@ export async function seedProducts() {
               hip: 100,
               chest: 105,
               inventory: [
-                { location_id: 1, amount: 16 },
-                { location_id: 2, amount: 13 },
+                { branch_id: 1, amount: 16 },
+                { branch_id: 2, amount: 13 },
               ],
             },
             {
@@ -855,8 +855,8 @@ export async function seedProducts() {
               hip: 105,
               chest: 110,
               inventory: [
-                { location_id: 1, amount: 14 },
-                { location_id: 2, amount: 11 },
+                { branch_id: 1, amount: 14 },
+                { branch_id: 2, amount: 11 },
               ],
             },
             {
@@ -864,8 +864,8 @@ export async function seedProducts() {
               hip: 110,
               chest: 115,
               inventory: [
-                { location_id: 1, amount: 10 },
-                { location_id: 2, amount: 8 },
+                { branch_id: 1, amount: 10 },
+                { branch_id: 2, amount: 8 },
               ],
             },
           ],
@@ -880,8 +880,8 @@ export async function seedProducts() {
               hip: 95,
               chest: 100,
               inventory: [
-                { location_id: 1, amount: 12 },
-                { location_id: 2, amount: 10 },
+                { branch_id: 1, amount: 12 },
+                { branch_id: 2, amount: 10 },
               ],
             },
             {
@@ -889,8 +889,8 @@ export async function seedProducts() {
               hip: 100,
               chest: 105,
               inventory: [
-                { location_id: 1, amount: 14 },
-                { location_id: 2, amount: 12 },
+                { branch_id: 1, amount: 14 },
+                { branch_id: 2, amount: 12 },
               ],
             },
             {
@@ -898,8 +898,8 @@ export async function seedProducts() {
               hip: 105,
               chest: 110,
               inventory: [
-                { location_id: 1, amount: 13 },
-                { location_id: 2, amount: 10 },
+                { branch_id: 1, amount: 13 },
+                { branch_id: 2, amount: 10 },
               ],
             },
           ],
@@ -910,10 +910,14 @@ export async function seedProducts() {
 
   // Create products with full relationships
   for (const productData of productsData) {
-    // Create product
+    // Create product with category relationship (implicit many-to-many)
     const product = await prismaClient.product.upsert({
       where: { code: productData.code },
-      update: {},
+      update: {
+        categories: {
+          set: [{ id: productData.category_id }],
+        },
+      },
       create: {
         code: productData.code,
         slug: slugify(productData.name_en),
@@ -926,21 +930,9 @@ export async function seedProducts() {
         is_active: true,
         is_featured: productData.is_featured,
         is_best_seller: productData.is_best_seller,
-      },
-    })
-
-    // Create product-category relationship
-    await prismaClient.productCategory.upsert({
-      where: {
-        product_id_category_id: {
-          product_id: product.id,
-          category_id: productData.category_id,
+        categories: {
+          connect: { id: productData.category_id },
         },
-      },
-      update: {},
-      create: {
-        product_id: product.id,
-        category_id: productData.category_id,
       },
     })
 
@@ -965,13 +957,13 @@ export async function seedProducts() {
           },
         })
 
-        // Create inventories for each location
+        // Create inventories for each branch
         for (const inventory of sizeData.inventory) {
           await prismaClient.productInventory.upsert({
             where: {
-              product_size_id_location_id: {
+              product_size_id_branch_id: {
                 product_size_id: productSize.id,
-                location_id: inventory.location_id,
+                branch_id: inventory.branch_id,
               },
             },
             update: {
@@ -979,7 +971,7 @@ export async function seedProducts() {
             },
             create: {
               product_size_id: productSize.id,
-              location_id: inventory.location_id,
+              branch_id: inventory.branch_id,
               amount: inventory.amount,
               sold: 0,
             },

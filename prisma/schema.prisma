@@ -79,10 +79,10 @@ model Region {
 }
 
 // ======================
-// LOCATIONS
+// Branches
 // ======================
 
-model Location {
+model Branch {
   id          Int                @id @default(autoincrement())
   name_en     String
   name_ar     String
@@ -93,13 +93,13 @@ model Location {
 model ProductInventory {
   id              Int         @id @default(autoincrement())
   product_size_id Int
-  location_id     Int
+  branch_id       Int
   amount          Int         @default(0)
   sold            Int         @default(0)
   productSize     ProductSize @relation(fields: [product_size_id], references: [id], onDelete: Cascade)
-  location        Location    @relation(fields: [location_id], references: [id], onDelete: Cascade)
+  branch          Branch      @relation(fields: [branch_id], references: [id], onDelete: Cascade)
 
-  @@unique([product_size_id, location_id]) // each size has one entry per location
+  @@unique([product_size_id, branch_id]) // each size has one entry per branch
   @@index([amount])
   @@index([product_size_id])
 }
@@ -109,51 +109,39 @@ model ProductInventory {
 // ======================
 
 model Category {
-  id        Int               @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   name_en   String
   name_ar   String
-  slug      String            @unique
+  slug      String    @unique
   image     String
-  products  ProductCategory[]
-  createdAt DateTime          @default(now())
-  updatedAt DateTime          @updatedAt
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 model Product {
-  id             Int               @id @default(autoincrement())
-  code           String            @unique
-  slug           String            @unique
+  id             Int        @id @default(autoincrement())
+  code           String     @unique
+  slug           String     @unique
   name_en        String
   name_ar        String
   description_en String
   description_ar String
   price          Float
   main_image_url String
-  is_active      Boolean           @default(true)
-  is_featured    Boolean           @default(false)
-  is_best_seller Boolean           @default(false)
-  categories     ProductCategory[]
+  is_active      Boolean    @default(true)
+  is_featured    Boolean    @default(false)
+  is_best_seller Boolean    @default(false)
+  categories     Category[]
   colors         Color[]
-  createdAt      DateTime          @default(now())
-  updatedAt      DateTime          @updatedAt
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
 
   @@index([is_active])
   @@index([createdAt])
   @@index([code])
   @@index([name_en])
   @@index([name_ar])
-}
-
-// Explicit many-to-many relation with future flexibility
-model ProductCategory {
-  product_id  Int
-  category_id Int
-  product     Product  @relation(fields: [product_id], references: [id], onDelete: Cascade)
-  category    Category @relation(fields: [category_id], references: [id], onDelete: Cascade)
-
-  @@id([product_id, category_id])
-  @@index([category_id])
-  @@index([product_id])
 }
 
 // ======================

@@ -2,6 +2,11 @@ import { z } from "zod/v4"
 
 import { paginationParamsSchema } from "@/schemas/pagination-params"
 
+export const inventorySchema = z.object({
+  location_id: z.coerce.number().int().min(1, { error: "products.location_id_invalid" }),
+  amount: z.coerce.number().int().min(0, { error: "products.amount_positive" }),
+})
+
 export const createColorSchema = z.object({
   name_en: z.string().min(1, { error: "products.color_name_en_required" }),
   name_ar: z.string().min(1, { error: "products.color_name_ar_required" }),
@@ -9,7 +14,6 @@ export const createColorSchema = z.object({
   sizes: z.array(
     z.object({
       size_code: z.string().min(1, { error: "products.size_code_required" }),
-      amount: z.coerce.number().positive({ error: "products.size_amount_positive" }),
       hip: z.coerce.number().positive({ error: "products.size_hip_positive" }),
       chest: z.coerce.number().positive({ error: "products.size_chest_positive" }),
     })

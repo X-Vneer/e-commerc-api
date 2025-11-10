@@ -1,11 +1,7 @@
 import type { Prisma } from "@prisma/client"
 
 export const productFullData = {
-  categories: {
-    include: {
-      category: true,
-    },
-  },
+  categories: true,
   colors: {
     include: {
       sizes: {

@@ -2,17 +2,18 @@
 CREATE TABLE `User` (
     `id` VARCHAR(191) NOT NULL,
     `phone` VARCHAR(191) NOT NULL,
-    `email` VARCHAR(191) NOT NULL,
+    `email` VARCHAR(191) NULL,
     `password` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NOT NULL,
-    `role` VARCHAR(191) NOT NULL DEFAULT 'user',
-    `status` VARCHAR(191) NOT NULL DEFAULT 'active',
+    `role` ENUM('user', 'admin', 'employee') NOT NULL DEFAULT 'user',
+    `status` ENUM('active', 'inactive', 'suspended') NOT NULL DEFAULT 'active',
     `region_id` INTEGER NOT NULL,
     `address` VARCHAR(191) NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
     UNIQUE INDEX `User_phone_key`(`phone`),
+    UNIQUE INDEX `User_email_key`(`email`),
     INDEX `User_phone_idx`(`phone`),
     INDEX `User_email_idx`(`email`),
     PRIMARY KEY (`id`)
@@ -24,13 +25,22 @@ CREATE TABLE `Admin` (
     `email` VARCHAR(191) NOT NULL,
     `password` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NOT NULL,
-    `role` VARCHAR(191) NOT NULL DEFAULT 'employee',
-    `status` VARCHAR(191) NOT NULL DEFAULT 'active',
+    `role` ENUM('user', 'admin', 'employee') NOT NULL DEFAULT 'employee',
+    `status` ENUM('active', 'inactive', 'suspended') NOT NULL DEFAULT 'active',
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
     UNIQUE INDEX `Admin_email_key`(`email`),
     INDEX `Admin_email_idx`(`email`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Emirate` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `name_en` VARCHAR(191) NOT NULL,
+    `name_ar` VARCHAR(191) NOT NULL,
+
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -45,11 +55,27 @@ CREATE TABLE `Region` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `Emirate` (
+CREATE TABLE `Branch` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name_en` VARCHAR(191) NOT NULL,
     `name_ar` VARCHAR(191) NOT NULL,
+    `code` VARCHAR(191) NOT NULL,
 
+    UNIQUE INDEX `Branch_code_key`(`code`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `ProductInventory` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `product_size_id` INTEGER NOT NULL,
+    `branch_id` INTEGER NOT NULL,
+    `amount` INTEGER NOT NULL DEFAULT 0,
+    `sold` INTEGER NOT NULL DEFAULT 0,
+
+    INDEX `ProductInventory_amount_idx`(`amount`),
+    INDEX `ProductInventory_product_size_id_idx`(`product_size_id`),
+    UNIQUE INDEX `ProductInventory_product_size_id_branch_id_key`(`product_size_id`, `branch_id`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -58,8 +84,12 @@ CREATE TABLE `Category` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name_en` VARCHAR(191) NOT NULL,
     `name_ar` VARCHAR(191) NOT NULL,
+    `slug` VARCHAR(191) NOT NULL,
     `image` VARCHAR(191) NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
 
+    UNIQUE INDEX `Category_slug_key`(`slug`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -67,6 +97,7 @@ CREATE TABLE `Category` (
 CREATE TABLE `Product` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `code` VARCHAR(191) NOT NULL,
+    `slug` VARCHAR(191) NOT NULL,
     `name_en` VARCHAR(191) NOT NULL,
     `name_ar` VARCHAR(191) NOT NULL,
     `description_en` VARCHAR(191) NOT NULL,
@@ -80,7 +111,12 @@ CREATE TABLE `Product` (
     `updatedAt` DATETIME(3) NOT NULL,
 
     UNIQUE INDEX `Product_code_key`(`code`),
+    UNIQUE INDEX `Product_slug_key`(`slug`),
+    INDEX `Product_is_active_idx`(`is_active`),
+    INDEX `Product_createdAt_idx`(`createdAt`),
     INDEX `Product_code_idx`(`code`),
+    INDEX `Product_name_en_idx`(`name_en`),
+    INDEX `Product_name_ar_idx`(`name_ar`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -99,24 +135,24 @@ CREATE TABLE `Color` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `ProductSize` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `color_id` INTEGER NOT NULL,
-    `size_code` VARCHAR(191) NOT NULL,
-    `amount` INTEGER NOT NULL,
-    `hip` DOUBLE NOT NULL,
-    `chest` DOUBLE NOT NULL,
-
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
 CREATE TABLE `Size` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `code` VARCHAR(191) NOT NULL,
     `weight` VARCHAR(191) NOT NULL,
 
     UNIQUE INDEX `Size_code_key`(`code`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `ProductSize` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `color_id` INTEGER NOT NULL,
+    `size_code` VARCHAR(191) NOT NULL,
+    `hip` DOUBLE NOT NULL,
+    `chest` DOUBLE NOT NULL,
+
+    INDEX `ProductSize_size_code_idx`(`size_code`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -136,13 +172,19 @@ ALTER TABLE `User` ADD CONSTRAINT `User_region_id_fkey` FOREIGN KEY (`region_id`
 ALTER TABLE `Region` ADD CONSTRAINT `Region_emirate_id_fkey` FOREIGN KEY (`emirate_id`) REFERENCES `Emirate`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Color` ADD CONSTRAINT `Color_product_id_fkey` FOREIGN KEY (`product_id`) REFERENCES `Product`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `ProductInventory` ADD CONSTRAINT `ProductInventory_product_size_id_fkey` FOREIGN KEY (`product_size_id`) REFERENCES `ProductSize`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `ProductSize` ADD CONSTRAINT `ProductSize_color_id_fkey` FOREIGN KEY (`color_id`) REFERENCES `Color`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `ProductInventory` ADD CONSTRAINT `ProductInventory_branch_id_fkey` FOREIGN KEY (`branch_id`) REFERENCES `Branch`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `ProductSize` ADD CONSTRAINT `ProductSize_size_code_fkey` FOREIGN KEY (`size_code`) REFERENCES `Size`(`code`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Color` ADD CONSTRAINT `Color_product_id_fkey` FOREIGN KEY (`product_id`) REFERENCES `Product`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `ProductSize` ADD CONSTRAINT `ProductSize_color_id_fkey` FOREIGN KEY (`color_id`) REFERENCES `Color`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `ProductSize` ADD CONSTRAINT `ProductSize_size_code_fkey` FOREIGN KEY (`size_code`) REFERENCES `Size`(`code`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `_CategoryToProduct` ADD CONSTRAINT `_CategoryToProduct_A_fkey` FOREIGN KEY (`A`) REFERENCES `Category`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;

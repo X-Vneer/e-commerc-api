@@ -27,18 +27,6 @@ export async function seedUsers() {
     status: "active" as const,
   }
 
-  // ---------- Locations ----------
-  console.log("Seeding locations...")
-  const locationsData = [
-    { name_en: "Warehouse A", name_ar: "المستودع أ", code: "A" },
-    { name_en: "Warehouse B", name_ar: "المستودع ب", code: "B" },
-  ]
-
-  await prismaClient.location.createMany({
-    data: locationsData,
-    skipDuplicates: true,
-  })
-
   // ---------- Create User ----------
   console.log("Seeding user...")
   const userPhone = DEFAULT_USER.phone

@@ -26,7 +26,7 @@ export async function getProductsHandler(
     ...(is_active !== undefined && { is_active }),
 
     ...(category_id && {
-      categories: { some: { category_id } },
+      categories: { some: { id: category_id } },
     }),
 
     ...(q && {
@@ -74,15 +74,9 @@ export async function getProductsHandler(
     prismaClient.product.count({ where }),
   ])
 
-  // Transform categories from join table to direct category objects
-  const productsWithCategories = products.map((product) => ({
-    ...product,
-    categories: product.categories.map((pc) => pc.category),
-  }))
-
   res.json({
     message: req.t("products_fetched_successfully", { ns: "translations" }),
-    data: stripLangKeys(productsWithCategories),
+    data: stripLangKeys(products),
     pagination: {
       page,
       limit,
@@ -141,9 +135,7 @@ export async function createProductHandler(
       main_image_url: colors[0].image,
       is_active,
       categories: {
-        create: category_ids.map((categoryId) => ({
-          category: { connect: { id: categoryId } },
-        })),
+        connect: category_ids.map((categoryId) => ({ id: categoryId })),
       },
       colors: {
         create: colors.map((color) => ({
@@ -200,9 +192,8 @@ export async function updateProductHandler(
     ...(category_ids
       ? {
           categories: {
-            deleteMany: {},
-            create: category_ids.map((categoryId) => ({
-              category: { connect: { id: categoryId } },
+            connect: category_ids.map((categoryId) => ({
+              id: categoryId,
             })),
           },
         }
