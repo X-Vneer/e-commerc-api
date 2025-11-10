@@ -42,6 +42,12 @@
     "amount_positive": "Amount must be positive or zero",
     "id_invalid": "Product ID is invalid"
   },
+  "branches": {
+    "name_en_required": "Branch name in English is required",
+    "name_ar_required": "Branch name in Arabic is required",
+    "code_required": "Branch code is required",
+    "id_required": "Branch ID is required"
+  },
   "body_required": "Body is required",
   "field_required": "This field is required",
   "invalid_url": "Invalid URL format",
