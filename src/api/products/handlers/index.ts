@@ -6,9 +6,7 @@ export async function getProductsHandler(req: Request, res: Response) {
   const products = await prismaClient.color.findMany({
     include: {
       product: {
-        include: {
-          categories: true,
-        },
+        include: { categories: true },
       },
       sizes: {
         include: {
