@@ -8,5 +8,6 @@
   "products_fetched_successfully": "تم جلب المنتجات بنجاح",
   "product_updated_successfully": "تم تحديث المنتج بنجاح",
   "product_fetched_successfully": "تم جلب المنتج بنجاح",
-  "product_product_not_fount": "لم يتم العثور على المنتج!"
+  "product_product_not_fount": "لم يتم العثور على المنتج!",
+  "product_deleted_successfully": "تم حذف المنتج بنجاح"
 }

@@ -239,3 +239,18 @@ export async function updateActivityHandler(
     data: stripLangKeys(product),
   })
 }
+
+export async function deleteProductHandler(
+  req: ValidatedRequest<{ params: typeof productIdSchema }>,
+  res: Response
+) {
+  const { id } = req.params
+  await prismaClient.product.delete({
+    where: {
+      id,
+    },
+  })
+  res.json({
+    message: req.t("product_deleted_successfully", { ns: "translations" }),
+  })
+}

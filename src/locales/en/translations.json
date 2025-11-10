@@ -8,5 +8,6 @@
   "products_fetched_successfully": "Products fetched successfully",
   "product_updated_successfully": "Product updated successfully ",
   "product_fetched_successfully": "Product fetched successfully",
-  "product_product_not_fount": "Product not found!"
+  "product_product_not_fount": "Product not found!",
+  "product_deleted_successfully": "Product deleted successfully"
 }

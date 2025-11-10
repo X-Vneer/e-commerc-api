@@ -3,6 +3,7 @@ import validate from "express-zod-safe"
 
 import {
   createProductHandler,
+  deleteProductHandler,
   getProductHandler,
   getProductsHandler,
   updateActivityHandler,
@@ -35,5 +36,7 @@ router.put(
   validate({ body: updateActivitySchema, params: productIdSchema }),
   updateActivityHandler
 )
+
+router.delete("/:id", validate({ params: productIdSchema }), deleteProductHandler)
 
 export default router
