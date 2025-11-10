@@ -23,7 +23,7 @@ export async function seedUsers() {
     email: "admin@elwaha.com",
     passwordPlain: "password123",
     name: "Seeded Admin",
-    role: "employee" as const, // or "admin" if you have that enum value
+    role: "admin" as const, // or "admin" if you have that enum value
     status: "active" as const,
   }
 

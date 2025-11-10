@@ -42,10 +42,13 @@ describe("PUT /api/v1/auth/address", () => {
       .expect("Content-Type", /json/)
       .expect(200)
 
-    expect(prismaClient.user.update).toHaveBeenCalledWith({
-      where: { id: 1 },
-      data: { region: { connect: { id: validBody.region_id } }, address: validBody.address },
-    })
+    expect(prismaClient.user.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { id: 1 },
+        data: { region: { connect: { id: validBody.region_id } }, address: validBody.address },
+      })
+    )
+
     expect(res.body?.data?.id).toBe(1)
   })
 

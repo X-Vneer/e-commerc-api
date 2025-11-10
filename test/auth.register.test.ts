@@ -25,7 +25,7 @@ vi.mock("bcrypt", () => ({
   },
 }))
 
-vi.mock("../src/api/auth/utils/generate-access-token.js", () => ({
+vi.mock("@/utils/generate-access-token.ts", () => ({
   generateAccessToken: vi.fn(() => "test-access-token"),
 }))
 
