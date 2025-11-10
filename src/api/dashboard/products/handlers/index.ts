@@ -11,6 +11,7 @@ import type {
   createProductSchema,
   productIdSchema,
   productQueryWithPaginationSchema,
+  updateActivitySchema,
   updateProductSchema,
 } from "../schemas/index.js"
 
@@ -189,6 +190,25 @@ export async function updateProductHandler(
   const product = await prismaClient.product.update({
     where: { id: Number(id) },
     data: updateData,
+    include: productFullData,
+  })
+
+  res.json({
+    message: req.t("product_updated_successfully", { ns: "translations" }),
+    data: stripLangKeys(product),
+  })
+}
+
+export async function updateActivityHandler(
+  req: ValidatedRequest<{ params: typeof productIdSchema; body: typeof updateActivitySchema }>,
+  res: Response
+) {
+  const { id } = req.params
+  const { is_active } = req.body
+
+  const product = await prismaClient.product.update({
+    where: { id: Number(id) },
+    data: { is_active },
     include: productFullData,
   })
 

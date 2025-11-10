@@ -76,3 +76,8 @@ export const productQuerySchema = z.object({
 export const productQueryWithPaginationSchema = paginationParamsSchema.and(productQuerySchema)
 export type ProductQuerySchema = z.infer<typeof productQuerySchema>
 export type ProductQueryWithPaginationSchema = z.infer<typeof productQueryWithPaginationSchema>
+
+export const updateActivitySchema = z.object({
+  is_active: z.boolean(),
+})
+export type UpdateActivitySchema = z.infer<typeof updateActivitySchema>

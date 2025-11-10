@@ -1,11 +1,17 @@
 import express from "express"
 import validate from "express-zod-safe"
 
-import { createProductHandler, getProductsHandler, updateProductHandler } from "./handlers/index.js"
+import {
+  createProductHandler,
+  getProductsHandler,
+  updateActivityHandler,
+  updateProductHandler,
+} from "./handlers/index.js"
 import {
   createProductSchema,
   productIdSchema,
   productQueryWithPaginationSchema,
+  updateActivitySchema,
   updateProductSchema,
 } from "./schemas/index.js"
 
@@ -19,6 +25,12 @@ router.put(
   "/:id",
   validate({ body: updateProductSchema, params: productIdSchema }),
   updateProductHandler
+)
+
+router.put(
+  "/:id/status",
+  validate({ body: updateActivitySchema, params: productIdSchema }),
+  updateActivityHandler
 )
 
 export default router
