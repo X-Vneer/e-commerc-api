@@ -36,9 +36,15 @@
     "size_name_ar_required": "اسم الحجم باللغة العربية مطلوب",
     "size_weight_required": "وزن الحجم مطلوب",
     "size_hip_positive": "يجب أن يكون الحجم أكبر من 0",
-    "size_chest_positive": "يجب أن يكون الحجم أكبر من 0"
+    "size_chest_positive": "يجب أن يكون الحجم أكبر من 0",
+    "branch_id_invalid": "معرف الفرع غير صالح",
+    "amount_positive": "يجب أن تكون الكمية موجبة أو صفر",
+    "inventories_required": "يجب أن يكون هناك مخزون واحد على الأقل",
+    "id_invalid": "معرف المنتج غير صالح"
   },
   "body_required": "يجب أن يكون هناك بيانات في الجسم المرسل",
+  "field_required": "هذا الحقل مطلوب",
+  "invalid_url": "صيغة الرابط غير صالحة",
   "region_not_found": "لم يتم العثور على المنطقة",
   "user_conflict": "المستخدم موجود بالفعل",
   "phone_number_invalid": "رقم هاتف غير صالح",

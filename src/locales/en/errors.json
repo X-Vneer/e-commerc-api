@@ -36,9 +36,15 @@
     "size_name_ar_required": "Size name in Arabic is required",
     "size_weight_required": "Size weight is required",
     "size_hip_positive": "Size hip must be positive",
-    "size_chest_positive": "Size chest must be positive"
+    "size_chest_positive": "Size chest must be positive",
+    "inventories_required": "At least one inventory is required",
+    "branch_id_invalid": "Branch ID is invalid",
+    "amount_positive": "Amount must be positive or zero",
+    "id_invalid": "Product ID is invalid"
   },
   "body_required": "Body is required",
+  "field_required": "This field is required",
+  "invalid_url": "Invalid URL format",
   "region_not_found": "Region not found",
   "user_conflict": "User already exists",
   "phone_number_invalid": "Invalid phone number",

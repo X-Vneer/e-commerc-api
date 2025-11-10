@@ -147,6 +147,12 @@ export async function createProductHandler(
               size: { connect: { code: size.size_code } },
               hip: size.hip,
               chest: size.chest,
+              inventories: {
+                create: size.inventories.map((inventory) => ({
+                  branch: { connect: { id: inventory.branch_id } },
+                  amount: inventory.amount,
+                })),
+              },
             })),
           },
         })),

@@ -3,19 +3,28 @@ import { z } from "zod/v4"
 import { paginationParamsSchema } from "@/schemas/pagination-params"
 
 export const inventorySchema = z.object({
-  location_id: z.coerce.number().int().min(1, { error: "products.location_id_invalid" }),
+  branch_id: z.coerce.number().int().min(1, { error: "products.branch_id_invalid" }),
   amount: z.coerce.number().int().min(0, { error: "products.amount_positive" }),
 })
 
+export type InventorySchema = z.infer<typeof inventorySchema>
+
 export const createColorSchema = z.object({
-  name_en: z.string().min(1, { error: "products.color_name_en_required" }),
-  name_ar: z.string().min(1, { error: "products.color_name_ar_required" }),
+  name_en: z
+    .string({ error: "products.color_name_en_required" })
+    .min(1, { error: "products.color_name_en_required" }),
+  name_ar: z
+    .string({ error: "products.color_name_ar_required" })
+    .min(1, { error: "products.color_name_ar_required" }),
   image: z.url({ error: "products.color_image_invalid" }),
   sizes: z.array(
     z.object({
       size_code: z.string().min(1, { error: "products.size_code_required" }),
       hip: z.coerce.number().positive({ error: "products.size_hip_positive" }),
       chest: z.coerce.number().positive({ error: "products.size_chest_positive" }),
+      inventories: z
+        .array(inventorySchema, { error: "products.inventories_required" })
+        .min(1, { error: "products.inventories_required" }),
     })
   ),
 })
