@@ -171,34 +171,25 @@ export async function updateProductHandler(
   res: Response
 ) {
   const { id } = req.params
-  const {
-    code,
-    name_en,
-    name_ar,
-    description_en,
-    description_ar,
-    price,
-    is_active,
-    is_featured,
-    is_best_seller,
-    category_ids,
-  } = req.body
+  const productId = Number(id)
+  const { code, name_en, name_ar, description_en, description_ar, price, category_ids, colors } =
+    req.body
 
-  // Build the update data object with only provided fields
-  const updateData: Partial<Prisma.ProductUpdateInput> = {
+  // Build the base update data object with only provided fields
+  const updateData: Prisma.ProductUpdateInput = {
     code,
     name_en,
+    slug: slugify(name_en),
     name_ar,
     description_en,
     description_ar,
     price,
-    is_active,
-    is_featured,
-    is_best_seller,
+    // update main image from first color
+    main_image_url: colors[0].image,
     ...(category_ids
       ? {
           categories: {
-            connect: category_ids.map((categoryId) => ({
+            set: category_ids.map((categoryId) => ({
               id: categoryId,
             })),
           },
@@ -206,15 +197,106 @@ export async function updateProductHandler(
       : {}),
   }
 
+  // Handle colors update/delete/create based on name_en
+  if (colors) {
+    // Get existing colors for this product
+    const existingColors = await prismaClient.color.findMany({
+      where: { product_id: productId },
+      select: { id: true, name_en: true },
+    })
+
+    const requestedColorNames = new Set(colors.map((c) => c.name_en))
+
+    // Colors to delete (exist in DB but not in request)
+    const colorsToDelete = existingColors.filter((c) => !requestedColorNames.has(c.name_en))
+
+    // Colors to update/create
+    const colorsToUpsert = colors.map((color) => {
+      const existingColor = existingColors.find((c) => c.name_en === color.name_en)
+
+      return {
+        existingColorId: existingColor?.id,
+        colorData: {
+          name_en: color.name_en,
+          name_ar: color.name_ar,
+          image: color.image,
+          sizes: {
+            create: color.sizes.map((size) => ({
+              size: { connect: { code: size.size_code } },
+              hip: size.hip,
+              chest: size.chest,
+              inventories: {
+                create: size.inventories.map((inventory) => ({
+                  branch: { connect: { id: inventory.branch_id } },
+                  amount: inventory.amount,
+                })),
+              },
+            })),
+          },
+        },
+        updateData: {
+          name_en: color.name_en,
+          name_ar: color.name_ar,
+          image: color.image,
+          sizes: {
+            deleteMany: {}, // Delete all existing sizes for this color
+            create: color.sizes.map((size) => ({
+              size: { connect: { code: size.size_code } },
+              hip: size.hip,
+              chest: size.chest,
+              inventories: {
+                create: size.inventories.map((inventory) => ({
+                  branch: { connect: { id: inventory.branch_id } },
+                  amount: inventory.amount,
+                })),
+              },
+            })),
+          },
+        },
+      }
+    })
+
+    // Use transaction to handle all color operations
+    await prismaClient.$transaction(async (tx) => {
+      // Delete colors that are not in the request
+      if (colorsToDelete.length > 0) {
+        await tx.color.deleteMany({
+          where: {
+            id: { in: colorsToDelete.map((c) => c.id) },
+          },
+        })
+      }
+
+      // Upsert colors (update existing or create new)
+      for (const colorUpsert of colorsToUpsert) {
+        if (colorUpsert.existingColorId) {
+          // Update existing color
+          await tx.color.update({
+            where: { id: colorUpsert.existingColorId },
+            data: colorUpsert.updateData,
+          })
+        } else {
+          // Create new color
+          await tx.color.create({
+            data: {
+              product_id: productId,
+              ...colorUpsert.colorData,
+            },
+          })
+        }
+      }
+    })
+  }
+
   const product = await prismaClient.product.update({
-    where: { id: Number(id) },
+    where: { id: productId },
     data: updateData,
     include: productFullData,
   })
 
   res.json({
     message: req.t("product_updated_successfully", { ns: "translations" }),
-    data: stripLangKeys(product),
+    data: product,
   })
 }
 

@@ -159,7 +159,11 @@ model Color {
   createdAt  DateTime      @default(now())
   updatedAt  DateTime      @updatedAt
 
+  @@unique([product_id, name_en])
+  @@unique([product_id, name_ar])
   @@index([product_id])
+  @@index([name_en])
+  @@index([name_ar])
 }
 
 model Size {
