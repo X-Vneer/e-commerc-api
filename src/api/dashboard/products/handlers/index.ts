@@ -214,45 +214,50 @@ export async function updateProductHandler(
     const colorsToUpsert = colors.map((color) => {
       const existingColor = existingColors.find((c) => c.name_en === color.name_en)
 
+      const colorData: Prisma.ColorCreateInput = {
+        product: { connect: { id: productId } },
+        name_en: color.name_en,
+        name_ar: color.name_ar,
+        image: color.image,
+        sizes: {
+          create: color.sizes.map((size) => ({
+            size: { connect: { code: size.size_code } },
+            hip: size.hip,
+            chest: size.chest,
+            inventories: {
+              create: size.inventories.map((inventory) => ({
+                branch: { connect: { id: inventory.branch_id } },
+                amount: inventory.amount,
+              })),
+            },
+          })),
+        },
+      }
+
+      const updateData: Prisma.ColorUpdateInput = {
+        name_en: color.name_en,
+        name_ar: color.name_ar,
+        image: color.image,
+        sizes: {
+          deleteMany: {}, // Delete all existing sizes for this color
+          create: color.sizes.map((size) => ({
+            size: { connect: { code: size.size_code } },
+            hip: size.hip,
+            chest: size.chest,
+            inventories: {
+              create: size.inventories.map((inventory) => ({
+                branch: { connect: { id: inventory.branch_id } },
+                amount: inventory.amount,
+              })),
+            },
+          })),
+        },
+      }
+
       return {
         existingColorId: existingColor?.id,
-        colorData: {
-          name_en: color.name_en,
-          name_ar: color.name_ar,
-          image: color.image,
-          sizes: {
-            create: color.sizes.map((size) => ({
-              size: { connect: { code: size.size_code } },
-              hip: size.hip,
-              chest: size.chest,
-              inventories: {
-                create: size.inventories.map((inventory) => ({
-                  branch: { connect: { id: inventory.branch_id } },
-                  amount: inventory.amount,
-                })),
-              },
-            })),
-          },
-        },
-        updateData: {
-          name_en: color.name_en,
-          name_ar: color.name_ar,
-          image: color.image,
-          sizes: {
-            deleteMany: {}, // Delete all existing sizes for this color
-            create: color.sizes.map((size) => ({
-              size: { connect: { code: size.size_code } },
-              hip: size.hip,
-              chest: size.chest,
-              inventories: {
-                create: size.inventories.map((inventory) => ({
-                  branch: { connect: { id: inventory.branch_id } },
-                  amount: inventory.amount,
-                })),
-              },
-            })),
-          },
-        },
+        colorData,
+        updateData,
       }
     })
 
@@ -278,10 +283,7 @@ export async function updateProductHandler(
         } else {
           // Create new color
           await tx.color.create({
-            data: {
-              product_id: productId,
-              ...colorUpsert.colorData,
-            },
+            data: colorUpsert.colorData,
           })
         }
       }
