@@ -32,18 +32,19 @@ enum Status {
 // ======================
 
 model User {
-  id        String   @id @default(cuid())
-  phone     String   @unique
-  email     String?  @unique
+  id        String    @id @default(cuid())
+  phone     String    @unique
+  email     String?   @unique
   password  String
   name      String
-  role      UserRole @default(user)
-  status    Status   @default(active)
+  role      UserRole  @default(user)
+  status    Status    @default(active)
   region_id Int
-  region    Region   @relation(fields: [region_id], references: [id])
+  region    Region    @relation(fields: [region_id], references: [id])
   address   String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  favorites Product[]
 
   @@index([phone])
   @@index([email])
@@ -136,6 +137,7 @@ model Product {
   colors         Color[]
   createdAt      DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
+  favorite_by    User[]
 
   @@index([is_active])
   @@index([createdAt])

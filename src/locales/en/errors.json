@@ -57,6 +57,7 @@
   "category_not_found": "Category not found",
   "category_has_products": "Cannot delete category with associated products",
   "invalid_id": "Invalid ID format",
+  "number_id_invalid": "Invalid numeric identifier",
   "pagination": {
     "page_min": "Page must be at least 1",
     "limit_min": "Limit must be at least 1",
