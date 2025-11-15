@@ -1,84 +1,109 @@
-import type { Request, Response } from "express"
+import type { Prisma } from "@prisma/client"
+import type { Response } from "express"
 import type { ValidatedRequest } from "express-zod-safe"
 
-import jwt from "jsonwebtoken"
-
 import type { numberIdSchema } from "@/schemas/number-id-schema"
+import type { paginationParamsSchema } from "@/schemas/pagination-params.js"
 
-import { env } from "@/env.js"
 import prismaClient from "@/prisma"
 
 import type { toggleFavoriteSchema } from "../schemas/index.js"
 
-export async function getProductsHandler(req: Request, res: Response) {
-  // get user id from token
-  const authHeader = req.headers.authorization
-  let userId = null
-
-  if (authHeader && authHeader.startsWith("Bearer ")) {
-    const token = authHeader.split(" ")[1]
-    try {
-      const decoded = jwt.verify(token, env.JWT_SECRET)
-      userId = (decoded as jwt.JwtPayload).userId
-    } catch {
-      // ignore
-    }
-  }
-
-  // language
+export async function getProductsHandler(
+  req: ValidatedRequest<{ query: typeof paginationParamsSchema }>,
+  res: Response
+) {
+  const userId = req.userId
   const language = req.language
   const name = language === "ar" ? "name_ar" : "name_en"
 
-  const products = await prismaClient.color.findMany({
-    where: {
-      // get active products only
-      product: {
-        is_active: true,
-      },
-      // get products with available inventories
-      sizes: {
-        some: {
-          inventories: {
-            some: {
-              amount: { gt: 0 },
-            },
+  const { page, limit } = req.query
+
+  const where: Prisma.ColorWhereInput = {
+    // active products only
+    product: {
+      is_active: true,
+    },
+    sizes: {
+      some: {
+        inventories: {
+          some: {
+            amount: { gt: 0 },
           },
         },
       },
     },
-    include: {
-      product: {
-        include: {
-          categories: true,
-          ...(userId && { favorite_by: { where: { id: userId }, select: { id: true } } }),
-        },
-      },
-      sizes: {
-        include: {
-          inventories: true,
+  }
+
+  const include = {
+    product: {
+      include: {
+        categories: {
+          select: {
+            id: true,
+            [name]: true,
+            slug: true,
+          },
         },
       },
     },
-  })
 
-  const productsWithFavorite = products.map((color) => {
+    sizes: {
+      where: {
+        size_code: {
+          notIn: ["S", "M", "L", "XL", "2xL", "3XL", "4XL", "free-size"],
+        },
+      },
+    },
+    // favorite_by is only included if userId is provided
+    ...(userId && { favorite_by: { where: { id: userId }, select: { id: true } } }),
+  } satisfies Prisma.ColorInclude
+
+  const [products, total] = await Promise.all([
+    prismaClient.color.findMany({
+      take: limit,
+      skip: (page - 1) * limit,
+      where,
+      include,
+      orderBy: {
+        product: {
+          createdAt: "desc",
+        },
+      },
+    }),
+    prismaClient.color.count({ where }),
+  ])
+
+  const formattedProducts = products.map((color) => {
     return {
       id: color.id,
       slug: color.product.slug,
+      name: `${color.product[name]} - ${color[name]}`,
       main_image_url: color.product.main_image_url,
       price: color.product.price,
       code: color.product.code,
       product_id: color.product.id,
-      product_name: `${color.product[name]} - ${color[name]}`,
+      product_name: color.product[name],
       color_name: color[name],
-      is_favorite: color.product.favorite_by.length > 0,
-      categories: color.product.categories,
+      categories: color.product.categories.map((category) => ({
+        id: category.id,
+        name: category[name],
+        slug: category.slug,
+      })),
+      has_plus_size: color.sizes.map((size) => size.size_code).length > 0,
+      is_favorite: color.favorite_by.length > 0,
     }
   })
 
   res.json({
     message: req.t("products_fetched_successfully", { ns: "translations" }),
-    data: productsWithFavorite,
+    data: formattedProducts,
+    pagination: {
+      page,
+      limit,
+      total,
+      last_page: Math.ceil(total / limit),
+    },
   })
 }
 
