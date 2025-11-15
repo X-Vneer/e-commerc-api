@@ -23,3 +23,18 @@ export function authMiddleware(req: Request, res: Response, next: NextFunction) 
     res.status(401).json({ message: req.t("unauthorized", { ns: "errors" }) })
   }
 }
+export function userIdMiddleware(req: Request, res: Response, next: NextFunction) {
+  const authHeader = req.headers.authorization
+
+  if (authHeader && authHeader.startsWith("Bearer ")) {
+    const token = authHeader.split(" ")[1]
+    try {
+      const decoded = jwt.verify(token, env.JWT_SECRET)
+      req.userId = (decoded as jwt.JwtPayload).userId
+    } catch (_error) {
+      // ignore
+    }
+  }
+
+  next()
+}

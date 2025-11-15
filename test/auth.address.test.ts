@@ -5,7 +5,7 @@ import app from "../src/app.js"
 import prismaClient from "../src/prisma/index.js"
 
 // Mock Prisma client before importing routes/handlers
-vi.mock("../src/prisma/index.js", () => {
+vi.mock("@/prisma/index.js", () => {
   const user = {
     update: vi.fn(),
   }
@@ -14,7 +14,7 @@ vi.mock("../src/prisma/index.js", () => {
 })
 
 // Bypass auth: inject a fake userId and continue
-vi.mock("../src/middlewares/auth.js", () => ({
+vi.mock("@/api/middlewares/auth.js", () => ({
   authMiddleware: (req: any, _res: any, next: any) => {
     req.userId = 1
     next()

@@ -1,7 +1,7 @@
 import express from "express"
 import validate from "express-zod-safe"
 
-import { authMiddleware } from "../../middlewares/auth.js"
+import { authMiddleware } from "../middlewares/auth.js"
 import {
   getMeHandler,
   loginHandler,
