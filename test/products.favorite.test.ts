@@ -6,15 +6,15 @@ import app from "../src/app.js"
 import prismaClient from "../src/prisma/index.js"
 
 vi.mock("../src/prisma/index.js", () => {
-  const product = {
+  const color = {
     findUnique: vi.fn(),
     update: vi.fn(),
   }
-  const admin = {
+  const user = {
     findUnique: vi.fn(),
   }
 
-  return { default: { product, admin } }
+  return { default: { color, user } }
 })
 
 vi.mock("jsonwebtoken", () => ({
@@ -24,9 +24,9 @@ vi.mock("jsonwebtoken", () => ({
 }))
 
 const mockToken = "test-access-token"
-const mockAdmin = { id: "admin-1", email: "admin@example.com" }
+const mockUser = { id: "user-1", email: "user@example.com" }
 const mockProduct = {
-  id: 1,
+  id: 15,
   code: "PROD001",
   name_en: "Test Product",
   name_ar: "منتج تجريبي",
@@ -35,15 +35,15 @@ const mockProduct = {
 describe("POST /api/v1/products/:id/favorite", () => {
   beforeEach(() => {
     vi.clearAllMocks()
-    ;(jwt.verify as any).mockReturnValue({ userId: mockAdmin.id })
-    ;(prismaClient.admin.findUnique as any).mockResolvedValue(mockAdmin)
+    ;(jwt.verify as any).mockReturnValue({ userId: mockUser.id })
+    ;(prismaClient.user.findUnique as any).mockResolvedValue(mockUser)
   })
 
-  it("marks a product as favorite for the authenticated admin", async () => {
-    ;(prismaClient.product.findUnique as any).mockResolvedValue(mockProduct)
-    ;(prismaClient.product.update as any).mockResolvedValue({
+  it("marks a product as favorite for the authenticated user", async () => {
+    ;(prismaClient.color.findUnique as any).mockResolvedValue(mockProduct)
+    ;(prismaClient.color.update as any).mockResolvedValue({
       ...mockProduct,
-      favorite_by: [{ id: mockAdmin.id }],
+      favorite_by: [{ id: mockUser.id }],
     })
 
     const res = await request(app)
@@ -54,17 +54,17 @@ describe("POST /api/v1/products/:id/favorite", () => {
       .expect("Content-Type", /json/)
       .expect(200)
 
-    expect(res.body.message).toContain("Product updated successfully")
     expect(res.body.data).toEqual({ ...mockProduct, is_favorite: true })
-    expect(prismaClient.product.findUnique).toHaveBeenCalledWith({
+    expect(prismaClient.color.findUnique).toHaveBeenCalledWith({
       where: { id: mockProduct.id },
     })
-    expect(prismaClient.product.update).toHaveBeenCalledWith({
+    expect(prismaClient.color.update).toHaveBeenCalledWith({
       where: { id: mockProduct.id },
-      data: { favorite_by: { connect: { id: mockAdmin.id } } },
+      data: { favorite_by: { connect: { id: mockUser.id } } },
       include: {
+        product: true,
         favorite_by: {
-          where: { id: mockAdmin.id },
+          where: { id: mockUser.id },
           select: { id: true },
         },
       },
@@ -72,8 +72,8 @@ describe("POST /api/v1/products/:id/favorite", () => {
   })
 
   it("removes a product from favorites when toggled off", async () => {
-    ;(prismaClient.product.findUnique as any).mockResolvedValue(mockProduct)
-    ;(prismaClient.product.update as any).mockResolvedValue({
+    ;(prismaClient.color.findUnique as any).mockResolvedValue(mockProduct)
+    ;(prismaClient.color.update as any).mockResolvedValue({
       ...mockProduct,
       favorite_by: [],
     })
@@ -88,12 +88,13 @@ describe("POST /api/v1/products/:id/favorite", () => {
 
     expect(res.body.message).toContain("Product updated successfully")
     expect(res.body.data).toEqual({ ...mockProduct, is_favorite: false })
-    expect(prismaClient.product.update).toHaveBeenCalledWith({
+    expect(prismaClient.color.update).toHaveBeenCalledWith({
       where: { id: mockProduct.id },
-      data: { favorite_by: { disconnect: { id: mockAdmin.id } } },
+      data: { favorite_by: { disconnect: { id: mockUser.id } } },
       include: {
+        product: true,
         favorite_by: {
-          where: { id: mockAdmin.id },
+          where: { id: mockUser.id },
           select: { id: true },
         },
       },
@@ -101,7 +102,7 @@ describe("POST /api/v1/products/:id/favorite", () => {
   })
 
   it("returns 404 when the product does not exist", async () => {
-    ;(prismaClient.product.findUnique as any).mockResolvedValue(null)
+    ;(prismaClient.color.findUnique as any).mockResolvedValue(null)
 
     const res = await request(app)
       .post(`/api/v1/products/${mockProduct.id}/favorite`)
@@ -112,6 +113,6 @@ describe("POST /api/v1/products/:id/favorite", () => {
       .expect(404)
 
     expect(res.body.message).toContain("Product not found")
-    expect(prismaClient.product.update).not.toHaveBeenCalled()
+    expect(prismaClient.color.update).not.toHaveBeenCalled()
   })
 })

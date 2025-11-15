@@ -32,19 +32,19 @@ enum Status {
 // ======================
 
 model User {
-  id        String    @id @default(cuid())
-  phone     String    @unique
-  email     String?   @unique
+  id        String   @id @default(cuid())
+  phone     String   @unique
+  email     String?  @unique
   password  String
   name      String
-  role      UserRole  @default(user)
-  status    Status    @default(active)
+  role      UserRole @default(user)
+  status    Status   @default(active)
   region_id Int
-  region    Region    @relation(fields: [region_id], references: [id])
+  region    Region   @relation(fields: [region_id], references: [id])
   address   String?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  favorites Product[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  favorites Color[]
 
   @@index([phone])
   @@index([email])
@@ -137,7 +137,6 @@ model Product {
   colors         Color[]
   createdAt      DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
-  favorite_by    User[]
 
   @@index([is_active])
   @@index([createdAt])
@@ -151,15 +150,16 @@ model Product {
 // ======================
 
 model Color {
-  id         Int           @id @default(autoincrement())
-  product_id Int
-  product    Product       @relation(fields: [product_id], references: [id], onDelete: Cascade)
-  name_en    String
-  name_ar    String
-  image      String
-  sizes      ProductSize[]
-  createdAt  DateTime      @default(now())
-  updatedAt  DateTime      @updatedAt
+  id          Int           @id @default(autoincrement())
+  product_id  Int
+  product     Product       @relation(fields: [product_id], references: [id], onDelete: Cascade)
+  name_en     String
+  name_ar     String
+  image       String
+  sizes       ProductSize[]
+  favorite_by User[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
 
   @@unique([product_id, name_en])
   @@unique([product_id, name_ar])

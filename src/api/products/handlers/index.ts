@@ -20,8 +20,8 @@ export async function getProductsHandler(req: Request, res: Response) {
     try {
       const decoded = jwt.verify(token, env.JWT_SECRET)
       userId = (decoded as jwt.JwtPayload).userId
-    } catch (_error) {
-      return
+    } catch {
+      // ignore
     }
   }
 
@@ -31,9 +31,11 @@ export async function getProductsHandler(req: Request, res: Response) {
 
   const products = await prismaClient.color.findMany({
     where: {
+      // get active products only
       product: {
         is_active: true,
       },
+      // get products with available inventories
       sizes: {
         some: {
           inventories: {
@@ -86,10 +88,10 @@ export async function toggleFavoriteHandler(
 ) {
   const { id } = req.params
   const { is_favorite } = req.body
-  const productId = Number(id)
+  const colorId = Number(id)
 
-  const product = await prismaClient.product.findUnique({
-    where: { id: productId },
+  const product = await prismaClient.color.findUnique({
+    where: { id: colorId },
   })
   if (!product) {
     res.status(404).json({
@@ -102,22 +104,20 @@ export async function toggleFavoriteHandler(
     ? { favorite_by: { connect: { id: req.userId } } }
     : { favorite_by: { disconnect: { id: req.userId } } }
 
-  const updatedProduct = await prismaClient.product.update({
-    where: { id: productId },
+  const updatedColor = await prismaClient.color.update({
+    where: { id: colorId },
     data: favoriteUpdate,
     include: {
-      favorite_by: {
-        where: { id: req.userId },
-        select: { id: true },
-      },
+      product: true,
+      favorite_by: { where: { id: req.userId }, select: { id: true } },
     },
   })
-  const { favorite_by, ...productData } = updatedProduct
+  const { favorite_by, ...colorData } = updatedColor
 
   res.json({
     message: req.t("product_updated_successfully", { ns: "translations" }),
     data: {
-      ...productData,
+      ...colorData,
       is_favorite: favorite_by.length > 0,
     },
   })
