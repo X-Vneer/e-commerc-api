@@ -3,26 +3,27 @@ import type { Response } from "express"
 import type { ValidatedRequest } from "express-zod-safe"
 
 import type { numberIdSchema } from "@/schemas/number-id-schema"
-import type { paginationParamsSchema } from "@/schemas/pagination-params.js"
 
 import prismaClient from "@/prisma"
 
-import type { toggleFavoriteSchema } from "../schemas/index.js"
+import type { productQueryWithPaginationSchema, toggleFavoriteSchema } from "../schemas/index.js"
 
 export async function getProductsHandler(
-  req: ValidatedRequest<{ query: typeof paginationParamsSchema }>,
+  req: ValidatedRequest<{ query: typeof productQueryWithPaginationSchema }>,
   res: Response
 ) {
   const userId = req.userId
   const language = req.language
   const name = language === "ar" ? "name_ar" : "name_en"
 
-  const { page, limit } = req.query
+  const { page, limit, category_id, has_plus_size, size_id } = req.query
 
   const where: Prisma.ColorWhereInput = {
-    // active products only
     product: {
       is_active: true,
+      ...(category_id && {
+        categories: { some: { id: category_id } },
+      }),
     },
     sizes: {
       some: {
@@ -31,6 +32,28 @@ export async function getProductsHandler(
             amount: { gt: 0 },
           },
         },
+
+        OR: [
+          ...(has_plus_size
+            ? [
+                {
+                  size_code: {
+                    notIn: ["S", "M", "L", "XL", "2xL", "3XL", "4XL", "free-size"],
+                  },
+                },
+              ]
+            : []),
+
+          ...(size_id
+            ? [
+                {
+                  size: {
+                    id: size_id,
+                  },
+                },
+              ]
+            : []),
+        ],
       },
     },
   }
