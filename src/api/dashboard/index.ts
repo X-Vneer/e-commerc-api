@@ -15,5 +15,6 @@ router.use("/upload", upload)
 
 router.use("/categories", categories)
 router.use("/products", products)
+// test
 
 export default router
