@@ -13,5 +13,6 @@
   "branches_fetched_successfully": "Branches fetched successfully",
   "branch_created_successfully": "Branch created successfully",
   "branch_updated_successfully": "Branch updated successfully",
-  "branch_deleted_successfully": "Branch deleted successfully"
+  "branch_deleted_successfully": "Branch deleted successfully",
+  "favorites_fetched_successfully": "Favorites fetched successfully"
 }

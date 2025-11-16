@@ -13,5 +13,6 @@
   "branches_fetched_successfully": "تم جلب الفروع بنجاح",
   "branch_created_successfully": "تم إنشاء الفرع بنجاح",
   "branch_updated_successfully": "تم تحديث الفرع بنجاح",
-  "branch_deleted_successfully": "تم حذف الفرع بنجاح"
+  "branch_deleted_successfully": "تم حذف الفرع بنجاح",
+  "favorites_fetched_successfully": "تم جلب المفضلة بنجاح"
 }

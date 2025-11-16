@@ -3,18 +3,20 @@ import type { Response } from "express"
 import type { ValidatedRequest } from "express-zod-safe"
 
 import type { numberIdSchema } from "@/schemas/number-id-schema"
+import type { paginationParamsSchema } from "@/schemas/pagination-params.js"
 
 import prismaClient from "@/prisma"
+import { ColorIncludeWithProductAndPlusSizesAndFavoriteBy } from "@/prisma/products.js"
 
 import type { productQueryWithPaginationSchema, toggleFavoriteSchema } from "../schemas/index.js"
+
+import { formatColorWithProduct } from "../utils/formate-color.js"
 
 export async function getProductsHandler(
   req: ValidatedRequest<{ query: typeof productQueryWithPaginationSchema }>,
   res: Response
 ) {
-  const userId = req.userId
-  const language = req.language
-  const name = language === "ar" ? "name_ar" : "name_en"
+  const language = req.language as "ar" | "en"
 
   const { page, limit, category_id, has_plus_size, size_id } = req.query
 
@@ -58,29 +60,7 @@ export async function getProductsHandler(
     },
   }
 
-  const include = {
-    product: {
-      include: {
-        categories: {
-          select: {
-            id: true,
-            [name]: true,
-            slug: true,
-          },
-        },
-      },
-    },
-
-    sizes: {
-      where: {
-        size_code: {
-          notIn: ["S", "M", "L", "XL", "2xL", "3XL", "4XL", "free-size"],
-        },
-      },
-    },
-    // favorite_by is only included if userId is provided
-    ...(userId && { favorite_by: { where: { id: userId }, select: { id: true } } }),
-  } satisfies Prisma.ColorInclude
+  const include = ColorIncludeWithProductAndPlusSizesAndFavoriteBy(req.userId)
 
   const [products, total] = await Promise.all([
     prismaClient.color.findMany({
@@ -98,24 +78,7 @@ export async function getProductsHandler(
   ])
 
   const formattedProducts = products.map((color) => {
-    return {
-      id: color.id,
-      slug: color.product.slug,
-      name: `${color.product[name]} - ${color[name]}`,
-      main_image_url: color.product.main_image_url,
-      price: color.product.price,
-      code: color.product.code,
-      product_id: color.product.id,
-      product_name: color.product[name],
-      color_name: color[name],
-      categories: color.product.categories.map((category) => ({
-        id: category.id,
-        name: category[name],
-        slug: category.slug,
-      })),
-      has_plus_size: color.sizes.map((size) => size.size_code).length > 0,
-      is_favorite: color.favorite_by.length > 0,
-    }
+    return formatColorWithProduct(color, language)
   })
 
   res.json({
@@ -167,6 +130,46 @@ export async function toggleFavoriteHandler(
     data: {
       ...colorData,
       is_favorite: favorite_by.length > 0,
+    },
+  })
+}
+
+export async function getFavoritesHandler(
+  req: ValidatedRequest<{ query: typeof paginationParamsSchema }>,
+  res: Response
+) {
+  const { page, limit } = req.query
+
+  const include = ColorIncludeWithProductAndPlusSizesAndFavoriteBy(req.userId)
+
+  //
+  const where: Prisma.ColorWhereInput = {
+    favorite_by: { some: { id: req.userId } },
+  }
+
+  const [favorites, total] = await Promise.all([
+    prismaClient.color.findMany({
+      where,
+      take: limit,
+      skip: (page - 1) * limit,
+      include,
+      orderBy: {
+        product: {
+          createdAt: "desc",
+        },
+      },
+    }),
+    prismaClient.color.count({ where }),
+  ])
+
+  res.json({
+    message: req.t("favorites_fetched_successfully", { ns: "translations" }),
+    data: favorites,
+    pagination: {
+      page,
+      limit,
+      total,
+      last_page: Math.ceil(total / limit),
     },
   })
 }
