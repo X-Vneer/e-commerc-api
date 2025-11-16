@@ -164,7 +164,7 @@ export async function getFavoritesHandler(
 
   res.json({
     message: req.t("favorites_fetched_successfully", { ns: "translations" }),
-    data: favorites,
+    data: favorites.map((color) => formatColorWithProduct(color, req.language as "ar" | "en")),
     pagination: {
       page,
       limit,
