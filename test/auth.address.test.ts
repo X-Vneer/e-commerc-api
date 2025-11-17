@@ -14,7 +14,7 @@ vi.mock("@/prisma/index.js", () => {
 })
 
 // Bypass auth: inject a fake userId and continue
-vi.mock("@/api/middlewares/auth.ts", () => ({
+vi.mock("@/api/public/middlewares/auth.ts", () => ({
   authMiddleware: (req: any, _res: any, next: any) => {
     req.userId = 1
     next()
