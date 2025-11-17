@@ -50,7 +50,7 @@ export function ColorIncludeWithProductAndPlusSizesAndFavoriteBy(userId?: string
       // for plus sizes
       where: {
         size_code: {
-          notIn: ["S", "M", "L", "XL", "2xL", "3XL", "4XL", "free-size"],
+          notIn: NOT_PLUS_SIZES,
         },
       },
     },

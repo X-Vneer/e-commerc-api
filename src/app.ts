@@ -5,7 +5,7 @@ import helmet from "helmet"
 import morgan from "morgan"
 
 import api from "./api/index.js"
-import i18next from "./libs/i18next.js"
+import i18next from "./libs/i18n/i18next.js"
 import * as middlewares from "./middlewares/error-handler.js"
 
 const app = express()

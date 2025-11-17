@@ -3,12 +3,12 @@ import type { ValidatedRequest } from "express-zod-safe"
 
 import bcrypt from "bcrypt"
 
-import type { addressSchema, loginSchema, registerSchema, updateUserDataSchema } from "../schemas/index.js"
+import prismaClient from "@/prisma/index.js"
+import { userSelectWithoutPassword } from "@/prisma/user.js"
+import { generateAccessToken } from "@/utils/generate-access-token.js"
+import stripLangKeys from "@/utils/obj-select-lang.js"
 
-import prismaClient from "../../../prisma/index.js"
-import { userSelectWithoutPassword } from "../../../prisma/user.js"
-import { generateAccessToken } from "../../../utils/generate-access-token.js"
-import stripLangKeys from "../../../utils/obj-select-lang.js"
+import type { addressSchema, loginSchema, registerSchema, updateUserDataSchema } from "../schemas/index.js"
 
 export async function loginHandler(req: ValidatedRequest<{ body: typeof loginSchema }>, res: Response) {
   const { phone, password } = req.body

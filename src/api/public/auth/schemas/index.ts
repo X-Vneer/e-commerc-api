@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-import { phoneNumberSchema } from "../../../schemas/phone-number.js"
+import { phoneNumberSchema } from "@/schemas/phone-number.js"
 
 export const loginSchema = z.object({
   phone: phoneNumberSchema,
