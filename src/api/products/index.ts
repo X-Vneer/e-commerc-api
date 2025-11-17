@@ -5,13 +5,19 @@ import { authMiddleware, userIdMiddleware } from "@/api/middlewares/auth.js"
 import { numberIdSchema } from "@/schemas/number-id-schema.js"
 import { paginationParamsSchema } from "@/schemas/pagination-params.js"
 
-import { getFavoritesHandler, getProductsHandler, toggleFavoriteHandler } from "./handlers/index.js"
+import {
+  getFavoritesHandler,
+  getProductDetailsHandler,
+  getProductsHandler,
+  toggleFavoriteHandler,
+} from "./handlers/index.js"
 import { productQueryWithPaginationSchema, toggleFavoriteSchema } from "./schemas/index.js"
 
 const router = express.Router()
 
 router.use(userIdMiddleware)
 router.get("/", validate({ query: productQueryWithPaginationSchema }), getProductsHandler)
+router.get("/:id", validate({ params: numberIdSchema }), getProductDetailsHandler)
 
 // requires auth
 router.use(authMiddleware)

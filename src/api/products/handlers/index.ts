@@ -6,11 +6,16 @@ import type { numberIdSchema } from "@/schemas/number-id-schema"
 import type { paginationParamsSchema } from "@/schemas/pagination-params.js"
 
 import prismaClient from "@/prisma"
-import { ColorIncludeWithProductAndPlusSizesAndFavoriteBy } from "@/prisma/products.js"
+import {
+  colorBaseInclude,
+  ColorIncludeWithProductAndPlusSizesAndFavoriteBy,
+  NOT_PLUS_SIZES,
+} from "@/prisma/products.js"
 
 import type { productQueryWithPaginationSchema, toggleFavoriteSchema } from "../schemas/index.js"
 
-import { formatColorWithProduct } from "../utils/formate-color.js"
+import { formatColorFullData } from "../utils/format-color-full-data.js"
+import { formatColorWithProduct } from "../utils/format-color.js"
 
 export async function getProductsHandler(
   req: ValidatedRequest<{ query: typeof productQueryWithPaginationSchema }>,
@@ -35,27 +40,31 @@ export async function getProductsHandler(
           },
         },
 
-        OR: [
-          ...(has_plus_size
-            ? [
-                {
-                  size_code: {
-                    notIn: ["S", "M", "L", "XL", "2xL", "3XL", "4XL", "free-size"],
-                  },
-                },
-              ]
-            : []),
+        ...(has_plus_size || size_id
+          ? {
+              OR: [
+                ...(has_plus_size
+                  ? [
+                      {
+                        size_code: {
+                          notIn: NOT_PLUS_SIZES,
+                        },
+                      },
+                    ]
+                  : []),
 
-          ...(size_id
-            ? [
-                {
-                  size: {
-                    id: size_id,
-                  },
-                },
-              ]
-            : []),
-        ],
+                ...(size_id
+                  ? [
+                      {
+                        size: {
+                          id: size_id,
+                        },
+                      },
+                    ]
+                  : []),
+              ],
+            }
+          : {}),
       },
     },
   }
@@ -90,6 +99,29 @@ export async function getProductsHandler(
       total,
       last_page: Math.ceil(total / limit),
     },
+  })
+}
+
+export async function getProductDetailsHandler(
+  req: ValidatedRequest<{ params: typeof numberIdSchema }>,
+  res: Response
+) {
+  const { id } = req.params
+  const colorId = Number(id)
+  const product = await prismaClient.color.findFirst({
+    where: { id: colorId },
+    include: colorBaseInclude(req.userId),
+  })
+  if (!product) {
+    res.status(404).json({
+      message: req.t("product_product_not_fount", { ns: "translations" }),
+    })
+    return
+  }
+
+  res.json({
+    message: req.t("product_fetched_successfully", { ns: "translations" }),
+    data: formatColorFullData(product, req.language as "ar" | "en"),
   })
 }
 

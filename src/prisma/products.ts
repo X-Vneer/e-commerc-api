@@ -1,5 +1,7 @@
 import type { Prisma } from "@prisma/client"
 
+export const NOT_PLUS_SIZES = ["S", "M", "L", "XL", "2xL", "3XL", "4XL", "free-size"]
+
 export const productFullData = {
   categories: true,
   colors: {
@@ -13,14 +15,26 @@ export const productFullData = {
   },
 } satisfies Prisma.ProductInclude
 
-export const colorBaseInclude = {
-  product: true,
-  sizes: {
-    include: {
-      inventories: true,
+export function colorBaseInclude(userId?: string) {
+  return {
+    product: {
+      include: {
+        categories: true,
+        colors: true,
+      },
     },
-  },
-} satisfies Prisma.ColorInclude
+    sizes: {
+      include: {
+        inventories: true,
+      },
+    },
+    ...(userId && { favorite_by: { where: { id: userId }, select: { id: true } } }),
+  } satisfies Prisma.ColorInclude
+}
+
+export type ColorFullData = Prisma.ColorGetPayload<{
+  include: ReturnType<typeof colorBaseInclude>
+}>
 
 export function ColorIncludeWithProductAndPlusSizesAndFavoriteBy(userId?: string) {
   return {
