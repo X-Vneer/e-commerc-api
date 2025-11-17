@@ -4,32 +4,32 @@ import { phoneNumberSchema } from "@/schemas/phone-number.js"
 
 export const loginSchema = z.object({
   phone: phoneNumberSchema,
-  password: z.string().min(8, { message: "auth.password_min" }),
+  password: z.string().min(8, { error: "auth.password_min" }),
 })
 
 export const registerSchema = z.object({
   phone: phoneNumberSchema,
-  password: z.string().min(8, { message: "auth.password_min" }),
-  name: z.string().min(1, { message: "auth.name_min" }),
-  email: z.email({ message: "auth.email_invalid" }),
-  region_id: z.coerce.number().min(1, { message: "auth.region_required" }),
-  address: z.string().min(1, { message: "auth.address_required" }),
+  password: z.string().min(8, { error: "auth.password_min" }),
+  name: z.string().min(1, { error: "auth.name_min" }),
+  email: z.email({ error: "auth.email_invalid" }),
+  region_id: z.coerce.number().min(1, { error: "auth.region_required" }),
+  address: z.string({}).min(1, { error: "auth.address_required" }),
 })
 
 export const addressSchema = z
   .object({
-    region_id: z.coerce.number().min(1, { message: "auth.region_required" }).optional(),
-    address: z.string().min(1, { message: "auth.address_required" }).optional(),
+    region_id: z.coerce.number().min(1, { error: "auth.region_required" }).optional(),
+    address: z.string().min(1, { error: "auth.address_required" }).optional(),
   })
   .refine((data) => data.region_id !== undefined || data.address !== undefined, {
-    message: "body_required",
+    error: "body_required",
     path: ["root"],
   })
 
 export const updateUserDataSchema = z
   .object({
-    name: z.string().min(1, { message: "auth.name_min" }).optional(),
-    email: z.email({ message: "auth.email_invalid" }).optional(),
+    name: z.string().min(1, { error: "auth.name_min" }).optional(),
+    email: z.email({ error: "auth.email_invalid" }).optional(),
   })
   .refine((data) => data.name !== undefined || data.email !== undefined, {
     message: "body_required",
