@@ -12,7 +12,7 @@ i18next
     ns: ["translations", "errors"], // namespaces
     defaultNS: "translations",
     backend: {
-      loadPath: path.join(__dirname, "../locales/{{lng}}/{{ns}}.json"),
+      loadPath: path.join(__dirname, "../../locales/{{lng}}/{{ns}}.json"),
     },
     detection: {
       // detect language from headers (Accept-Language)
