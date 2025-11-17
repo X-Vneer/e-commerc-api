@@ -45,6 +45,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   favorites Color[]
+  cart      Cart?
 
   @@index([phone])
   @@index([email])
@@ -160,6 +161,7 @@ model Color {
   favorite_by User[]
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
+  cartItems   CartItem[]
 
   @@unique([product_id, name_en])
   @@unique([product_id, name_ar])
@@ -186,4 +188,25 @@ model ProductSize {
   chest       Float
 
   @@index([size_code])
+}
+
+// cart 
+model Cart {
+  id        String     @id @default(cuid())
+  user_id   String     @unique
+  user      User       @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  items     CartItem[]
+  updatedAt DateTime   @updatedAt
+}
+
+model CartItem {
+  id        Int    @id @default(autoincrement())
+  cart_id   String
+  color_id  Int
+  quantity  Int    @default(1)
+  cart      Cart   @relation(fields: [cart_id], references: [id], onDelete: Cascade)
+  color     Color  @relation(fields: [color_id], references: [id], onDelete: Cascade)
+  size_code String
+
+  @@unique([cart_id, color_id, size_code])
 }
