@@ -14,5 +14,11 @@
   "branch_created_successfully": "تم إنشاء الفرع بنجاح",
   "branch_updated_successfully": "تم تحديث الفرع بنجاح",
   "branch_deleted_successfully": "تم حذف الفرع بنجاح",
-  "favorites_fetched_successfully": "تم جلب المفضلة بنجاح"
+  "favorites_fetched_successfully": "تم جلب المفضلة بنجاح",
+  "cart_fetched_successfully": "تم جلب السلة بنجاح",
+  "color_not_found": "لم يتم العثور على لون المنتج",
+  "size_not_found": "لم يتم العثور على المقاس",
+  "not-enough-inventory": "لا يوجد مخزون كافٍ متاح",
+  "product_inactive": "المنتج غير متاح",
+  "item_added_to_cart_successfully": "تم إضافة العنصر إلى السلة بنجاح"
 }

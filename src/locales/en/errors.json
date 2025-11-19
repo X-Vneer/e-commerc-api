@@ -62,5 +62,16 @@
     "page_min": "Page must be at least 1",
     "limit_min": "Limit must be at least 1",
     "limit_max": "Limit must be less than 100"
+  },
+  "cart": {
+    "color_id_invalid": "Color ID must be a positive integer",
+    "size_code_invalid": "Size code is required",
+    "quantity_invalid": "Quantity must be at least 1",
+    "color_not_found": "Color not found",
+    "product_not_found": "Product not found",
+    "size_not_found": "Size not found for this product",
+    "insufficient_inventory": "Insufficient inventory for this product",
+    "item_not_found": "Cart item not found",
+    "cart_not_found": "Cart not found"
   }
 }

@@ -14,5 +14,11 @@
   "branch_created_successfully": "Branch created successfully",
   "branch_updated_successfully": "Branch updated successfully",
   "branch_deleted_successfully": "Branch deleted successfully",
-  "favorites_fetched_successfully": "Favorites fetched successfully"
+  "favorites_fetched_successfully": "Favorites fetched successfully",
+  "cart_fetched_successfully": "Cart feched successfully",
+  "color_not_found": "Product color not found",
+  "size_not_found": "Size not found",
+  "not-enough-inventory": "Not enough inventory available",
+  "product_inactive": "Product is not available",
+  "item_added_to_cart_successfully": "Item added to cart successfully"
 }
