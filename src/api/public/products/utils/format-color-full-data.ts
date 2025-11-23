@@ -1,6 +1,6 @@
-import type { ColorFullData } from "@/prisma/products"
+import type { ColorFullData } from "@/prisma/products.js"
 
-import { NOT_PLUS_SIZES } from "@/prisma/products"
+import { NOT_PLUS_SIZES } from "@/prisma/products.js"
 
 type FormattedColorData = {
   id: number

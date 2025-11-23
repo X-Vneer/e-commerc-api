@@ -1,6 +1,6 @@
-import type { Admin, User } from "@prisma/client"
-
 import jwt from "jsonwebtoken"
+
+import type { Admin, User } from "@/generated/client.js"
 
 import { env } from "../env.js"
 

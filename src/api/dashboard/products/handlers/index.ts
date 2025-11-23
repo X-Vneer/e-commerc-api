@@ -1,6 +1,7 @@
-import type { Prisma } from "@prisma/client"
 import type { Response } from "express"
 import type { ValidatedRequest } from "express-zod-safe"
+
+import type { Prisma } from "@/generated/client.js"
 
 import prismaClient from "@/prisma/index.js"
 import { productFullData } from "@/prisma/products.js"

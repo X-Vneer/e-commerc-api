@@ -1,11 +1,11 @@
 import i18next from "i18next"
 import Backend from "i18next-fs-backend"
-import middleware from "i18next-http-middleware"
+import { handle, LanguageDetector } from "i18next-http-middleware"
 import path from "node:path"
 
 i18next
   .use(Backend)
-  .use(middleware.LanguageDetector)
+  .use(LanguageDetector)
   .init({
     fallbackLng: "en",
     preload: ["en", "ar"],
@@ -23,4 +23,4 @@ i18next
   })
 
 export const t = i18next.t
-export default middleware.handle(i18next)
+export default handle(i18next)

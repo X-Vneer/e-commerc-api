@@ -1,4 +1,4 @@
-import type { Prisma } from "@prisma/client"
+import type { Prisma } from "@/generated/client.js"
 
 export const NOT_PLUS_SIZES = ["S", "M", "L", "XL", "2xL", "3XL", "4XL", "free-size"]
 

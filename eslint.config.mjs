@@ -61,5 +61,8 @@ export default antfu(
       ...vitest.configs.recommended.rules,
       "@typescript-eslint/unbound-method": "off",
     },
+  },
+  {
+    ignores: ["src/generated/**"],
   }
 )

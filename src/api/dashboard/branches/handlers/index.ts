@@ -1,10 +1,10 @@
-import type { Prisma } from "@prisma/client"
 import type { Response } from "express"
 import type { ValidatedRequest } from "express-zod-safe"
 
+import type { Prisma } from "@/generated/client.js"
 import type { generalQuerySchema } from "@/schemas/general-query-schema.js"
 
-import prismaClient from "@/prisma"
+import prismaClient from "@/prisma/index.js"
 import stripLangKeys from "@/utils/obj-select-lang.js"
 
 import type { createBranchSchema, paramsBranchIdSchema, updateBranchSchema } from "../schemas/index.js"

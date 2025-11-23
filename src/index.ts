@@ -1,4 +1,4 @@
-import "module-alias/register"
+import "module-alias/register.js"
 
 import app from "./app.js"
 import { env } from "./env.js"

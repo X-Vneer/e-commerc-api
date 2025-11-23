@@ -1,7 +1,8 @@
 import type { Request, Response } from "express"
 import type { ValidatedRequest } from "express-zod-safe"
 
-import prismaClient from "@/prisma"
+import { cartActiveProductInclude } from "@/prisma/cart.js"
+import prismaClient from "@/prisma/index.js"
 
 import type { addToCartSchema } from "../schemas/index.js"
 
@@ -17,34 +18,7 @@ export async function getCartHandler(req: Request, res: Response) {
     where: {
       user_id: userId,
     },
-    include: {
-      items: {
-        where: {
-          // Filter out items from inactive products
-          color: {
-            product: {
-              is_active: true,
-            },
-          },
-        },
-        include: {
-          color: {
-            include: {
-              product: true,
-              // Include sizes to get size information
-              sizes: {
-                include: {
-                  size: true,
-                },
-              },
-            },
-          },
-        },
-        orderBy: {
-          id: "desc",
-        },
-      },
-    },
+    include: cartActiveProductInclude,
   })
 
   res.json({
@@ -67,11 +41,6 @@ export async function addToCartHandler(req: ValidatedRequest<{ body: typeof addT
         },
       },
       include: {
-        product: {
-          select: {
-            is_active: true,
-          },
-        },
         sizes: {
           where: {
             size_code,
@@ -85,17 +54,13 @@ export async function addToCartHandler(req: ValidatedRequest<{ body: typeof addT
       return null
     }
 
-    if (!color.product.is_active) {
-      res.status(422).json({ message: req.t("product_inactive", { ns: "translations" }) })
-      return null
-    }
-
     if (!color.sizes.length) {
       res.status(404).json({ message: req.t("size_not_found", { ns: "translations" }) })
       return null
     }
 
     // Calculate available inventory using database aggregation (more efficient)
+    // TODO: handle paid items
     const productSizeId = color.sizes[0].id
     const inventoryAggregate = await tx.productInventory.aggregate({
       where: {

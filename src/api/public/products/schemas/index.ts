@@ -1,6 +1,6 @@
 import z from "zod"
 
-import { paginationParamsSchema } from "@/schemas/pagination-params"
+import { paginationParamsSchema } from "@/schemas/pagination-params.js"
 
 export const toggleFavoriteSchema = z.object({
   is_favorite: z.enum(["true", "false"]).transform((val) => val === "true"),

@@ -1,6 +1,6 @@
-import type { Prisma } from "@prisma/client"
+import type { Prisma } from "@/generated/client.js"
 
-import prismaClient from "../index.js"
+import prismaClient from "@/prisma/index.js"
 
 export async function seedSizes() {
   const sizes: Prisma.SizeCreateManyInput[] = [

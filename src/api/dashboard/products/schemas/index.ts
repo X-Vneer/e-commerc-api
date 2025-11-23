@@ -1,6 +1,6 @@
 import { z } from "zod/v4"
 
-import { paginationParamsSchema } from "@/schemas/pagination-params"
+import { paginationParamsSchema } from "@/schemas/pagination-params.js"
 
 export const inventorySchema = z.object({
   branch_id: z.coerce.number().int().min(1, { error: "products.branch_id_invalid" }),

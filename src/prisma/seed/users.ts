@@ -1,7 +1,7 @@
 // prisma/seed.ts
 import bcrypt from "bcrypt"
 
-import prismaClient from "../index.js"
+import prismaClient from "@/prisma/index.js"
 
 export async function seedUsers() {
   // ---------- config ----------

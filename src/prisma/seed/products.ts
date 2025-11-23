@@ -1,5 +1,6 @@
+import prismaClient from "@/prisma/index.js"
+
 import { slugify } from "../../utils/slugify.js"
-import prismaClient from "../index.js"
 
 type ProductData = {
   code: string
