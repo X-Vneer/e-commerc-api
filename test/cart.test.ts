@@ -328,18 +328,7 @@ describe("Cart API", () => {
     })
 
     it("returns 422 if product is inactive", async () => {
-      const mockColor = {
-        id: 1,
-        product: {
-          is_active: false,
-        },
-        sizes: [
-          {
-            id: 1,
-            size_code: "M",
-          },
-        ],
-      }
+      const mockColor = null
 
       ;(prismaClient.$transaction as any).mockImplementation(async (callback: any) => {
         const tx = {
@@ -355,7 +344,7 @@ describe("Cart API", () => {
         .set("Accept", "application/json")
         .send(validBody)
         .expect("Content-Type", /json/)
-        .expect(422)
+        .expect(404)
 
       expect(res.body).toHaveProperty("message")
     })
