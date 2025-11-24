@@ -3,7 +3,7 @@ import type { Prisma } from "@/generated/client.js"
 export function cartActiveProductInclude(lang: "en" | "ar") {
   const name = lang === "en" ? "name_en" : "name_ar"
   const description = lang === "en" ? "description_en" : "description_ar"
-  const select = {
+  return {
     items: {
       where: {
         color: {
@@ -26,6 +26,24 @@ export function cartActiveProductInclude(lang: "en" | "ar") {
         id: true,
         quantity: true,
         size_code: true,
+        color: {
+          select: {
+            [name as "name_en"]: true,
+            id: true,
+            image: true,
+            product: {
+              select: {
+                price: true,
+                id: true,
+                code: true,
+                [name as "name_en"]: true,
+                [description as "description_en"]: true,
+                main_image_url: true,
+              },
+            },
+          },
+        },
+
         size: {
           select: {
             id: true,
@@ -48,29 +66,16 @@ export function cartActiveProductInclude(lang: "en" | "ar") {
             },
           },
         },
-
-        color: {
-          select: {
-            id: true,
-            [name]: true,
-            image: true,
-            product: {
-              select: {
-                id: true,
-                [name]: true,
-                code: true,
-                [description]: true,
-                main_image_url: true,
-              },
-            },
-          },
-        },
       },
 
       orderBy: {
         id: "desc",
       },
     },
+    _count: {
+      select: {
+        items: true,
+      },
+    },
   } satisfies Prisma.CartInclude
-  return select
 }

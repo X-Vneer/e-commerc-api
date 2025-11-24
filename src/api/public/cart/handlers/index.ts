@@ -23,16 +23,20 @@ export async function getCartHandler(req: Request, res: Response) {
   })
 
   const formattedItems = cartWithItems!.items.map((item) => {
-    const { product: _product, ...color } = item.color
+    const { product, ...color } = item.color
     return {
       ...item,
-      product: item.color.product,
+      product,
       color,
       size: item.size,
     }
   })
   const formattedCart = {
     ...cartWithItems,
+    paymentSummary: {
+      totalItems: cartWithItems?._count.items,
+      totalPrice: formattedItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0),
+    },
     items: formattedItems,
   }
 
