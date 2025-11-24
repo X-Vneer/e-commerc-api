@@ -12,6 +12,15 @@ export function cartActiveProductInclude(lang: "en" | "ar") {
             is_active: true,
           },
         },
+
+        // Check inventory for the specific size in the cart item
+        size: {
+          inventories: {
+            some: {
+              amount: { gt: 0 },
+            },
+          },
+        },
       },
       select: {
         id: true,
@@ -22,10 +31,19 @@ export function cartActiveProductInclude(lang: "en" | "ar") {
             id: true,
             size_code: true,
             inventories: {
+              where: {
+                amount: { gt: 0 },
+              },
               select: {
                 id: true,
                 amount: true,
                 sold: true,
+                branch: {
+                  select: {
+                    id: true,
+                    [name]: true,
+                  },
+                },
               },
             },
           },
@@ -53,6 +71,6 @@ export function cartActiveProductInclude(lang: "en" | "ar") {
         id: "desc",
       },
     },
-  } satisfies Prisma.CartSelect
+  } satisfies Prisma.CartInclude
   return select
 }
