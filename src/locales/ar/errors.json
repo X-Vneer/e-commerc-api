@@ -67,6 +67,7 @@
     "color_id_invalid": "يجب أن يكون معرف اللون رقماً صحيحاً موجباً",
     "size_code_invalid": "رمز الحجم مطلوب",
     "quantity_invalid": "يجب أن تكون الكمية 1 على الأقل",
+    "quantity_max": "يجب ألا تتجاوز الكمية 100",
     "color_not_found": "اللون غير موجود",
     "product_not_found": "المنتج غير موجود",
     "size_not_found": "الحجم غير موجود لهذا المنتج",

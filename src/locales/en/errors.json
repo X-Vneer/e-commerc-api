@@ -67,6 +67,7 @@
     "color_id_invalid": "Color ID must be a positive integer",
     "size_code_invalid": "Size code is required",
     "quantity_invalid": "Quantity must be at least 1",
+    "quantity_max": "Quantity must not exceed 100",
     "color_not_found": "Color not found",
     "product_not_found": "Product not found",
     "size_not_found": "Size not found for this product",

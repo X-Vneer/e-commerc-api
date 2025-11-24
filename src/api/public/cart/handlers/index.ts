@@ -1,11 +1,13 @@
 import type { Request, Response } from "express"
 import type { ValidatedRequest } from "express-zod-safe"
 
+import type { numberIdSchema } from "@/schemas/number-id-schema.js"
+
 import { cartActiveProductInclude } from "@/prisma/cart.js"
 import prismaClient from "@/prisma/index.js"
 import stripLangKeys from "@/utils/obj-select-lang.js"
 
-import type { addToCartSchema } from "../schemas/index.js"
+import type { addToCartSchema, updateCartItemQuantitySchema } from "../schemas/index.js"
 
 import { getOrCreateCart } from "../services/index.js"
 
@@ -146,6 +148,119 @@ export async function addToCartHandler(req: ValidatedRequest<{ body: typeof addT
 
   res.json({
     message: req.t("item_added_to_cart_successfully", { ns: "translations" }),
+    data: result,
+  })
+}
+
+export async function removeFromCartHandler(req: ValidatedRequest<{ params: typeof numberIdSchema }>, res: Response) {
+  const { id } = req.params
+
+  // Check if cart item exists
+  const cartItem = await prismaClient.cartItem.findUnique({
+    where: {
+      id,
+    },
+  })
+
+  if (!cartItem) {
+    res.status(404).json({ message: req.t("cart.item_not_found", { ns: "errors" }) })
+    return
+  }
+
+  await prismaClient.cartItem.delete({
+    where: {
+      id,
+    },
+  })
+
+  res.json({
+    message: req.t("item_removed_from_cart_successfully", { ns: "translations" }),
+  })
+}
+
+export async function updateCartItemQuantityHandler(
+  req: ValidatedRequest<{ params: typeof numberIdSchema; body: typeof updateCartItemQuantitySchema }>,
+  res: Response
+) {
+  const { id } = req.params
+  const { quantity } = req.body
+
+  // Use transaction to ensure data consistency
+  const result = await prismaClient.$transaction(async (tx) => {
+    // Check if cart item exists
+    const cartItem = await tx.cartItem.findUnique({
+      where: {
+        id,
+        color: {
+          product: {
+            is_active: true,
+          },
+        },
+        size: {
+          inventories: {
+            some: {
+              amount: { gt: 0 },
+            },
+          },
+        },
+      },
+    })
+
+    if (!cartItem) {
+      res.status(404).json({ message: req.t("cart.item_not_found", { ns: "errors" }) })
+      return null
+    }
+
+    // Get the product size ID
+    const productSize = await tx.productSize.findFirst({
+      where: {
+        color_id: cartItem.color_id,
+        size_code: cartItem.size_code,
+      },
+    })
+
+    if (!productSize) {
+      res.status(404).json({ message: req.t("cart.size_not_found", { ns: "errors" }) })
+      return null
+    }
+
+    // Calculate available inventory
+    const inventoryAggregate = await tx.productInventory.aggregate({
+      where: {
+        product_size_id: productSize.id,
+      },
+      _sum: {
+        amount: true,
+      },
+    })
+    const availableInventory = inventoryAggregate._sum.amount ?? 0
+
+    // Validate inventory
+    if (quantity > availableInventory) {
+      res.status(422).json({ message: req.t("cart.insufficient_inventory", { ns: "errors" }) })
+      return null
+    }
+
+    // Update cart item quantity
+    const updatedItem = await tx.cartItem.update({
+      where: {
+        id,
+      },
+      data: {
+        quantity,
+      },
+    })
+
+    return updatedItem
+  })
+
+  // If transaction returned null, an error was already sent
+  if (!result) {
+    return
+  }
+
+  res.json({
+    message: req.t("item_quantity_updated_successfully", { ns: "translations" }),
     data: result,
   })
 }

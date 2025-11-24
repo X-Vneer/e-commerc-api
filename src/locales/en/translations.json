@@ -20,5 +20,7 @@
   "size_not_found": "Size not found",
   "not-enough-inventory": "Not enough inventory available",
   "product_inactive": "Product is not available",
-  "item_added_to_cart_successfully": "Item added to cart successfully"
+  "item_added_to_cart_successfully": "Item added to cart successfully",
+  "item_removed_from_cart_successfully": "item removed successfully",
+  "item_quantity_updated_successfully": "Item quantity updated successfully"
 }
