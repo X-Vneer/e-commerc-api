@@ -2,8 +2,15 @@ import i18next from "i18next"
 import Backend from "i18next-fs-backend"
 import { handle, LanguageDetector } from "i18next-http-middleware"
 import path from "node:path"
+import { fileURLToPath } from "node:url"
 
-i18next
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+const localesPath = path.join(__dirname, "../../locales/{{lng}}/{{ns}}.json")
+
+// Initialize i18next
+await i18next
   .use(Backend)
   .use(LanguageDetector)
   .init({
@@ -12,7 +19,7 @@ i18next
     ns: ["translations", "errors"], // namespaces
     defaultNS: "translations",
     backend: {
-      loadPath: path.join(__dirname, "../../locales/{{lng}}/{{ns}}.json"),
+      loadPath: localesPath,
     },
     detection: {
       // detect language from headers (Accept-Language)
