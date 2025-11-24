@@ -1,6 +1,6 @@
 export type JsonObject = { [key: string]: JsonValue }
 export type JsonArray = Array<JsonValue>
-export type JsonValue = string | number | boolean | null | JsonObject | JsonArray | Date
+export type JsonValue = string | number | boolean | null | JsonObject | JsonArray | Date | undefined
 
 /**
  * Recursively removes any object keys that end with the provided suffix(es).
@@ -27,6 +27,7 @@ export function removeKeysWithSuffix<T extends JsonValue>(value: T, suffix: stri
     const result: JsonObject = {}
     for (const [key, val] of Object.entries(inputObj)) {
       if (matchesSuffix(key)) continue
+      if (val === undefined) continue
       result[key] = removeKeysWithSuffix(val as JsonValue, suffixes)
     }
     return result as T
@@ -62,6 +63,7 @@ export function unsuffixKeys<T extends JsonValue>(value: T, suffix: string | str
     const inputObj = value as JsonObject
     const result: JsonObject = {}
     for (const [key, val] of Object.entries(inputObj)) {
+      if (val === undefined) continue
       const processed = unsuffixKeys(val as JsonValue, suffixes)
       const base = getBaseKey(key)
       if (base) {
