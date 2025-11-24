@@ -3,6 +3,7 @@ import type { ValidatedRequest } from "express-zod-safe"
 
 import { cartActiveProductInclude } from "@/prisma/cart.js"
 import prismaClient from "@/prisma/index.js"
+import stripLangKeys from "@/utils/obj-select-lang.js"
 
 import type { addToCartSchema } from "../schemas/index.js"
 
@@ -18,12 +19,26 @@ export async function getCartHandler(req: Request, res: Response) {
     where: {
       user_id: userId,
     },
-    include: cartActiveProductInclude,
+    include: cartActiveProductInclude(req.language),
   })
+
+  const formattedItems = cartWithItems!.items.map((item) => {
+    const { product: _product, ...color } = item.color
+    return {
+      ...item,
+      product: item.color.product,
+      color,
+      size: item.size,
+    }
+  })
+  const formattedCart = {
+    ...cartWithItems,
+    items: formattedItems,
+  }
 
   res.json({
     message: req.t("cart_fetched_successfully", { ns: "translations" }),
-    data: cartWithItems,
+    data: stripLangKeys(formattedCart),
   })
 }
 
