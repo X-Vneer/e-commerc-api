@@ -6,5 +6,5 @@ export const addToCartSchema = z.object({
   quantity: z.number().int().min(1, { error: "cart.quantity_invalid" }),
 })
 export const updateCartItemQuantitySchema = z.object({
-  quantity: z.number().int().min(1, { error: "cart.quantity_invalid" }).max(100, { error: "cart.quantity_max" }),
+  quantity: z.number().int().min(0, { error: "cart.quantity_invalid" }).max(100, { error: "cart.quantity_max" }),
 })

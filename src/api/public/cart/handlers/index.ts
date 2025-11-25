@@ -211,6 +211,18 @@ export async function updateCartItemQuantityHandler(
       return null
     }
 
+    if (quantity === 0) {
+      await tx.cartItem.delete({
+        where: {
+          id,
+        },
+      })
+      res.json({
+        message: req.t("item_removed_from_cart_successfully", { ns: "translations" }),
+      })
+      return null
+    }
+
     // Get the product size ID
     const productSize = await tx.productSize.findFirst({
       where: {

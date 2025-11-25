@@ -680,4 +680,52 @@ describe("Cart API", () => {
       expect(prismaClient.cartItem.delete).not.toHaveBeenCalled()
     })
   })
+
+  describe("PUT /api/v1/cart/:id", () => {
+    it("removes item when quantity is updated to zero", async () => {
+      const mockCartItem = {
+        id: 1,
+        cart_id: "cart1",
+        color_id: 1,
+        size_code: "M",
+        quantity: 2,
+      }
+
+      const cartItemFindUnique = vi.fn().mockResolvedValue(mockCartItem)
+      const cartItemDelete = vi.fn().mockResolvedValue(mockCartItem)
+
+      ;(prismaClient.$transaction as any).mockImplementation(async (callback: any) => {
+        const tx = {
+          cartItem: {
+            findUnique: cartItemFindUnique,
+            delete: cartItemDelete,
+          },
+          productSize: {
+            findFirst: vi.fn(),
+          },
+          productInventory: {
+            aggregate: vi.fn(),
+          },
+        }
+        return callback(tx)
+      })
+
+      const res = await request(app)
+        .put("/api/v1/cart/1")
+        .set("Accept", "application/json")
+        .send({ quantity: 0 })
+        .expect("Content-Type", /json/)
+        .expect(200)
+
+      expect(res.body).toHaveProperty("message")
+      expect(prismaClient.$transaction).toHaveBeenCalled()
+      expect(cartItemFindUnique).toHaveBeenCalled()
+      expect(cartItemFindUnique.mock.calls[0][0]?.where?.id).toBe(1)
+      expect(cartItemDelete).toHaveBeenCalledWith({
+        where: {
+          id: 1,
+        },
+      })
+    })
+  })
 })
