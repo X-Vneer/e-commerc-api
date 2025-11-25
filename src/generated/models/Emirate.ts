@@ -208,7 +208,6 @@ export type EmirateOrderByWithRelationInput = {
   name_en?: Prisma.SortOrder
   name_ar?: Prisma.SortOrder
   regions?: Prisma.RegionOrderByRelationAggregateInput
-  _relevance?: Prisma.EmirateOrderByRelevanceInput
 }
 
 export type EmirateWhereUniqueInput = Prisma.AtLeast<{
@@ -282,12 +281,6 @@ export type EmirateUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name_en?: Prisma.StringFieldUpdateOperationsInput | string
   name_ar?: Prisma.StringFieldUpdateOperationsInput | string
-}
-
-export type EmirateOrderByRelevanceInput = {
-  fields: Prisma.EmirateOrderByRelevanceFieldEnum | Prisma.EmirateOrderByRelevanceFieldEnum[]
-  sort: Prisma.SortOrder
-  search: string
 }
 
 export type EmirateCountOrderByAggregateInput = {
@@ -412,7 +405,17 @@ export type EmirateSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   _count?: boolean | Prisma.EmirateCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["emirate"]>
 
+export type EmirateSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  name_en?: boolean
+  name_ar?: boolean
+}, ExtArgs["result"]["emirate"]>
 
+export type EmirateSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  name_en?: boolean
+  name_ar?: boolean
+}, ExtArgs["result"]["emirate"]>
 
 export type EmirateSelectScalar = {
   id?: boolean
@@ -425,6 +428,8 @@ export type EmirateInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   regions?: boolean | Prisma.Emirate$regionsArgs<ExtArgs>
   _count?: boolean | Prisma.EmirateCountOutputTypeDefaultArgs<ExtArgs>
 }
+export type EmirateIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type EmirateIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $EmiratePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Emirate"
@@ -553,6 +558,30 @@ export interface EmirateDelegate<ExtArgs extends runtime.Types.Extensions.Intern
   createMany<T extends EmirateCreateManyArgs>(args?: Prisma.SelectSubset<T, EmirateCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many Emirates and returns the data saved in the database.
+   * @param {EmirateCreateManyAndReturnArgs} args - Arguments to create many Emirates.
+   * @example
+   * // Create many Emirates
+   * const emirate = await prisma.emirate.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many Emirates and only return the `id`
+   * const emirateWithIdOnly = await prisma.emirate.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends EmirateCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, EmirateCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EmiratePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a Emirate.
    * @param {EmirateDeleteArgs} args - Arguments to delete one Emirate.
    * @example
@@ -615,6 +644,36 @@ export interface EmirateDelegate<ExtArgs extends runtime.Types.Extensions.Intern
    * 
    */
   updateMany<T extends EmirateUpdateManyArgs>(args: Prisma.SelectSubset<T, EmirateUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more Emirates and returns the data updated in the database.
+   * @param {EmirateUpdateManyAndReturnArgs} args - Arguments to update many Emirates.
+   * @example
+   * // Update many Emirates
+   * const emirate = await prisma.emirate.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more Emirates and only return the `id`
+   * const emirateWithIdOnly = await prisma.emirate.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends EmirateUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, EmirateUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EmiratePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one Emirate.
@@ -1041,6 +1100,25 @@ export type EmirateCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
+ * Emirate createManyAndReturn
+ */
+export type EmirateCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Emirate
+   */
+  select?: Prisma.EmirateSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Emirate
+   */
+  omit?: Prisma.EmirateOmit<ExtArgs> | null
+  /**
+   * The data used to create many Emirates.
+   */
+  data: Prisma.EmirateCreateManyInput | Prisma.EmirateCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
  * Emirate update
  */
 export type EmirateUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1070,6 +1148,32 @@ export type EmirateUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
  * Emirate updateMany
  */
 export type EmirateUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * The data used to update Emirates.
+   */
+  data: Prisma.XOR<Prisma.EmirateUpdateManyMutationInput, Prisma.EmirateUncheckedUpdateManyInput>
+  /**
+   * Filter which Emirates to update
+   */
+  where?: Prisma.EmirateWhereInput
+  /**
+   * Limit how many Emirates to update.
+   */
+  limit?: number
+}
+
+/**
+ * Emirate updateManyAndReturn
+ */
+export type EmirateUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Emirate
+   */
+  select?: Prisma.EmirateSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Emirate
+   */
+  omit?: Prisma.EmirateOmit<ExtArgs> | null
   /**
    * The data used to update Emirates.
    */

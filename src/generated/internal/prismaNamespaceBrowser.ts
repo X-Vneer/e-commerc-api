@@ -247,120 +247,18 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+} as const
+
+export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
 export const NullsOrder = {
   first: 'first',
   last: 'last'
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
-
-
-export const UserOrderByRelevanceFieldEnum = {
-  id: 'id',
-  phone: 'phone',
-  email: 'email',
-  password: 'password',
-  name: 'name',
-  address: 'address'
-} as const
-
-export type UserOrderByRelevanceFieldEnum = (typeof UserOrderByRelevanceFieldEnum)[keyof typeof UserOrderByRelevanceFieldEnum]
-
-
-export const AdminOrderByRelevanceFieldEnum = {
-  id: 'id',
-  email: 'email',
-  password: 'password',
-  name: 'name'
-} as const
-
-export type AdminOrderByRelevanceFieldEnum = (typeof AdminOrderByRelevanceFieldEnum)[keyof typeof AdminOrderByRelevanceFieldEnum]
-
-
-export const EmirateOrderByRelevanceFieldEnum = {
-  name_en: 'name_en',
-  name_ar: 'name_ar'
-} as const
-
-export type EmirateOrderByRelevanceFieldEnum = (typeof EmirateOrderByRelevanceFieldEnum)[keyof typeof EmirateOrderByRelevanceFieldEnum]
-
-
-export const RegionOrderByRelevanceFieldEnum = {
-  name_en: 'name_en',
-  name_ar: 'name_ar'
-} as const
-
-export type RegionOrderByRelevanceFieldEnum = (typeof RegionOrderByRelevanceFieldEnum)[keyof typeof RegionOrderByRelevanceFieldEnum]
-
-
-export const BranchOrderByRelevanceFieldEnum = {
-  name_en: 'name_en',
-  name_ar: 'name_ar',
-  code: 'code'
-} as const
-
-export type BranchOrderByRelevanceFieldEnum = (typeof BranchOrderByRelevanceFieldEnum)[keyof typeof BranchOrderByRelevanceFieldEnum]
-
-
-export const CategoryOrderByRelevanceFieldEnum = {
-  name_en: 'name_en',
-  name_ar: 'name_ar',
-  slug: 'slug',
-  image: 'image'
-} as const
-
-export type CategoryOrderByRelevanceFieldEnum = (typeof CategoryOrderByRelevanceFieldEnum)[keyof typeof CategoryOrderByRelevanceFieldEnum]
-
-
-export const ProductOrderByRelevanceFieldEnum = {
-  code: 'code',
-  slug: 'slug',
-  name_en: 'name_en',
-  name_ar: 'name_ar',
-  description_en: 'description_en',
-  description_ar: 'description_ar',
-  main_image_url: 'main_image_url'
-} as const
-
-export type ProductOrderByRelevanceFieldEnum = (typeof ProductOrderByRelevanceFieldEnum)[keyof typeof ProductOrderByRelevanceFieldEnum]
-
-
-export const ColorOrderByRelevanceFieldEnum = {
-  name_en: 'name_en',
-  name_ar: 'name_ar',
-  image: 'image'
-} as const
-
-export type ColorOrderByRelevanceFieldEnum = (typeof ColorOrderByRelevanceFieldEnum)[keyof typeof ColorOrderByRelevanceFieldEnum]
-
-
-export const SizeOrderByRelevanceFieldEnum = {
-  code: 'code',
-  weight: 'weight'
-} as const
-
-export type SizeOrderByRelevanceFieldEnum = (typeof SizeOrderByRelevanceFieldEnum)[keyof typeof SizeOrderByRelevanceFieldEnum]
-
-
-export const ProductSizeOrderByRelevanceFieldEnum = {
-  size_code: 'size_code'
-} as const
-
-export type ProductSizeOrderByRelevanceFieldEnum = (typeof ProductSizeOrderByRelevanceFieldEnum)[keyof typeof ProductSizeOrderByRelevanceFieldEnum]
-
-
-export const CartOrderByRelevanceFieldEnum = {
-  id: 'id',
-  user_id: 'user_id'
-} as const
-
-export type CartOrderByRelevanceFieldEnum = (typeof CartOrderByRelevanceFieldEnum)[keyof typeof CartOrderByRelevanceFieldEnum]
-
-
-export const CartItemOrderByRelevanceFieldEnum = {
-  cart_id: 'cart_id',
-  size_code: 'size_code'
-} as const
-
-export type CartItemOrderByRelevanceFieldEnum = (typeof CartItemOrderByRelevanceFieldEnum)[keyof typeof CartItemOrderByRelevanceFieldEnum]
 

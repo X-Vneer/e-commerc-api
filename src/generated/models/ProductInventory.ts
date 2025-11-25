@@ -629,7 +629,25 @@ export type ProductInventorySelect<ExtArgs extends runtime.Types.Extensions.Inte
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["productInventory"]>
 
+export type ProductInventorySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  product_size_id?: boolean
+  branch_id?: boolean
+  amount?: boolean
+  sold?: boolean
+  productSize?: boolean | Prisma.ProductSizeDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["productInventory"]>
 
+export type ProductInventorySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  product_size_id?: boolean
+  branch_id?: boolean
+  amount?: boolean
+  sold?: boolean
+  productSize?: boolean | Prisma.ProductSizeDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["productInventory"]>
 
 export type ProductInventorySelectScalar = {
   id?: boolean
@@ -641,6 +659,14 @@ export type ProductInventorySelectScalar = {
 
 export type ProductInventoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "product_size_id" | "branch_id" | "amount" | "sold", ExtArgs["result"]["productInventory"]>
 export type ProductInventoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  productSize?: boolean | Prisma.ProductSizeDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
+}
+export type ProductInventoryIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  productSize?: boolean | Prisma.ProductSizeDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
+}
+export type ProductInventoryIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   productSize?: boolean | Prisma.ProductSizeDefaultArgs<ExtArgs>
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
 }
@@ -775,6 +801,30 @@ export interface ProductInventoryDelegate<ExtArgs extends runtime.Types.Extensio
   createMany<T extends ProductInventoryCreateManyArgs>(args?: Prisma.SelectSubset<T, ProductInventoryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many ProductInventories and returns the data saved in the database.
+   * @param {ProductInventoryCreateManyAndReturnArgs} args - Arguments to create many ProductInventories.
+   * @example
+   * // Create many ProductInventories
+   * const productInventory = await prisma.productInventory.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many ProductInventories and only return the `id`
+   * const productInventoryWithIdOnly = await prisma.productInventory.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends ProductInventoryCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, ProductInventoryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductInventoryPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a ProductInventory.
    * @param {ProductInventoryDeleteArgs} args - Arguments to delete one ProductInventory.
    * @example
@@ -837,6 +887,36 @@ export interface ProductInventoryDelegate<ExtArgs extends runtime.Types.Extensio
    * 
    */
   updateMany<T extends ProductInventoryUpdateManyArgs>(args: Prisma.SelectSubset<T, ProductInventoryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more ProductInventories and returns the data updated in the database.
+   * @param {ProductInventoryUpdateManyAndReturnArgs} args - Arguments to update many ProductInventories.
+   * @example
+   * // Update many ProductInventories
+   * const productInventory = await prisma.productInventory.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more ProductInventories and only return the `id`
+   * const productInventoryWithIdOnly = await prisma.productInventory.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends ProductInventoryUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, ProductInventoryUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductInventoryPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one ProductInventory.
@@ -1266,6 +1346,29 @@ export type ProductInventoryCreateManyArgs<ExtArgs extends runtime.Types.Extensi
 }
 
 /**
+ * ProductInventory createManyAndReturn
+ */
+export type ProductInventoryCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProductInventory
+   */
+  select?: Prisma.ProductInventorySelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProductInventory
+   */
+  omit?: Prisma.ProductInventoryOmit<ExtArgs> | null
+  /**
+   * The data used to create many ProductInventories.
+   */
+  data: Prisma.ProductInventoryCreateManyInput | Prisma.ProductInventoryCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProductInventoryIncludeCreateManyAndReturn<ExtArgs> | null
+}
+
+/**
  * ProductInventory update
  */
 export type ProductInventoryUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1307,6 +1410,36 @@ export type ProductInventoryUpdateManyArgs<ExtArgs extends runtime.Types.Extensi
    * Limit how many ProductInventories to update.
    */
   limit?: number
+}
+
+/**
+ * ProductInventory updateManyAndReturn
+ */
+export type ProductInventoryUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProductInventory
+   */
+  select?: Prisma.ProductInventorySelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProductInventory
+   */
+  omit?: Prisma.ProductInventoryOmit<ExtArgs> | null
+  /**
+   * The data used to update ProductInventories.
+   */
+  data: Prisma.XOR<Prisma.ProductInventoryUpdateManyMutationInput, Prisma.ProductInventoryUncheckedUpdateManyInput>
+  /**
+   * Filter which ProductInventories to update
+   */
+  where?: Prisma.ProductInventoryWhereInput
+  /**
+   * Limit how many ProductInventories to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProductInventoryIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

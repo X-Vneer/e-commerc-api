@@ -8,9 +8,9 @@ const baseSchema = z.object({
   JWT_SECRET: z.string().optional(),
   DATABASE_USER: z.string().default("username"),
   DATABASE_PASSWORD: z.string().default("password"),
-  DATABASE_NAME: z.string().default("mydb"),
+  DATABASE_NAME: z.string().default("postgresql"),
   DATABASE_HOST: z.string().default("localhost"),
-  DATABASE_PORT: z.coerce.number().default(3306),
+  DATABASE_PORT: z.coerce.number().default(5432),
 })
 
 // eslint-disable-next-line node/no-process-env

@@ -254,7 +254,6 @@ export type ColorOrderByWithRelationInput = {
   sizes?: Prisma.ProductSizeOrderByRelationAggregateInput
   favorite_by?: Prisma.UserOrderByRelationAggregateInput
   cartItems?: Prisma.CartItemOrderByRelationAggregateInput
-  _relevance?: Prisma.ColorOrderByRelevanceInput
 }
 
 export type ColorWhereUniqueInput = Prisma.AtLeast<{
@@ -390,12 +389,6 @@ export type ColorListRelationFilter = {
 
 export type ColorOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
-}
-
-export type ColorOrderByRelevanceInput = {
-  fields: Prisma.ColorOrderByRelevanceFieldEnum | Prisma.ColorOrderByRelevanceFieldEnum[]
-  sort: Prisma.SortOrder
-  search: string
 }
 
 export type ColorProduct_idName_enCompoundUniqueInput = {
@@ -929,7 +922,27 @@ export type ColorSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   _count?: boolean | Prisma.ColorCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["color"]>
 
+export type ColorSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  product_id?: boolean
+  name_en?: boolean
+  name_ar?: boolean
+  image?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["color"]>
 
+export type ColorSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  product_id?: boolean
+  name_en?: boolean
+  name_ar?: boolean
+  image?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["color"]>
 
 export type ColorSelectScalar = {
   id?: boolean
@@ -948,6 +961,12 @@ export type ColorInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   favorite_by?: boolean | Prisma.Color$favorite_byArgs<ExtArgs>
   cartItems?: boolean | Prisma.Color$cartItemsArgs<ExtArgs>
   _count?: boolean | Prisma.ColorCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type ColorIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
+}
+export type ColorIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
 }
 
 export type $ColorPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1084,6 +1103,30 @@ export interface ColorDelegate<ExtArgs extends runtime.Types.Extensions.Internal
   createMany<T extends ColorCreateManyArgs>(args?: Prisma.SelectSubset<T, ColorCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many Colors and returns the data saved in the database.
+   * @param {ColorCreateManyAndReturnArgs} args - Arguments to create many Colors.
+   * @example
+   * // Create many Colors
+   * const color = await prisma.color.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many Colors and only return the `id`
+   * const colorWithIdOnly = await prisma.color.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends ColorCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, ColorCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ColorPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a Color.
    * @param {ColorDeleteArgs} args - Arguments to delete one Color.
    * @example
@@ -1146,6 +1189,36 @@ export interface ColorDelegate<ExtArgs extends runtime.Types.Extensions.Internal
    * 
    */
   updateMany<T extends ColorUpdateManyArgs>(args: Prisma.SelectSubset<T, ColorUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more Colors and returns the data updated in the database.
+   * @param {ColorUpdateManyAndReturnArgs} args - Arguments to update many Colors.
+   * @example
+   * // Update many Colors
+   * const color = await prisma.color.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more Colors and only return the `id`
+   * const colorWithIdOnly = await prisma.color.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends ColorUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, ColorUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ColorPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one Color.
@@ -1579,6 +1652,29 @@ export type ColorCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
 }
 
 /**
+ * Color createManyAndReturn
+ */
+export type ColorCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Color
+   */
+  select?: Prisma.ColorSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Color
+   */
+  omit?: Prisma.ColorOmit<ExtArgs> | null
+  /**
+   * The data used to create many Colors.
+   */
+  data: Prisma.ColorCreateManyInput | Prisma.ColorCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ColorIncludeCreateManyAndReturn<ExtArgs> | null
+}
+
+/**
  * Color update
  */
 export type ColorUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1620,6 +1716,36 @@ export type ColorUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Limit how many Colors to update.
    */
   limit?: number
+}
+
+/**
+ * Color updateManyAndReturn
+ */
+export type ColorUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Color
+   */
+  select?: Prisma.ColorSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Color
+   */
+  omit?: Prisma.ColorOmit<ExtArgs> | null
+  /**
+   * The data used to update Colors.
+   */
+  data: Prisma.XOR<Prisma.ColorUpdateManyMutationInput, Prisma.ColorUncheckedUpdateManyInput>
+  /**
+   * Filter which Colors to update
+   */
+  where?: Prisma.ColorWhereInput
+  /**
+   * Limit how many Colors to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ColorIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

@@ -244,12 +244,11 @@ export type ProductSizeOrderByWithRelationInput = {
   size?: Prisma.SizeOrderByWithRelationInput
   inventories?: Prisma.ProductInventoryOrderByRelationAggregateInput
   cartItems?: Prisma.CartItemOrderByRelationAggregateInput
-  _relevance?: Prisma.ProductSizeOrderByRelevanceInput
 }
 
 export type ProductSizeWhereUniqueInput = Prisma.AtLeast<{
   id?: number
-  color_id_size_code?: Prisma.ProductSizeColor_idSize_codeCompoundUniqueInput
+  size_code_color_id?: Prisma.ProductSizeSize_codeColor_idCompoundUniqueInput
   AND?: Prisma.ProductSizeWhereInput | Prisma.ProductSizeWhereInput[]
   OR?: Prisma.ProductSizeWhereInput[]
   NOT?: Prisma.ProductSizeWhereInput | Prisma.ProductSizeWhereInput[]
@@ -261,7 +260,7 @@ export type ProductSizeWhereUniqueInput = Prisma.AtLeast<{
   size?: Prisma.XOR<Prisma.SizeScalarRelationFilter, Prisma.SizeWhereInput>
   inventories?: Prisma.ProductInventoryListRelationFilter
   cartItems?: Prisma.CartItemListRelationFilter
-}, "id" | "color_id_size_code">
+}, "id" | "size_code_color_id">
 
 export type ProductSizeOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -361,15 +360,9 @@ export type ProductSizeOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type ProductSizeOrderByRelevanceInput = {
-  fields: Prisma.ProductSizeOrderByRelevanceFieldEnum | Prisma.ProductSizeOrderByRelevanceFieldEnum[]
-  sort: Prisma.SortOrder
-  search: string
-}
-
-export type ProductSizeColor_idSize_codeCompoundUniqueInput = {
-  color_id: number
+export type ProductSizeSize_codeColor_idCompoundUniqueInput = {
   size_code: string
+  color_id: number
 }
 
 export type ProductSizeCountOrderByAggregateInput = {
@@ -834,7 +827,25 @@ export type ProductSizeSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   _count?: boolean | Prisma.ProductSizeCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["productSize"]>
 
+export type ProductSizeSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  color_id?: boolean
+  size_code?: boolean
+  hip?: boolean
+  chest?: boolean
+  color?: boolean | Prisma.ColorDefaultArgs<ExtArgs>
+  size?: boolean | Prisma.SizeDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["productSize"]>
 
+export type ProductSizeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  color_id?: boolean
+  size_code?: boolean
+  hip?: boolean
+  chest?: boolean
+  color?: boolean | Prisma.ColorDefaultArgs<ExtArgs>
+  size?: boolean | Prisma.SizeDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["productSize"]>
 
 export type ProductSizeSelectScalar = {
   id?: boolean
@@ -851,6 +862,14 @@ export type ProductSizeInclude<ExtArgs extends runtime.Types.Extensions.Internal
   inventories?: boolean | Prisma.ProductSize$inventoriesArgs<ExtArgs>
   cartItems?: boolean | Prisma.ProductSize$cartItemsArgs<ExtArgs>
   _count?: boolean | Prisma.ProductSizeCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type ProductSizeIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  color?: boolean | Prisma.ColorDefaultArgs<ExtArgs>
+  size?: boolean | Prisma.SizeDefaultArgs<ExtArgs>
+}
+export type ProductSizeIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  color?: boolean | Prisma.ColorDefaultArgs<ExtArgs>
+  size?: boolean | Prisma.SizeDefaultArgs<ExtArgs>
 }
 
 export type $ProductSizePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -985,6 +1004,30 @@ export interface ProductSizeDelegate<ExtArgs extends runtime.Types.Extensions.In
   createMany<T extends ProductSizeCreateManyArgs>(args?: Prisma.SelectSubset<T, ProductSizeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many ProductSizes and returns the data saved in the database.
+   * @param {ProductSizeCreateManyAndReturnArgs} args - Arguments to create many ProductSizes.
+   * @example
+   * // Create many ProductSizes
+   * const productSize = await prisma.productSize.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many ProductSizes and only return the `id`
+   * const productSizeWithIdOnly = await prisma.productSize.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends ProductSizeCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, ProductSizeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductSizePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a ProductSize.
    * @param {ProductSizeDeleteArgs} args - Arguments to delete one ProductSize.
    * @example
@@ -1047,6 +1090,36 @@ export interface ProductSizeDelegate<ExtArgs extends runtime.Types.Extensions.In
    * 
    */
   updateMany<T extends ProductSizeUpdateManyArgs>(args: Prisma.SelectSubset<T, ProductSizeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more ProductSizes and returns the data updated in the database.
+   * @param {ProductSizeUpdateManyAndReturnArgs} args - Arguments to update many ProductSizes.
+   * @example
+   * // Update many ProductSizes
+   * const productSize = await prisma.productSize.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more ProductSizes and only return the `id`
+   * const productSizeWithIdOnly = await prisma.productSize.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends ProductSizeUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, ProductSizeUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductSizePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one ProductSize.
@@ -1478,6 +1551,29 @@ export type ProductSizeCreateManyArgs<ExtArgs extends runtime.Types.Extensions.I
 }
 
 /**
+ * ProductSize createManyAndReturn
+ */
+export type ProductSizeCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProductSize
+   */
+  select?: Prisma.ProductSizeSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProductSize
+   */
+  omit?: Prisma.ProductSizeOmit<ExtArgs> | null
+  /**
+   * The data used to create many ProductSizes.
+   */
+  data: Prisma.ProductSizeCreateManyInput | Prisma.ProductSizeCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProductSizeIncludeCreateManyAndReturn<ExtArgs> | null
+}
+
+/**
  * ProductSize update
  */
 export type ProductSizeUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1519,6 +1615,36 @@ export type ProductSizeUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * Limit how many ProductSizes to update.
    */
   limit?: number
+}
+
+/**
+ * ProductSize updateManyAndReturn
+ */
+export type ProductSizeUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProductSize
+   */
+  select?: Prisma.ProductSizeSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProductSize
+   */
+  omit?: Prisma.ProductSizeOmit<ExtArgs> | null
+  /**
+   * The data used to update ProductSizes.
+   */
+  data: Prisma.XOR<Prisma.ProductSizeUpdateManyMutationInput, Prisma.ProductSizeUncheckedUpdateManyInput>
+  /**
+   * Filter which ProductSizes to update
+   */
+  where?: Prisma.ProductSizeWhereInput
+  /**
+   * Limit how many ProductSizes to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProductSizeIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

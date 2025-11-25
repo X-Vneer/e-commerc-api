@@ -223,7 +223,6 @@ export type RegionOrderByWithRelationInput = {
   emirate_id?: Prisma.SortOrder
   emirate?: Prisma.EmirateOrderByWithRelationInput
   users?: Prisma.UserOrderByRelationAggregateInput
-  _relevance?: Prisma.RegionOrderByRelevanceInput
 }
 
 export type RegionWhereUniqueInput = Prisma.AtLeast<{
@@ -322,12 +321,6 @@ export type RegionListRelationFilter = {
 
 export type RegionOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
-}
-
-export type RegionOrderByRelevanceInput = {
-  fields: Prisma.RegionOrderByRelevanceFieldEnum | Prisma.RegionOrderByRelevanceFieldEnum[]
-  sort: Prisma.SortOrder
-  search: string
 }
 
 export type RegionCountOrderByAggregateInput = {
@@ -574,7 +567,21 @@ export type RegionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   _count?: boolean | Prisma.RegionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["region"]>
 
+export type RegionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  name_en?: boolean
+  name_ar?: boolean
+  emirate_id?: boolean
+  emirate?: boolean | Prisma.EmirateDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["region"]>
 
+export type RegionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  name_en?: boolean
+  name_ar?: boolean
+  emirate_id?: boolean
+  emirate?: boolean | Prisma.EmirateDefaultArgs<ExtArgs>
+}, ExtArgs["result"]["region"]>
 
 export type RegionSelectScalar = {
   id?: boolean
@@ -588,6 +595,12 @@ export type RegionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   emirate?: boolean | Prisma.EmirateDefaultArgs<ExtArgs>
   users?: boolean | Prisma.Region$usersArgs<ExtArgs>
   _count?: boolean | Prisma.RegionCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type RegionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  emirate?: boolean | Prisma.EmirateDefaultArgs<ExtArgs>
+}
+export type RegionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  emirate?: boolean | Prisma.EmirateDefaultArgs<ExtArgs>
 }
 
 export type $RegionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -719,6 +732,30 @@ export interface RegionDelegate<ExtArgs extends runtime.Types.Extensions.Interna
   createMany<T extends RegionCreateManyArgs>(args?: Prisma.SelectSubset<T, RegionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many Regions and returns the data saved in the database.
+   * @param {RegionCreateManyAndReturnArgs} args - Arguments to create many Regions.
+   * @example
+   * // Create many Regions
+   * const region = await prisma.region.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many Regions and only return the `id`
+   * const regionWithIdOnly = await prisma.region.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends RegionCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, RegionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RegionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a Region.
    * @param {RegionDeleteArgs} args - Arguments to delete one Region.
    * @example
@@ -781,6 +818,36 @@ export interface RegionDelegate<ExtArgs extends runtime.Types.Extensions.Interna
    * 
    */
   updateMany<T extends RegionUpdateManyArgs>(args: Prisma.SelectSubset<T, RegionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more Regions and returns the data updated in the database.
+   * @param {RegionUpdateManyAndReturnArgs} args - Arguments to update many Regions.
+   * @example
+   * // Update many Regions
+   * const region = await prisma.region.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more Regions and only return the `id`
+   * const regionWithIdOnly = await prisma.region.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends RegionUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, RegionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RegionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one Region.
@@ -1209,6 +1276,29 @@ export type RegionCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
 }
 
 /**
+ * Region createManyAndReturn
+ */
+export type RegionCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Region
+   */
+  select?: Prisma.RegionSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Region
+   */
+  omit?: Prisma.RegionOmit<ExtArgs> | null
+  /**
+   * The data used to create many Regions.
+   */
+  data: Prisma.RegionCreateManyInput | Prisma.RegionCreateManyInput[]
+  skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionIncludeCreateManyAndReturn<ExtArgs> | null
+}
+
+/**
  * Region update
  */
 export type RegionUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1250,6 +1340,36 @@ export type RegionUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Limit how many Regions to update.
    */
   limit?: number
+}
+
+/**
+ * Region updateManyAndReturn
+ */
+export type RegionUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Region
+   */
+  select?: Prisma.RegionSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Region
+   */
+  omit?: Prisma.RegionOmit<ExtArgs> | null
+  /**
+   * The data used to update Regions.
+   */
+  data: Prisma.XOR<Prisma.RegionUpdateManyMutationInput, Prisma.RegionUncheckedUpdateManyInput>
+  /**
+   * Filter which Regions to update
+   */
+  where?: Prisma.RegionWhereInput
+  /**
+   * Limit how many Regions to update.
+   */
+  limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RegionIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
