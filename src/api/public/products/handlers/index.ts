@@ -122,6 +122,30 @@ export async function getRecentProductsHandler(req: Request, res: Response) {
   })
 }
 
+export async function getFeaturedProductsHandler(req: Request, res: Response) {
+  const include = ColorIncludeWithProductAndPlusSizesAndFavoriteBy(req.userId)
+  const products = await prismaClient.color.findMany({
+    take: 10,
+    where: {
+      ...activeColorsFilter,
+      product: {
+        ...activeColorsFilter.product,
+        is_featured: true,
+      },
+    },
+    orderBy: {
+      product: {
+        createdAt: "desc",
+      },
+    },
+    include,
+  })
+  res.json({
+    message: req.t("featured_products_fetched_successfully", { ns: "translations" }),
+    data: products.map((color) => formatColorWithProduct(color, req.language)),
+  })
+}
+
 export async function getProductDetailsHandler(
   req: ValidatedRequest<{ params: typeof numberIdSchema }>,
   res: Response

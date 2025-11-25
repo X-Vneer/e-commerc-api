@@ -7,6 +7,7 @@ import { paginationParamsSchema } from "@/schemas/pagination-params.js"
 
 import {
   getFavoritesHandler,
+  getFeaturedProductsHandler,
   getProductDetailsHandler,
   getProductsHandler,
   getRecentProductsHandler,
@@ -19,6 +20,7 @@ const router = express.Router()
 router.use(userIdMiddleware)
 router.get("/", validate({ query: productQueryWithPaginationSchema }), getProductsHandler)
 router.get("/recent", getRecentProductsHandler)
+router.get("/featured", getFeaturedProductsHandler)
 router.get("/:id", validate({ params: numberIdSchema }), getProductDetailsHandler)
 
 // requires auth

@@ -24,5 +24,6 @@
   "item_removed_from_cart_successfully": "تمت إزالة العنصر بنجاح",
   "item_quantity_updated_successfully": "تم تحديث كمية العنصر بنجاح",
   "item_quantity_deleted_successfully": "تم حذف العناصر بنجاح",
-  "recent_products_fetched_successfully": "تم جلب المنتجات الأخيرة بنجاح"
+  "recent_products_fetched_successfully": "تم جلب المنتجات الأخيرة بنجاح",
+  "featured_products_fetched_successfully": "تم جلب المنتجات المميزة بنجاح"
 }

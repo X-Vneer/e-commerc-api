@@ -17,6 +17,7 @@ type FormattedColorData = {
   }[]
   has_plus_size: boolean
   is_favorite: boolean
+  is_featured: boolean
 }
 
 /**
@@ -40,6 +41,7 @@ export function formatColorWithProduct(color: ColorWithProductAndPlusSizesAndFav
     color_name: color[name],
     has_plus_size: color.sizes.map((size) => size.size_code).length > 0,
     is_favorite: color.favorite_by.length > 0,
+    is_featured: color.product.is_featured,
     categories: color.product.categories.map((category) => ({
       id: category.id,
       name: category[name],
