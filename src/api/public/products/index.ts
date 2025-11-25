@@ -9,6 +9,7 @@ import {
   getFavoritesHandler,
   getProductDetailsHandler,
   getProductsHandler,
+  getRecentProductsHandler,
   toggleFavoriteHandler,
 } from "./handlers/index.js"
 import { productQueryWithPaginationSchema, toggleFavoriteSchema } from "./schemas/index.js"
@@ -17,6 +18,7 @@ const router = express.Router()
 
 router.use(userIdMiddleware)
 router.get("/", validate({ query: productQueryWithPaginationSchema }), getProductsHandler)
+router.get("/recent", getRecentProductsHandler)
 router.get("/:id", validate({ params: numberIdSchema }), getProductDetailsHandler)
 
 // requires auth

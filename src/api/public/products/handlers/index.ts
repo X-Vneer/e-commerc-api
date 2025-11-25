@@ -1,4 +1,4 @@
-import type { Response } from "express"
+import type { Request, Response } from "express"
 import type { ValidatedRequest } from "express-zod-safe"
 
 import type { Prisma } from "@/generated/client.js"
@@ -7,6 +7,7 @@ import type { paginationParamsSchema } from "@/schemas/pagination-params.js"
 
 import prismaClient from "@/prisma/index.js"
 import {
+  activeColorsFilter,
   colorBaseInclude,
   ColorIncludeWithProductAndPlusSizesAndFavoriteBy,
   NOT_PLUS_SIZES,
@@ -99,6 +100,25 @@ export async function getProductsHandler(
       total,
       last_page: Math.ceil(total / limit),
     },
+  })
+}
+
+export async function getRecentProductsHandler(req: Request, res: Response) {
+  const include = ColorIncludeWithProductAndPlusSizesAndFavoriteBy(req.userId)
+  const products = await prismaClient.color.findMany({
+    take: 10,
+    where: activeColorsFilter,
+    orderBy: {
+      product: {
+        createdAt: "desc",
+      },
+    },
+    include,
+  })
+
+  res.json({
+    message: req.t("recent_products_fetched_successfully", { ns: "translations" }),
+    data: products.map((color) => formatColorWithProduct(color, req.language)),
   })
 }
 

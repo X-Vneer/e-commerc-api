@@ -62,3 +62,18 @@ export function ColorIncludeWithProductAndPlusSizesAndFavoriteBy(userId?: string
 export type ColorWithProductAndPlusSizesAndFavoriteBy = Prisma.ColorGetPayload<{
   include: ReturnType<typeof ColorIncludeWithProductAndPlusSizesAndFavoriteBy>
 }>
+
+export const activeColorsFilter = {
+  product: {
+    is_active: true,
+  },
+  sizes: {
+    some: {
+      inventories: {
+        some: {
+          amount: { gt: 0 },
+        },
+      },
+    },
+  },
+} satisfies Prisma.ColorWhereInput
